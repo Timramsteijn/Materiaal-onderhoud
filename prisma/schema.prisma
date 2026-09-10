@@ -31,19 +31,36 @@ model User {
   @@map("users")
 }
 
-/// Een materiaalcategorie (bv. Ski, Snowboard, of een toekomstige activiteit).
+/// Een onderdeel/activiteit van het bedrijf (bv. "Ski & Snowboard",
+/// "Mountainbike", "Boogschieten"). Medewerkers kiezen na het inloggen een
+/// onderdeel om mee te werken; alles daarbinnen (materiaal, log, overzicht)
+/// is gescoped tot dat onderdeel. Duty managers voegen nieuwe onderdelen toe
+/// via Beheer, zonder dat de applicatie herbouwd hoeft te worden.
+model Department {
+  id         String     @id @default(cuid())
+  naam       String     @unique
+  aangemaakt DateTime   @default(now())
+  categories Category[]
+
+  @@map("departments")
+}
+
+/// Een materiaalcategorie binnen een onderdeel (bv. Ski, Snowboard).
 /// Nieuwe categorieen kunnen door een duty manager via de UI worden toegevoegd
 /// zonder dat de applicatie herbouwd hoeft te worden.
 model Category {
-  id         String     @id @default(cuid())
-  naam       String     @unique
+  id           String     @id @default(cuid())
+  naam         String     @unique
   /// Korte prefix voor automatische materiaal-ID's, bv. "SKI", "SB"
-  prefix     String     @unique
+  prefix       String     @unique
   /// Onderhoudsacties die voor deze categorie gelden, in weergavevolgorde
-  acties     String[]
-  aangemaakt DateTime   @default(now())
-  materialen Material[]
+  acties       String[]
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  aangemaakt   DateTime   @default(now())
+  materialen   Material[]
 
+  @@index([departmentId])
   @@map("categories")
 }
 

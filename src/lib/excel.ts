@@ -140,7 +140,7 @@ export function parseImportWorkbook(buffer: ArrayBuffer): {
 export function buildExportWorkbook(
   materialen: Array<{
     id: string;
-    category: { naam: string };
+    category: { naam: string; department: { naam: string } };
     merk: string;
     model: string;
     maat: string | null;
@@ -150,7 +150,7 @@ export function buildExportWorkbook(
   }>,
   logs: Array<{
     datum: Date;
-    material: { id: string; category: { naam: string } };
+    material: { id: string; category: { naam: string; department: { naam: string } } };
     actie: string;
     uitgevoerdDoor: { naam: string };
     opmerkingen: string | null;
@@ -158,6 +158,7 @@ export function buildExportWorkbook(
 ): Buffer {
   const matHeaders = [
     "Materiaal-ID",
+    "Onderdeel",
     "Categorie",
     "Merk",
     "Model",
@@ -168,6 +169,7 @@ export function buildExportWorkbook(
   ];
   const matRows = materialen.map((m) => [
     m.id,
+    m.category.department.naam,
     m.category.naam,
     m.merk,
     m.model,
@@ -179,6 +181,7 @@ export function buildExportWorkbook(
   const wsMat = XLSX.utils.aoa_to_sheet([matHeaders, ...matRows]);
   wsMat["!cols"] = [
     { wch: 14 },
+    { wch: 18 },
     { wch: 14 },
     { wch: 16 },
     { wch: 20 },
@@ -188,18 +191,35 @@ export function buildExportWorkbook(
     { wch: 30 },
   ];
 
-  const logHeaders = ["Datum", "Materiaal-ID", "Categorie", "Actie", "Uitgevoerd door", "Opmerkingen"];
+  const logHeaders = [
+    "Datum",
+    "Materiaal-ID",
+    "Onderdeel",
+    "Categorie",
+    "Actie",
+    "Uitgevoerd door",
+    "Opmerkingen",
+  ];
   const sortedLogs = [...logs].sort((a, b) => a.datum.getTime() - b.datum.getTime());
   const logRows = sortedLogs.map((l) => [
     l.datum.toLocaleString("nl-NL"),
     l.material.id,
+    l.material.category.department.naam,
     l.material.category.naam,
     l.actie,
     l.uitgevoerdDoor.naam,
     l.opmerkingen ?? "",
   ]);
   const wsLog = XLSX.utils.aoa_to_sheet([logHeaders, ...logRows]);
-  wsLog["!cols"] = [{ wch: 16 }, { wch: 14 }, { wch: 14 }, { wch: 42 }, { wch: 16 }, { wch: 30 }];
+  wsLog["!cols"] = [
+    { wch: 16 },
+    { wch: 14 },
+    { wch: 18 },
+    { wch: 14 },
+    { wch: 42 },
+    { wch: 16 },
+    { wch: 30 },
+  ];
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, wsMat, "Materiaal");

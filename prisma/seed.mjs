@@ -13,17 +13,29 @@ const STANDAARD_ACTIES = [
   "Algehele onderhoudsbeurt (slijpen kanten + belag)",
 ];
 
+const OVERIGE_ONDERDELEN = ["Mountainbike", "Boogschieten", "Klimmateriaal", "Kano & Kajak & SUP"];
+
 async function main() {
+  const skiSnowboard = await prisma.department.upsert({
+    where: { naam: "Ski & Snowboard" },
+    update: {},
+    create: { naam: "Ski & Snowboard" },
+  });
+
+  for (const naam of OVERIGE_ONDERDELEN) {
+    await prisma.department.upsert({ where: { naam }, update: {}, create: { naam } });
+  }
+
   await prisma.category.upsert({
     where: { naam: "Ski" },
     update: {},
-    create: { naam: "Ski", prefix: "SKI", acties: STANDAARD_ACTIES },
+    create: { naam: "Ski", prefix: "SKI", acties: STANDAARD_ACTIES, departmentId: skiSnowboard.id },
   });
 
   await prisma.category.upsert({
     where: { naam: "Snowboard" },
     update: {},
-    create: { naam: "Snowboard", prefix: "SB", acties: STANDAARD_ACTIES },
+    create: { naam: "Snowboard", prefix: "SB", acties: STANDAARD_ACTIES, departmentId: skiSnowboard.id },
   });
 
   const adminGebruikersnaam = "beheer";

@@ -19,12 +19,19 @@ applicatie met een persistente Postgres-database en accounts per medewerker.
 
 ## Datamodel (kort)
 
-- **Category**: naam, prefix (voor materiaal-ID's, bv. `SKI`), lijst van
-  onderhoudsacties. Nieuwe categorieën (ander materiaal/activiteit) kunnen
-  door een duty manager via **Beheer** worden toegevoegd — geen nieuwe build
-  nodig.
-- **Material**: het materiaal-ID (uniek over alle categorieën, staat op de
-  QR-code), categorie, merk, model, maat, aanschafjaar, status, opmerkingen.
+- **Department (onderdeel)**: een bedrijfsonderdeel/activiteit, bv. "Ski &
+  Snowboard", "Mountainbike", "Boogschieten", "Klimmateriaal",
+  "Kano & Kajak & SUP". Medewerkers kiezen na het inloggen een onderdeel om
+  mee te werken (`/onderdeel`); alles daarna (scannen, materiaal, log,
+  overzicht) is gescoped tot dat onderdeel. Nieuwe onderdelen voegt een duty
+  manager toe via **Beheer** — geen nieuwe build nodig.
+- **Category**: een materiaalsoort binnen een onderdeel (bv. Ski, Snowboard),
+  met naam, prefix (voor materiaal-ID's, bv. `SKI`) en een eigen lijst
+  onderhoudsacties.
+- **Material**: het materiaal-ID (uniek over alle onderdelen/categorieën
+  heen — dit voorkomt scanverwarring en laat een scan altijd naar het juiste
+  onderdeel navigeren, ook als je in een ander onderdeel aan het scannen
+  was), categorie, merk, model, maat, aanschafjaar, status, opmerkingen.
 - **MaintenanceLog**: datum, materiaal, actie, wie (account), opmerkingen,
   eventuele nieuwe status.
 - **User**: naam, gebruikersnaam, wachtwoord (gehasht), rol
@@ -34,7 +41,7 @@ applicatie met een persistente Postgres-database en accounts per medewerker.
 
 Iedereen kan scannen, onderhoud registreren en materiaal toevoegen/bewerken.
 Alleen **duty managers** kunnen: materiaal definitief verwijderen, materiaal
-afkeuren ("Buiten gebruik / afgekeurd"), categorieën/onderhoudsacties
+afkeuren ("Buiten gebruik / afgekeurd"), onderdelen/categorieën/onderhoudsacties
 beheren, en medewerkeraccounts aanmaken/deactiveren.
 
 ## Lokaal draaien

@@ -8,6 +8,7 @@ import { requireDutyManager } from "@/lib/actions/guard";
 export type FormState = { error?: string } | undefined;
 
 const categorySchema = z.object({
+  departmentId: z.string().min(1),
   naam: z.string().trim().min(1).max(60),
   prefix: z
     .string()
@@ -25,6 +26,7 @@ export async function createCategory(
   await requireDutyManager();
 
   const parsed = categorySchema.safeParse({
+    departmentId: formData.get("departmentId"),
     naam: formData.get("naam"),
     prefix: formData.get("prefix"),
   });
@@ -32,18 +34,52 @@ export async function createCategory(
     return { error: parsed.error.issues[0]?.message ?? "Controleer de velden." };
   }
 
-  const bestaat = await prisma.category.findFirst({
-    where: { OR: [{ naam: parsed.data.naam }, { prefix: parsed.data.prefix }] },
-  });
+  const [department, bestaat] = await Promise.all([
+    prisma.department.findUnique({ where: { id: parsed.data.departmentId } }),
+    prisma.category.findFirst({
+      where: { OR: [{ naam: parsed.data.naam }, { prefix: parsed.data.prefix }] },
+    }),
+  ]);
+  if (!department) return { error: "Onderdeel niet gevonden." };
   if (bestaat) {
     return { error: "Er bestaat al een categorie met deze naam of prefix." };
   }
 
   await prisma.category.create({
-    data: { naam: parsed.data.naam, prefix: parsed.data.prefix, acties: [] },
+    data: {
+      naam: parsed.data.naam,
+      prefix: parsed.data.prefix,
+      acties: [],
+      departmentId: parsed.data.departmentId,
+    },
   });
 
   revalidatePath("/beheer");
+  return undefined;
+}
+
+const departmentSchema = z.object({
+  naam: z.string().trim().min(1).max(60),
+});
+
+export async function createDepartment(
+  _prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  await requireDutyManager();
+
+  const parsed = departmentSchema.safeParse({ naam: formData.get("naam") });
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "Vul een naam in." };
+  }
+
+  const bestaat = await prisma.department.findUnique({ where: { naam: parsed.data.naam } });
+  if (bestaat) return { error: "Er bestaat al een onderdeel met deze naam." };
+
+  await prisma.department.create({ data: { naam: parsed.data.naam } });
+
+  revalidatePath("/beheer");
+  revalidatePath("/onderdeel");
   return undefined;
 }
 

@@ -18,11 +18,21 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
+CREATE TABLE "departments" (
+    "id" TEXT NOT NULL,
+    "naam" TEXT NOT NULL,
+    "aangemaakt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "departments_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "categories" (
     "id" TEXT NOT NULL,
     "naam" TEXT NOT NULL,
     "prefix" TEXT NOT NULL,
     "acties" TEXT[],
+    "departmentId" TEXT NOT NULL,
     "aangemaakt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
@@ -60,10 +70,16 @@ CREATE TABLE "maintenance_logs" (
 CREATE UNIQUE INDEX "users_gebruikersnaam_key" ON "users"("gebruikersnaam");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "departments_naam_key" ON "departments"("naam");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "categories_naam_key" ON "categories"("naam");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "categories_prefix_key" ON "categories"("prefix");
+
+-- CreateIndex
+CREATE INDEX "categories_departmentId_idx" ON "categories"("departmentId");
 
 -- CreateIndex
 CREATE INDEX "materials_categoryId_idx" ON "materials"("categoryId");
@@ -73,6 +89,9 @@ CREATE INDEX "maintenance_logs_materialId_idx" ON "maintenance_logs"("materialId
 
 -- CreateIndex
 CREATE INDEX "maintenance_logs_datum_idx" ON "maintenance_logs"("datum");
+
+-- AddForeignKey
+ALTER TABLE "categories" ADD CONSTRAINT "categories_departmentId_fkey" FOREIGN KEY ("departmentId") REFERENCES "departments"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "materials" ADD CONSTRAINT "materials_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

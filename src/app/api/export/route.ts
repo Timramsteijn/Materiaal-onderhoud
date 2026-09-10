@@ -10,12 +10,17 @@ export async function GET() {
 
   const [materialen, logs] = await Promise.all([
     prisma.material.findMany({
-      include: { category: true },
+      include: { category: { include: { department: true } } },
       orderBy: { id: "asc" },
     }),
     prisma.maintenanceLog.findMany({
       include: {
-        material: { select: { id: true, category: { select: { naam: true } } } },
+        material: {
+          select: {
+            id: true,
+            category: { select: { naam: true, department: { select: { naam: true } } } },
+          },
+        },
         uitgevoerdDoor: { select: { naam: true } },
       },
     }),

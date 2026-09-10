@@ -39,17 +39,27 @@ export async function voorstelMateriaalId(categoryId: string): Promise<string> {
 
 /**
  * Bepaalt waar een gescande QR-code (bevat alleen het Materiaal-ID) naartoe moet
- * leiden: naar het bestaande materiaalkaartje, of naar "nieuw materiaal" met het
- * gescande ID alvast ingevuld als het nog niet bestaat.
+ * leiden: naar het bestaande materiaalkaartje (in het onderdeel waar dat
+ * materiaal daadwerkelijk bij hoort — ook als je in een ander onderdeel aan
+ * het scannen was), of naar "nieuw materiaal" in het huidige onderdeel met
+ * het gescande ID alvast ingevuld als het nog niet bestaat.
  */
-export async function resolveScannedId(rawId: string): Promise<string> {
+export async function resolveScannedId(
+  huidigeDepartmentId: string,
+  rawId: string
+): Promise<string> {
   await requireUser();
   const id = rawId.trim().toUpperCase();
-  if (!id) return "/scan";
+  if (!id) return `/onderdeel/${huidigeDepartmentId}/scan`;
 
-  const bestaat = await prisma.material.findUnique({ where: { id }, select: { id: true } });
-  if (bestaat) return `/materiaal/${encodeURIComponent(id)}`;
-  return `/materiaal/nieuw?id=${encodeURIComponent(id)}`;
+  const bestaat = await prisma.material.findUnique({
+    where: { id },
+    select: { category: { select: { departmentId: true } } },
+  });
+  if (bestaat) {
+    return `/onderdeel/${bestaat.category.departmentId}/materiaal/${encodeURIComponent(id)}`;
+  }
+  return `/onderdeel/${huidigeDepartmentId}/materiaal/nieuw?id=${encodeURIComponent(id)}`;
 }
 
 const materiaalSchema = z.object({
@@ -63,6 +73,7 @@ const materiaalSchema = z.object({
 });
 
 export async function createMaterial(
+  departmentId: string,
   _prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -82,11 +93,15 @@ export async function createMaterial(
     return { error: "Controleer de ingevulde velden." };
   }
 
-  const bestaat = await prisma.material.findUnique({
-    where: { id: parsed.data.id },
-  });
+  const [bestaat, category] = await Promise.all([
+    prisma.material.findUnique({ where: { id: parsed.data.id } }),
+    prisma.category.findUnique({ where: { id: parsed.data.categoryId } }),
+  ]);
   if (bestaat) {
     return { error: `Materiaal-ID "${parsed.data.id}" bestaat al.` };
+  }
+  if (!category || category.departmentId !== departmentId) {
+    return { error: "Onbekende categorie voor dit onderdeel." };
   }
 
   await prisma.material.create({
@@ -101,8 +116,8 @@ export async function createMaterial(
     },
   });
 
-  revalidatePath("/materiaal");
-  redirect(`/materiaal/${encodeURIComponent(parsed.data.id)}`);
+  revalidatePath(`/onderdeel/${departmentId}/materiaal`);
+  redirect(`/onderdeel/${departmentId}/materiaal/${encodeURIComponent(parsed.data.id)}`);
 }
 
 const bewerkSchema = z.object({
@@ -134,7 +149,10 @@ export async function updateMaterial(
     return { error: "Controleer de ingevulde velden." };
   }
 
-  const huidig = await prisma.material.findUnique({ where: { id: materialId } });
+  const huidig = await prisma.material.findUnique({
+    where: { id: materialId },
+    include: { category: { select: { departmentId: true } } },
+  });
   if (!huidig) return { error: "Materiaal niet gevonden." };
 
   const statusWordtAfgekeurd =
@@ -155,9 +173,10 @@ export async function updateMaterial(
     },
   });
 
-  revalidatePath("/materiaal");
-  revalidatePath(`/materiaal/${encodeURIComponent(materialId)}`);
-  revalidatePath("/overzicht");
+  const departmentId = huidig.category.departmentId;
+  revalidatePath(`/onderdeel/${departmentId}/materiaal`);
+  revalidatePath(`/onderdeel/${departmentId}/materiaal/${encodeURIComponent(materialId)}`);
+  revalidatePath(`/onderdeel/${departmentId}/overzicht`);
   return undefined;
 }
 
@@ -165,8 +184,15 @@ export async function deleteMaterial(materialId: string): Promise<void> {
   const user = await requireDutyManager();
   if (!canDeleteMaterial(user.role)) throw new ActionError("Geen rechten.");
 
+  const material = await prisma.material.findUnique({
+    where: { id: materialId },
+    select: { category: { select: { departmentId: true } } },
+  });
+  if (!material) return;
+
   await prisma.material.delete({ where: { id: materialId } });
 
-  revalidatePath("/materiaal");
-  redirect("/materiaal");
+  const departmentId = material.category.departmentId;
+  revalidatePath(`/onderdeel/${departmentId}/materiaal`);
+  redirect(`/onderdeel/${departmentId}/materiaal`);
 }

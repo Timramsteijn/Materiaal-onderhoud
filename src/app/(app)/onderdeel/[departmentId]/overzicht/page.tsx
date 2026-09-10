@@ -3,18 +3,35 @@ import { GROTE_BEURT_TREFWOORD, STATUS_LABELS } from "@/lib/domain";
 import { StatusBadge } from "@/components/status-badge";
 import Link from "next/link";
 
-export default async function OverzichtPage() {
+export default async function OverzichtPage({
+  params,
+}: {
+  params: Promise<{ departmentId: string }>;
+}) {
+  const { departmentId } = await params;
+  const base = `/onderdeel/${departmentId}`;
+
   const [categories, perCategorie, perStatus, perActie, materialenMetLaatsteBeurt] =
     await Promise.all([
-      prisma.category.findMany({ orderBy: { naam: "asc" } }),
-      prisma.material.groupBy({ by: ["categoryId"], _count: { _all: true } }),
-      prisma.material.groupBy({ by: ["status"], _count: { _all: true } }),
+      prisma.category.findMany({ where: { departmentId }, orderBy: { naam: "asc" } }),
+      prisma.material.groupBy({
+        by: ["categoryId"],
+        where: { category: { departmentId } },
+        _count: { _all: true },
+      }),
+      prisma.material.groupBy({
+        by: ["status"],
+        where: { category: { departmentId } },
+        _count: { _all: true },
+      }),
       prisma.maintenanceLog.groupBy({
         by: ["actie"],
+        where: { material: { category: { departmentId } } },
         _count: { _all: true },
         orderBy: { _count: { actie: "desc" } },
       }),
       prisma.material.findMany({
+        where: { category: { departmentId } },
         select: {
           id: true,
           merk: true,
@@ -114,7 +131,7 @@ export default async function OverzichtPage() {
           {aandachtNodig.map((m) => (
             <li key={m.id}>
               <Link
-                href={`/materiaal/${encodeURIComponent(m.id)}`}
+                href={`${base}/materiaal/${encodeURIComponent(m.id)}`}
                 prefetch={false}
                 className="flex items-center justify-between rounded-xl bg-panel px-3.5 py-3 shadow-sm"
               >

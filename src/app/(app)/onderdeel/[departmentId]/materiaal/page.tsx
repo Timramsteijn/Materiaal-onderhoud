@@ -3,16 +3,21 @@ import { prisma } from "@/lib/prisma";
 import { StatusBadge } from "@/components/status-badge";
 
 export default async function MateriaalPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ departmentId: string }>;
   searchParams: Promise<{ categorie?: string; q?: string }>;
 }) {
+  const { departmentId } = await params;
   const { categorie, q } = await searchParams;
+  const base = `/onderdeel/${departmentId}`;
 
   const [categories, materialen] = await Promise.all([
-    prisma.category.findMany({ orderBy: { naam: "asc" } }),
+    prisma.category.findMany({ where: { departmentId }, orderBy: { naam: "asc" } }),
     prisma.material.findMany({
       where: {
+        category: { departmentId },
         categoryId: categorie || undefined,
         ...(q
           ? {
@@ -34,14 +39,14 @@ export default async function MateriaalPage({
       <div className="mb-3 flex items-center justify-between">
         <h1 className="text-xl text-ink">Materiaal</h1>
         <Link
-          href="/materiaal/nieuw"
+          href={`${base}/materiaal/nieuw`}
           className="rounded-full bg-amber px-3.5 py-1.5 text-[13px] font-semibold text-graphite"
         >
           + Nieuw
         </Link>
       </div>
 
-      <form className="mb-3 flex gap-2" action="/materiaal">
+      <form className="mb-3 flex gap-2" action={`${base}/materiaal`}>
         <input
           type="search"
           name="q"
@@ -52,21 +57,23 @@ export default async function MateriaalPage({
         {categorie && <input type="hidden" name="categorie" value={categorie} />}
       </form>
 
-      <div className="no-scrollbar mb-3 flex items-center gap-2 overflow-x-auto">
-        <FilterPill href="/materiaal" active={!categorie} label="Alles" />
-        {categories.map((c) => (
-          <FilterPill
-            key={c.id}
-            href={`/materiaal?categorie=${c.id}`}
-            active={categorie === c.id}
-            label={c.naam}
-          />
-        ))}
-      </div>
+      {categories.length > 1 && (
+        <div className="no-scrollbar mb-3 flex items-center gap-2 overflow-x-auto">
+          <FilterPill href={`${base}/materiaal`} active={!categorie} label="Alles" />
+          {categories.map((c) => (
+            <FilterPill
+              key={c.id}
+              href={`${base}/materiaal?categorie=${c.id}`}
+              active={categorie === c.id}
+              label={c.naam}
+            />
+          ))}
+        </div>
+      )}
 
       {materialen.length > 0 && (
         <Link
-          href={`/materiaal/print${categorie ? `?categorie=${categorie}` : ""}`}
+          href={`${base}/materiaal/print${categorie ? `?categorie=${categorie}` : ""}`}
           className="mb-3 inline-block text-[12.5px] font-semibold text-ice-dark"
         >
           🖨️ Printvel voor {categorie ? "deze selectie" : "alle materiaal"} ({materialen.length})
@@ -82,7 +89,7 @@ export default async function MateriaalPage({
           {materialen.map((m) => (
             <li key={m.id}>
               <Link
-                href={`/materiaal/${encodeURIComponent(m.id)}`}
+                href={`${base}/materiaal/${encodeURIComponent(m.id)}`}
                 prefetch={false}
                 className="flex items-center justify-between rounded-xl bg-panel px-3.5 py-3 shadow-sm"
               >

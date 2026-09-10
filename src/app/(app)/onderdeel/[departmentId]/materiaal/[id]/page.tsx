@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { canDeleteMaterial, canSetOutOfService } from "@/lib/permissions";
@@ -13,10 +13,11 @@ import { DeleteMaterialButton } from "./delete-button";
 export default async function MateriaalDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ departmentId: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { departmentId, id } = await params;
   const materialId = decodeURIComponent(id);
+  const base = `/onderdeel/${departmentId}`;
 
   const [session, material] = await Promise.all([
     auth(),
@@ -34,12 +35,15 @@ export default async function MateriaalDetailPage({
   ]);
 
   if (!material) notFound();
+  if (material.category.departmentId !== departmentId) {
+    redirect(`/onderdeel/${material.category.departmentId}/materiaal/${encodeURIComponent(materialId)}`);
+  }
   const role = session!.user.role;
   const qrDataUrl = await generateQrDataUrl(material.id);
 
   return (
     <div className="px-4 pt-4 pb-4">
-      <Link href="/materiaal" className="text-[13px] text-ink-soft">
+      <Link href={`${base}/materiaal`} className="text-[13px] text-ink-soft">
         ← Terug naar materiaal
       </Link>
 
@@ -69,7 +73,7 @@ export default async function MateriaalDetailPage({
         <div className="flex-1">
           <p className="text-[13px] text-ink-soft">QR-code voor dit materiaal</p>
           <Link
-            href={`/materiaal/${encodeURIComponent(material.id)}/print`}
+            href={`${base}/materiaal/${encodeURIComponent(material.id)}/print`}
             className="mt-1 inline-block text-[13px] font-semibold text-ice-dark"
           >
             Printen →

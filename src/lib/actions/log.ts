@@ -70,9 +70,10 @@ export async function createLogEntry(
       : []),
   ]);
 
-  revalidatePath("/log");
-  revalidatePath("/overzicht");
-  revalidatePath("/materiaal");
-  revalidatePath(`/materiaal/${encodeURIComponent(material.id)}`);
+  const base = `/onderdeel/${material.category.departmentId}`;
+  revalidatePath(`${base}/log`);
+  revalidatePath(`${base}/overzicht`);
+  revalidatePath(`${base}/materiaal`);
+  revalidatePath(`${base}/materiaal/${encodeURIComponent(material.id)}`);
   return { success: true };
 }

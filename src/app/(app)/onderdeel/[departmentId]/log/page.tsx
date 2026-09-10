@@ -2,19 +2,26 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export default async function LogPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ departmentId: string }>;
   searchParams: Promise<{ categorie?: string; actie?: string }>;
 }) {
+  const { departmentId } = await params;
   const { categorie, actie } = await searchParams;
+  const base = `/onderdeel/${departmentId}`;
 
-  const categories = await prisma.category.findMany({ orderBy: { naam: "asc" } });
+  const categories = await prisma.category.findMany({
+    where: { departmentId },
+    orderBy: { naam: "asc" },
+  });
   const alleActies = Array.from(new Set(categories.flatMap((c) => c.acties))).sort();
 
   const logs = await prisma.maintenanceLog.findMany({
     where: {
       actie: actie || undefined,
-      material: categorie ? { categoryId: categorie } : undefined,
+      material: { category: { departmentId, ...(categorie ? { id: categorie } : {}) } },
     },
     orderBy: { datum: "desc" },
     take: 50,
@@ -28,19 +35,21 @@ export default async function LogPage({
     <div className="px-4 pt-4">
       <h1 className="mb-3 text-xl text-ink">Onderhoudslog</h1>
 
-      <form className="mb-3 flex gap-2" action="/log">
-        <select
-          name="categorie"
-          defaultValue={categorie ?? ""}
-          className="flex-1 rounded-lg border border-border bg-white px-3 py-2 text-[13px] text-ink"
-        >
-          <option value="">Alle categorieen</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.naam}
-            </option>
-          ))}
-        </select>
+      <form className="mb-3 flex gap-2" action={`${base}/log`}>
+        {categories.length > 1 && (
+          <select
+            name="categorie"
+            defaultValue={categorie ?? ""}
+            className="flex-1 rounded-lg border border-border bg-white px-3 py-2 text-[13px] text-ink"
+          >
+            <option value="">Alle categorieen</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.naam}
+              </option>
+            ))}
+          </select>
+        )}
         <select
           name="actie"
           defaultValue={actie ?? ""}
@@ -71,7 +80,7 @@ export default async function LogPage({
             <li key={log.id} className="rounded-xl bg-panel p-3 shadow-sm">
               <div className="flex items-center justify-between">
                 <Link
-                  href={`/materiaal/${encodeURIComponent(log.material.id)}`}
+                  href={`${base}/materiaal/${encodeURIComponent(log.material.id)}`}
                   prefetch={false}
                   className="label-font text-[13.5px] text-ink"
                 >

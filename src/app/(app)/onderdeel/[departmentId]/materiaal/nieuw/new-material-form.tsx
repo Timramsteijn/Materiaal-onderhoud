@@ -9,16 +9,19 @@ const inputClass =
 const labelClass = "mb-1.5 mt-3 block text-[12.5px] font-semibold text-ink-soft first:mt-0";
 
 export function NewMaterialForm({
+  departmentId,
   categories,
   initialCategoryId,
   initialId,
 }: {
+  departmentId: string;
   categories: Category[];
   initialCategoryId?: string;
   initialId?: string;
 }) {
+  const createMaterialInDepartment = createMaterial.bind(null, departmentId);
   const [state, action, pending] = useActionState<FormState, FormData>(
-    createMaterial,
+    createMaterialInDepartment,
     undefined
   );
   const [categoryId, setCategoryId] = useState(initialCategoryId || categories[0]?.id || "");

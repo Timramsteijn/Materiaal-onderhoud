@@ -1,40 +1,101 @@
 "use client";
 
 import { useActionState, useTransition } from "react";
-import type { Category } from "@prisma/client";
-import { addActie, createCategory, removeActie, type FormState } from "@/lib/actions/categorieen";
+import type { Category, Department } from "@prisma/client";
+import {
+  addActie,
+  createCategory,
+  createDepartment,
+  removeActie,
+  type FormState,
+} from "@/lib/actions/categorieen";
 
 const inputClass =
   "w-full rounded-lg border border-border bg-white px-3 py-2 text-[14px] text-ink";
 
-export function CategoryManager({ categories }: { categories: Category[] }) {
-  const [state, action, pending] = useActionState<FormState, FormData>(
+type DepartmentMetCategorieen = Department & { categories: Category[] };
+
+export function CategoryManager({
+  departments,
+}: {
+  departments: DepartmentMetCategorieen[];
+}) {
+  const [catState, catAction, catPending] = useActionState<FormState, FormData>(
     createCategory,
+    undefined
+  );
+  const [deptState, deptAction, deptPending] = useActionState<FormState, FormData>(
+    createDepartment,
     undefined
   );
 
   return (
     <div className="space-y-3">
-      {categories.map((c) => (
-        <CategoryCard key={c.id} category={c} />
+      {departments.map((dept) => (
+        <div key={dept.id} className="rounded-2xl bg-panel p-4 shadow-sm">
+          <p className="label-font mb-2 text-[15px] text-ink">{dept.naam}</p>
+          {dept.categories.length === 0 ? (
+            <p className="text-[12.5px] text-ink-soft">Nog geen categorieen in dit onderdeel.</p>
+          ) : (
+            <div className="space-y-3">
+              {dept.categories.map((c) => (
+                <CategoryCard key={c.id} category={c} />
+              ))}
+            </div>
+          )}
+        </div>
       ))}
 
       <details className="rounded-2xl bg-panel p-4 shadow-sm">
         <summary className="label-font cursor-pointer text-[14px] text-ink">
           + Nieuwe categorie
         </summary>
-        <form action={action} className="mt-3 grid grid-cols-[1fr_100px] gap-2">
-          <input name="naam" placeholder="Naam (bv. Klimmateriaal)" required className={inputClass} />
-          <input name="prefix" placeholder="Prefix (bv. KLIM)" required className={inputClass} />
+        <form action={catAction} className="mt-3 space-y-2">
+          <select name="departmentId" required className={inputClass} defaultValue="">
+            <option value="" disabled>
+              Kies een onderdeel
+            </option>
+            {departments.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.naam}
+              </option>
+            ))}
+          </select>
+          <div className="grid grid-cols-[1fr_100px] gap-2">
+            <input name="naam" placeholder="Naam (bv. Klimtouw)" required className={inputClass} />
+            <input name="prefix" placeholder="Prefix (bv. TOUW)" required className={inputClass} />
+          </div>
           <button
             type="submit"
-            disabled={pending}
-            className="col-span-2 mt-1 rounded-lg bg-amber px-4 py-2 text-[13px] font-semibold text-graphite disabled:opacity-60"
+            disabled={catPending}
+            className="w-full rounded-lg bg-amber px-4 py-2 text-[13px] font-semibold text-graphite disabled:opacity-60"
           >
-            {pending ? "Bezig..." : "Categorie toevoegen"}
+            {catPending ? "Bezig..." : "Categorie toevoegen"}
           </button>
         </form>
-        {state?.error && <p className="mt-2 text-[12.5px] text-danger">{state.error}</p>}
+        {catState?.error && <p className="mt-2 text-[12.5px] text-danger">{catState.error}</p>}
+      </details>
+
+      <details className="rounded-2xl bg-panel p-4 shadow-sm">
+        <summary className="label-font cursor-pointer text-[14px] text-ink">
+          + Nieuw onderdeel
+        </summary>
+        <form action={deptAction} className="mt-3 flex gap-2">
+          <input
+            name="naam"
+            placeholder="Naam (bv. Boogschieten)"
+            required
+            className={inputClass}
+          />
+          <button
+            type="submit"
+            disabled={deptPending}
+            className="shrink-0 rounded-lg bg-amber px-4 py-2 text-[13px] font-semibold text-graphite disabled:opacity-60"
+          >
+            {deptPending ? "Bezig..." : "Toevoegen"}
+          </button>
+        </form>
+        {deptState?.error && <p className="mt-2 text-[12.5px] text-danger">{deptState.error}</p>}
       </details>
     </div>
   );
@@ -45,10 +106,10 @@ function CategoryCard({ category }: { category: Category }) {
   const [removing, startRemoving] = useTransition();
 
   return (
-    <div className="rounded-2xl bg-panel p-4 shadow-sm">
+    <div className="rounded-xl bg-bg p-3">
       <div className="flex items-center justify-between">
-        <p className="label-font text-[15px] text-ink">{category.naam}</p>
-        <span className="rounded bg-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft">
+        <p className="label-font text-[14px] text-ink">{category.naam}</p>
+        <span className="rounded bg-panel px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft">
           {category.prefix}
         </span>
       </div>
@@ -57,7 +118,7 @@ function CategoryCard({ category }: { category: Category }) {
         {category.acties.map((actie) => (
           <li
             key={actie}
-            className="flex items-center justify-between rounded-lg bg-bg px-2.5 py-1.5 text-[12.5px] text-ink"
+            className="flex items-center justify-between rounded-lg bg-panel px-2.5 py-1.5 text-[12.5px] text-ink"
           >
             {actie}
             <button

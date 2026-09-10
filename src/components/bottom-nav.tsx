@@ -3,18 +3,27 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const TABS = [
-  { href: "/scan", label: "Scannen", icon: "📷" },
-  { href: "/materiaal", label: "Materiaal", icon: "🎿" },
-  { href: "/log", label: "Log", icon: "📋" },
-  { href: "/overzicht", label: "Overzicht", icon: "📊" },
-] as const;
-
-export function BottomNav({ isDutyManager }: { isDutyManager: boolean }) {
+export function BottomNav({
+  isDutyManager,
+  departmentId,
+}: {
+  isDutyManager: boolean;
+  departmentId?: string;
+}) {
   const pathname = usePathname();
-  const tabs = isDutyManager
-    ? [...TABS, { href: "/beheer", label: "Beheer", icon: "⚙️" } as const]
-    : TABS;
+
+  const tabs = departmentId
+    ? ([
+        { href: `/onderdeel/${departmentId}/scan`, label: "Scannen", icon: "📷" },
+        { href: `/onderdeel/${departmentId}/materiaal`, label: "Materiaal", icon: "🎿" },
+        { href: `/onderdeel/${departmentId}/log`, label: "Log", icon: "📋" },
+        { href: `/onderdeel/${departmentId}/overzicht`, label: "Overzicht", icon: "📊" },
+        ...(isDutyManager ? [{ href: "/beheer", label: "Beheer", icon: "⚙️" }] : []),
+      ] as const)
+    : ([
+        { href: "/onderdeel", label: "Onderdelen", icon: "🧭" },
+        ...(isDutyManager ? [{ href: "/beheer", label: "Beheer", icon: "⚙️" }] : []),
+      ] as const);
 
   return (
     <nav className="no-print fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[560px] border-t border-border bg-panel">

@@ -3,15 +3,19 @@ import { generateQrDataUrl } from "@/lib/qr";
 import { PrintButton } from "@/components/print-button";
 
 export default async function PrintSheetPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ departmentId: string }>;
   searchParams: Promise<{ categorie?: string; ids?: string }>;
 }) {
+  const { departmentId } = await params;
   const { categorie, ids } = await searchParams;
   const idList = ids ? ids.split(",").map((v) => v.trim()).filter(Boolean) : undefined;
 
   const materialen = await prisma.material.findMany({
     where: {
+      category: { departmentId },
       categoryId: categorie || undefined,
       id: idList ? { in: idList } : undefined,
     },

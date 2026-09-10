@@ -6,7 +6,7 @@ import { resolveScannedId } from "@/lib/actions/materialen";
 
 const SCANNER_ELEMENT_ID = "qr-scan-region";
 
-export function ScanView() {
+export function ScanView({ departmentId }: { departmentId: string }) {
   const router = useRouter();
   const [manualId, setManualId] = useState("");
   const [busy, setBusy] = useState(false);
@@ -24,7 +24,7 @@ export function ScanView() {
         } catch {
           // Kan mislukken als de scanner net niet actief is — geen probleem.
         }
-        const target = await resolveScannedId(rawId);
+        const target = await resolveScannedId(departmentId, rawId);
         router.push(target);
       } catch {
         setError("Kon dit materiaal niet opzoeken. Probeer opnieuw.");
@@ -33,7 +33,7 @@ export function ScanView() {
         scannerRef.current?.resume();
       }
     },
-    [router]
+    [router, departmentId]
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export function ScanView() {
     setBusy(true);
     setError(null);
     try {
-      const target = await resolveScannedId(manualId);
+      const target = await resolveScannedId(departmentId, manualId);
       router.push(target);
     } catch {
       setError("Kon dit materiaal niet opzoeken. Probeer opnieuw.");

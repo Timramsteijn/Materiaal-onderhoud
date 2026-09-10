@@ -16,7 +16,7 @@ export async function loginAction(
     await signIn("credentials", {
       gebruikersnaam,
       wachtwoord,
-      redirectTo: "/scan",
+      redirectTo: "/onderdeel",
     });
   } catch (err) {
     if (err instanceof AuthError) {
