@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #eef1f3;
+  --panel: #ffffff;
+  --ink: #1b232c;
+  --ink-soft: #5c6670;
+  --graphite: #12181f;
+  --graphite-2: #1d2732;
+  --amber: #f2a93b;
+  --amber-dark: #ce8a1d;
+  --ice: #2e8fc0;
+  --ice-dark: #236e97;
+  --good: #3c9a5f;
+  --good-bg: #e7f4ec;
+  --danger: #d64550;
+  --danger-bg: #fbeaec;
+  --border: #dce2e7;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-graphite: var(--graphite);
+  --color-graphite-2: var(--graphite-2);
+  --color-amber: var(--amber);
+  --color-amber-dark: var(--amber-dark);
+  --color-ice: var(--ice);
+  --color-ice-dark: var(--ice-dark);
+  --color-good: var(--good);
+  --color-good-bg: var(--good-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-border: var(--border);
+  --font-display: var(--font-oswald);
+  --font-body: var(--font-plex);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1,
+h2,
+h3,
+.label-font {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

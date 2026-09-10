@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  INSTRUCTEUR
+  DUTY_MANAGER
+}
+
+enum MaterialStatus {
+  IN_GEBRUIK
+  IN_REPARATIE
+  BUITEN_GEBRUIK
+}
+
+model User {
+  id             String           @id @default(cuid())
+  naam           String
+  gebruikersnaam String           @unique
+  wachtwoordHash String
+  role           Role             @default(INSTRUCTEUR)
+  actief         Boolean          @default(true)
+  aangemaakt     DateTime         @default(now())
+  logs           MaintenanceLog[]
+
+  @@map("users")
+}
+
+/// Een materiaalcategorie (bv. Ski, Snowboard, of een toekomstige activiteit).
+/// Nieuwe categorieen kunnen door een duty manager via de UI worden toegevoegd
+/// zonder dat de applicatie herbouwd hoeft te worden.
+model Category {
+  id         String     @id @default(cuid())
+  naam       String     @unique
+  /// Korte prefix voor automatische materiaal-ID's, bv. "SKI", "SB"
+  prefix     String     @unique
+  /// Onderhoudsacties die voor deze categorie gelden, in weergavevolgorde
+  acties     String[]
+  aangemaakt DateTime   @default(now())
+  materialen Material[]
+
+  @@map("categories")
+}
+
+model Material {
+  /// Materiaal-ID zoals op de QR-code, uniek over alle categorieen heen
+  id           String           @id
+  categoryId   String
+  category     Category         @relation(fields: [categoryId], references: [id])
+  merk         String
+  model        String
+  maat         String?
+  aanschafjaar Int?
+  status       MaterialStatus   @default(IN_GEBRUIK)
+  opmerkingen  String?
+  aangemaakt   DateTime         @default(now())
+  logs         MaintenanceLog[]
+
+  @@index([categoryId])
+  @@map("materials")
+}
+
+model MaintenanceLog {
+  id               String          @id @default(cuid())
+  datum            DateTime        @default(now())
+  materialId       String
+  material         Material        @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  actie            String
+  uitgevoerdDoorId String
+  uitgevoerdDoor   User            @relation(fields: [uitgevoerdDoorId], references: [id])
+  opmerkingen      String?
+  nieuweStatus     MaterialStatus?
+
+  @@index([materialId])
+  @@index([datum])
+  @@map("maintenance_logs")
+}
