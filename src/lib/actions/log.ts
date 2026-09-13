@@ -7,7 +7,7 @@ import { requireUser } from "@/lib/actions/guard";
 import { canSetOutOfService } from "@/lib/permissions";
 import type { MaterialStatus } from "@prisma/client";
 
-export type FormState = { error?: string; success?: boolean } | undefined;
+export type FormState = { error?: string; success?: boolean; loggedAtIso?: string } | undefined;
 
 const logSchema = z.object({
   materialId: z.string().min(1),
@@ -74,6 +74,5 @@ export async function createLogEntry(
   revalidatePath(`${base}/log`);
   revalidatePath(`${base}/overzicht`);
   revalidatePath(`${base}/materiaal`);
-  revalidatePath(`${base}/materiaal/${encodeURIComponent(material.id)}`);
-  return { success: true };
+  return { success: true, loggedAtIso: new Date().toISOString() };
 }

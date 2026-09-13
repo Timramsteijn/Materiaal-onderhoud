@@ -21,10 +21,10 @@ export default async function PrintMaterialLabelPage({
       <div className="no-print mb-4">
         <PrintButton />
       </div>
-      <div className="mx-auto flex w-[200px] flex-col items-center rounded-lg border border-dashed border-border p-4 text-center">
+      <div className="mx-auto flex w-[200px] flex-col items-center rounded-lg border border-dashed border-card-border p-4 text-center">
         <Image src={qrDataUrl} alt={material.id} width={160} height={160} unoptimized />
-        <p className="label-font mt-2 text-base font-bold text-ink">{material.id}</p>
-        <p className="text-[11px] text-ink-soft">
+        <p className="font-display mt-2 text-base font-extrabold italic text-ink">{material.id}</p>
+        <p className="text-[11px] text-text-muted">
           {material.merk} {material.model}
         </p>
       </div>

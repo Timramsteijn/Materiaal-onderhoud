@@ -1,12 +1,17 @@
 # Materiaalonderhoud — Outdoor Valley
 
-Mobiel-eerste webapp om onderhoud aan verhuurmateriaal (ski's, snowboards, en
-later mogelijk andere categorieën) te registreren via QR-scan, met een live
-gedeeld logboek voor alle medewerkers.
+Webapp om onderhoud aan verhuurmateriaal (ski's, snowboards, mountainbikes,
+boogschieten, klimmateriaal, kano/kajak/SUP en andere categorieën) te
+registreren via QR-scan, met een live gedeeld logboek voor alle medewerkers.
+Eén responsieve codebase: mobiele vorm (header + tabbalk) onder ~900px,
+desktopvorm (zijnavigatie + topbalk + materiaal-lijst/kaartje naast elkaar)
+daarboven.
 
-Gebaseerd op `Specificatie_materiaalonderhoud_app.md` — dit vervangt het
-eerdere prototype (los HTML-bestand met browser-opslag) door een echte
-applicatie met een persistente Postgres-database en accounts per medewerker.
+Gebaseerd op `Specificatie_materiaalonderhoud_app.md` en later herbouwd naar
+het high-fidelity ontwerp uit `design_handoff_materiaalonderhoud/README.md`
+— dit vervangt het eerdere prototype (los HTML-bestand met browser-opslag)
+door een echte applicatie met een persistente Postgres-database en accounts
+per medewerker.
 
 ## Techstack
 
@@ -15,7 +20,9 @@ applicatie met een persistente Postgres-database en accounts per medewerker.
 - **Auth.js / NextAuth v5** — inloggen met gebruikersnaam + wachtwoord
 - **html5-qrcode** (scannen) / **qrcode** (genereren)
 - **xlsx (SheetJS)** voor Excel-import/export
-- Tailwind CSS v4, condensed/koptypografie via Oswald + IBM Plex Sans
+- Tailwind CSS v4 — Archivo (italic, koppen/labels/cijfers) + Source Sans 3
+  (lopende tekst), donkere inkt-chrome + zandkleurige grond + oranje acties,
+  Lucide-iconen (inline SVG, `src/components/icons.tsx`)
 
 ## Datamodel (kort)
 
@@ -26,12 +33,14 @@ applicatie met een persistente Postgres-database en accounts per medewerker.
   overzicht) is gescoped tot dat onderdeel. Nieuwe onderdelen voegt een duty
   manager toe via **Beheer** — geen nieuwe build nodig.
 - **Category**: een materiaalsoort binnen een onderdeel (bv. Ski, Snowboard),
-  met naam, prefix (voor materiaal-ID's, bv. `SKI`) en een eigen lijst
-  onderhoudsacties.
+  met naam, prefix (voor materiaal-ID's, bv. `SKI`), een eigen lijst
+  onderhoudsacties en een optioneel extra specificatieveld (`extraVeldLabel`,
+  bv. "DIN" bij Ski) voor categorie-specifieke velden.
 - **Material**: het materiaal-ID (uniek over alle onderdelen/categorieën
   heen — dit voorkomt scanverwarring en laat een scan altijd naar het juiste
   onderdeel navigeren, ook als je in een ander onderdeel aan het scannen
-  was), categorie, merk, model, maat, aanschafjaar, status, opmerkingen.
+  was), categorie, merk, model, maat, aanschafjaar, status, opmerkingen,
+  locatie, in-gebruik-sinds en de waarde van het extra specificatieveld.
 - **MaintenanceLog**: datum, materiaal, actie, wie (account), opmerkingen,
   eventuele nieuwe status.
 - **User**: naam, gebruikersnaam, wachtwoord (gehasht), rol
@@ -130,6 +139,6 @@ voor duty managers.
   uploaden — geen publiek input-pad. Overweeg dit te herzien voor
   productie (bv. alsnog installeren vanaf de officiële CDN, of een bestand-
   groottelimiet + sandboxed parsing toevoegen).
-- De "aandacht nodig"-lijst herkent een "algehele onderhoudsbeurt" via een
-  trefwoordmatch op de actienaam. Voor toekomstige categorieën met heel
-  andere onderhoudsacties werkt dit concept dus mogelijk niet zoals bedoeld.
+- De "laatste import"-regel op de Beheer-pagina toont alleen het resultaat
+  van de import in de huidige sessie (via de redirect na upload), niet een
+  permanent opgeslagen importgeschiedenis.

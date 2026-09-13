@@ -10,6 +10,8 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="mx-auto flex min-h-full max-w-[560px] flex-col bg-bg">{children}</div>
+    <div className="mx-auto min-h-full max-w-[560px] bg-bg desktop:mx-0 desktop:max-w-none">
+      {children}
+    </div>
   );
 }

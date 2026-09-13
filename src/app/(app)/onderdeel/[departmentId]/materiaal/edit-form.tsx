@@ -5,15 +5,36 @@ import { updateMaterial, type FormState } from "@/lib/actions/materialen";
 import { STATUS_LABELS, STATUS_ORDER } from "@/lib/domain";
 import type { Material } from "@prisma/client";
 
+type BewerkbaarMateriaal = Pick<
+  Material,
+  | "id"
+  | "merk"
+  | "model"
+  | "maat"
+  | "aanschafjaar"
+  | "locatie"
+  | "inGebruikSinds"
+  | "extraVeldWaarde"
+  | "opmerkingen"
+  | "status"
+>;
+
 const inputClass =
-  "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[15px] text-ink";
-const labelClass = "mb-1.5 mt-3 block text-[12.5px] font-semibold text-ink-soft first:mt-0";
+  "w-full rounded-lg border border-border-light bg-input-fill px-3 py-2.5 text-[14px] text-ink";
+const labelClass =
+  "mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-text-dark-secondary first:mt-0";
+
+function isoDateInput(d: Date | null): string {
+  return d ? d.toISOString().slice(0, 10) : "";
+}
 
 export function EditMaterialForm({
   material,
+  extraVeldLabel,
   magAfkeuren,
 }: {
-  material: Material;
+  material: BewerkbaarMateriaal;
+  extraVeldLabel: string | null;
   magAfkeuren: boolean;
 }) {
   const updateWithId = updateMaterial.bind(null, material.id);
@@ -23,8 +44,8 @@ export function EditMaterialForm({
   );
 
   return (
-    <details className="rounded-2xl bg-panel p-4 shadow-sm">
-      <summary className="label-font cursor-pointer text-[14px] text-ink">
+    <details className="rounded-[10px] bg-card p-4 shadow-[var(--shadow-card)]">
+      <summary className="font-display cursor-pointer text-[13px] font-extrabold uppercase italic tracking-[0.06em] text-ink">
         Materiaalgegevens bewerken
       </summary>
       <form action={action} className="mt-3">
@@ -59,6 +80,43 @@ export function EditMaterialForm({
               className={inputClass}
             />
           </div>
+          <div>
+            <label className={labelClass} htmlFor="locatie">
+              Locatie
+            </label>
+            <input
+              id="locatie"
+              name="locatie"
+              defaultValue={material.locatie ?? ""}
+              placeholder="bv. Werkplaats · werkbank 2"
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label className={labelClass} htmlFor="inGebruikSinds">
+              In gebruik sinds
+            </label>
+            <input
+              id="inGebruikSinds"
+              name="inGebruikSinds"
+              type="date"
+              defaultValue={isoDateInput(material.inGebruikSinds)}
+              className={inputClass}
+            />
+          </div>
+          {extraVeldLabel && (
+            <div>
+              <label className={labelClass} htmlFor="extraVeldWaarde">
+                {extraVeldLabel}
+              </label>
+              <input
+                id="extraVeldWaarde"
+                name="extraVeldWaarde"
+                defaultValue={material.extraVeldWaarde ?? ""}
+                className={inputClass}
+              />
+            </div>
+          )}
         </div>
 
         <label className={labelClass} htmlFor="status">
@@ -85,16 +143,12 @@ export function EditMaterialForm({
           className={inputClass}
         />
 
-        {state?.error && (
-          <p className="mt-3 rounded-lg bg-danger-bg px-3 py-2 text-[13px] text-danger">
-            {state.error}
-          </p>
-        )}
+        {state?.error && <p className="mt-3 text-[12.5px] text-red">{state.error}</p>}
 
         <button
           type="submit"
           disabled={pending}
-          className="mt-4 w-full rounded-lg bg-graphite px-4 py-3 text-[14.5px] font-semibold text-white disabled:opacity-60"
+          className="mt-4 w-full rounded-lg bg-ink px-4 py-3 text-[13.5px] font-semibold text-white transition-colors hover:bg-ink-light disabled:opacity-60"
         >
           {pending ? "Opslaan..." : "Wijzigingen opslaan"}
         </button>

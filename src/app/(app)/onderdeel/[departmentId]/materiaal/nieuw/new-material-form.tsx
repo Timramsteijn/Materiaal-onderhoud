@@ -5,8 +5,9 @@ import type { Category } from "@prisma/client";
 import { createMaterial, voorstelMateriaalId, type FormState } from "@/lib/actions/materialen";
 
 const inputClass =
-  "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[15px] text-ink";
-const labelClass = "mb-1.5 mt-3 block text-[12.5px] font-semibold text-ink-soft first:mt-0";
+  "w-full rounded-lg border border-border-light bg-input-fill px-3 py-2.5 text-[14px] text-ink";
+const labelClass =
+  "mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-text-dark-secondary first:mt-0";
 
 export function NewMaterialForm({
   departmentId,
@@ -47,8 +48,10 @@ export function NewMaterialForm({
     });
   }
 
+  const extraVeldLabel = categories.find((c) => c.id === categoryId)?.extraVeldLabel ?? null;
+
   return (
-    <form action={action} className="rounded-2xl bg-panel p-4 shadow-sm">
+    <form action={action} className="rounded-[10px] bg-card p-4 shadow-[var(--shadow-card)]">
       <label className={labelClass} htmlFor="categoryId">
         Categorie
       </label>
@@ -91,16 +94,13 @@ export function NewMaterialForm({
 
       <div className="mt-3 grid grid-cols-2 gap-3">
         <div>
-          <label className="mb-1.5 block text-[12.5px] font-semibold text-ink-soft" htmlFor="maat">
+          <label className={labelClass} htmlFor="maat">
             Maat
           </label>
           <input id="maat" name="maat" className={inputClass} />
         </div>
         <div>
-          <label
-            className="mb-1.5 block text-[12.5px] font-semibold text-ink-soft"
-            htmlFor="aanschafjaar"
-          >
+          <label className={labelClass} htmlFor="aanschafjaar">
             Aanschafjaar
           </label>
           <input
@@ -111,6 +111,26 @@ export function NewMaterialForm({
             className={inputClass}
           />
         </div>
+        <div>
+          <label className={labelClass} htmlFor="locatie">
+            Locatie
+          </label>
+          <input id="locatie" name="locatie" placeholder="bv. Werkplaats · rek 3" className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="inGebruikSinds">
+            In gebruik sinds
+          </label>
+          <input id="inGebruikSinds" name="inGebruikSinds" type="date" className={inputClass} />
+        </div>
+        {extraVeldLabel && (
+          <div>
+            <label className={labelClass} htmlFor="extraVeldWaarde">
+              {extraVeldLabel}
+            </label>
+            <input id="extraVeldWaarde" name="extraVeldWaarde" className={inputClass} />
+          </div>
+        )}
       </div>
 
       <label className={labelClass} htmlFor="opmerkingen">
@@ -118,16 +138,12 @@ export function NewMaterialForm({
       </label>
       <textarea id="opmerkingen" name="opmerkingen" rows={2} className={inputClass} />
 
-      {state?.error && (
-        <p className="mt-3 rounded-lg bg-danger-bg px-3 py-2 text-[13px] text-danger">
-          {state.error}
-        </p>
-      )}
+      {state?.error && <p className="mt-3 text-[12.5px] text-red">{state.error}</p>}
 
       <button
         type="submit"
         disabled={pending}
-        className="mt-5 w-full rounded-lg bg-amber px-4 py-3 text-[14.5px] font-semibold text-graphite disabled:opacity-60"
+        className="mt-5 w-full rounded-full bg-orange px-4 py-3 text-[14.5px] font-bold uppercase tracking-[0.03em] text-white transition-colors hover:bg-orange-hover disabled:opacity-60"
       >
         {pending ? "Opslaan..." : "Materiaal toevoegen"}
       </button>

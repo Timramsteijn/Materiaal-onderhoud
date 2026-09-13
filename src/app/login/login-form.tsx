@@ -2,13 +2,17 @@
 
 import { useActionState } from "react";
 import { loginAction } from "./actions";
+import { ArrowRight } from "@/components/icons";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(loginAction, undefined);
 
   return (
-    <form action={action} className="rounded-2xl bg-panel p-6 shadow-sm">
-      <label htmlFor="gebruikersnaam" className="mb-1.5 mt-3 block text-[12.5px] font-semibold text-ink-soft first:mt-0">
+    <form action={action}>
+      <label
+        htmlFor="gebruikersnaam"
+        className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.08em] text-text-dark-secondary"
+      >
         Gebruikersnaam
       </label>
       <input
@@ -16,12 +20,16 @@ export function LoginForm() {
         name="gebruikersnaam"
         type="text"
         autoComplete="username"
+        placeholder="t.verhoeven"
         required
         autoFocus
-        className="w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[15px] text-ink"
+        className="h-12 w-full rounded-xl border border-border-dark bg-ink-light px-3.5 text-[15px] text-white placeholder:text-text-dark-secondary/60"
       />
 
-      <label htmlFor="wachtwoord" className="mb-1.5 mt-3 block text-[12.5px] font-semibold text-ink-soft">
+      <label
+        htmlFor="wachtwoord"
+        className="mb-1.5 mt-4 block text-[11px] font-semibold uppercase tracking-[0.08em] text-text-dark-secondary"
+      >
         Wachtwoord
       </label>
       <input
@@ -30,11 +38,11 @@ export function LoginForm() {
         type="password"
         autoComplete="current-password"
         required
-        className="w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[15px] text-ink"
+        className="h-12 w-full rounded-xl border border-border-dark bg-ink-light px-3.5 text-[15px] text-white"
       />
 
       {state?.error && (
-        <p className="mt-3 rounded-lg bg-danger-bg px-3 py-2 text-[13px] text-danger">
+        <p className="mt-3 rounded-lg bg-red-tint px-3 py-2 text-[13px] text-red">
           {state.error}
         </p>
       )}
@@ -42,10 +50,15 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-5 w-full rounded-lg bg-amber px-4 py-3 text-[14.5px] font-semibold text-graphite disabled:opacity-60"
+        className="mt-6 flex h-[52px] w-full items-center justify-between rounded-full bg-orange px-5 text-[14.5px] font-bold uppercase tracking-[0.04em] text-white transition-colors hover:bg-orange-hover disabled:opacity-60"
       >
         {pending ? "Bezig met inloggen..." : "Inloggen"}
+        <ArrowRight size={18} strokeWidth={2} />
       </button>
+
+      <p className="mt-5 text-center text-[13px] text-text-dark-secondary">
+        Wachtwoord vergeten? Vraag je locatiebeheerder.
+      </p>
     </form>
   );
 }

@@ -6,10 +6,10 @@ export default async function LogPage({
   searchParams,
 }: {
   params: Promise<{ departmentId: string }>;
-  searchParams: Promise<{ categorie?: string; actie?: string }>;
+  searchParams: Promise<{ categorie?: string; actie?: string; materiaal?: string }>;
 }) {
   const { departmentId } = await params;
-  const { categorie, actie } = await searchParams;
+  const { categorie, actie, materiaal } = await searchParams;
   const base = `/onderdeel/${departmentId}`;
 
   const categories = await prisma.category.findMany({
@@ -21,6 +21,7 @@ export default async function LogPage({
   const logs = await prisma.maintenanceLog.findMany({
     where: {
       actie: actie || undefined,
+      materialId: materiaal || undefined,
       material: { category: { departmentId, ...(categorie ? { id: categorie } : {}) } },
     },
     orderBy: { datum: "desc" },
@@ -32,15 +33,24 @@ export default async function LogPage({
   });
 
   return (
-    <div className="px-4 pt-4">
-      <h1 className="mb-3 text-xl text-ink">Onderhoudslog</h1>
+    <div className="px-[18px] pb-8 pt-4 desktop:px-6 desktop:pt-6">
+      <h1 className="text-[22px] text-ink">Onderhoudslog</h1>
 
-      <form className="mb-3 flex gap-2" action={`${base}/log`}>
+      {materiaal && (
+        <p className="mt-1 text-[12.5px] text-text-muted">
+          Gefilterd op materiaal {materiaal} ·{" "}
+          <Link href={`${base}/log`} className="text-steel-dark">
+            wis filter
+          </Link>
+        </p>
+      )}
+
+      <form className="mb-4 mt-3 flex gap-2" action={`${base}/log`}>
         {categories.length > 1 && (
           <select
             name="categorie"
             defaultValue={categorie ?? ""}
-            className="flex-1 rounded-lg border border-border bg-white px-3 py-2 text-[13px] text-ink"
+            className="flex-1 rounded-lg border border-border-light bg-card px-3 py-2 text-[13px] text-ink"
           >
             <option value="">Alle categorieen</option>
             {categories.map((c) => (
@@ -53,7 +63,7 @@ export default async function LogPage({
         <select
           name="actie"
           defaultValue={actie ?? ""}
-          className="flex-1 rounded-lg border border-border bg-white px-3 py-2 text-[13px] text-ink"
+          className="flex-1 rounded-lg border border-border-light bg-card px-3 py-2 text-[13px] text-ink"
         >
           <option value="">Alle acties</option>
           {alleActies.map((a) => (
@@ -64,32 +74,32 @@ export default async function LogPage({
         </select>
         <button
           type="submit"
-          className="rounded-lg bg-graphite px-3.5 py-2 text-[13px] font-semibold text-white"
+          className="rounded-lg bg-ink px-3.5 py-2 text-[13px] font-semibold text-white"
         >
           Filter
         </button>
       </form>
 
       {logs.length === 0 ? (
-        <div className="rounded-xl bg-panel py-10 text-center text-ink-soft">
+        <div className="rounded-[10px] bg-card py-10 text-center text-[13px] text-text-muted shadow-[var(--shadow-card-light)]">
           Geen logboekregels gevonden.
         </div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-2.5 desktop:grid desktop:grid-cols-2 desktop:gap-2.5 desktop:space-y-0">
           {logs.map((log) => (
-            <li key={log.id} className="rounded-xl bg-panel p-3 shadow-sm">
+            <li key={log.id} className="rounded-[10px] bg-card p-3.5 shadow-[var(--shadow-card-light)]">
               <div className="flex items-center justify-between">
                 <Link
-                  href={`${base}/materiaal/${encodeURIComponent(log.material.id)}`}
+                  href={`${base}/materiaal?id=${encodeURIComponent(log.material.id)}`}
                   prefetch={false}
-                  className="label-font text-[13.5px] text-ink"
+                  className="font-display text-[13.5px] font-extrabold italic text-ink"
                 >
                   {log.material.id}{" "}
-                  <span className="ml-1 rounded bg-bg px-1.5 py-0.5 text-[10px] font-semibold text-ink-soft">
+                  <span className="ml-1 rounded bg-steel-tint px-1.5 py-0.5 text-[10px] font-semibold not-italic text-steel-dark">
                     {log.material.category.naam}
                   </span>
                 </Link>
-                <span className="text-[11.5px] text-ink-soft">
+                <span className="text-[11.5px] text-text-dark-secondary">
                   {log.datum.toLocaleDateString("nl-NL", {
                     day: "2-digit",
                     month: "2-digit",
@@ -98,11 +108,11 @@ export default async function LogPage({
                 </span>
               </div>
               <p className="mt-1 text-[13px] text-ink">{log.actie}</p>
-              <p className="text-[12px] text-ink-soft">
+              <p className="text-[12px] text-text-muted">
                 {log.material.merk} {log.material.model} · door {log.uitgevoerdDoor.naam}
               </p>
               {log.opmerkingen && (
-                <p className="mt-1 text-[12.5px] italic text-ink-soft">{log.opmerkingen}</p>
+                <p className="mt-1 text-[12.5px] italic text-text-medium">{log.opmerkingen}</p>
               )}
             </li>
           ))}

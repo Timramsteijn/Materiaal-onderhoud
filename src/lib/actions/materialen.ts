@@ -44,22 +44,27 @@ export async function voorstelMateriaalId(categoryId: string): Promise<string> {
  * het scannen was), of naar "nieuw materiaal" in het huidige onderdeel met
  * het gescande ID alvast ingevuld als het nog niet bestaat.
  */
+/**
+ * Zoekt een gescand of handmatig ingevoerd Materiaal-ID op. Navigeert altijd
+ * naar het ECHTE onderdeel van het materiaal (ook als er in een ander
+ * onderdeel werd gescand). Een onbekend ID levert geen "nieuw materiaal
+ * aanmaken"-kortweg meer op (zoals voorheen) — de scanpagina toont in dat
+ * geval een foutmelding; materiaal toevoegen gaat via de materiaallijst.
+ */
 export async function resolveScannedId(
-  huidigeDepartmentId: string,
+  _huidigeDepartmentId: string,
   rawId: string
-): Promise<string> {
+): Promise<string | null> {
   await requireUser();
   const id = rawId.trim().toUpperCase();
-  if (!id) return `/onderdeel/${huidigeDepartmentId}/scan`;
+  if (!id) return null;
 
   const bestaat = await prisma.material.findUnique({
     where: { id },
     select: { category: { select: { departmentId: true } } },
   });
-  if (bestaat) {
-    return `/onderdeel/${bestaat.category.departmentId}/materiaal/${encodeURIComponent(id)}`;
-  }
-  return `/onderdeel/${huidigeDepartmentId}/materiaal/nieuw?id=${encodeURIComponent(id)}`;
+  if (!bestaat) return null;
+  return `/onderdeel/${bestaat.category.departmentId}/materiaal?id=${encodeURIComponent(id)}`;
 }
 
 const materiaalSchema = z.object({
@@ -70,6 +75,9 @@ const materiaalSchema = z.object({
   maat: z.string().trim().max(30).optional(),
   aanschafjaar: z.coerce.number().int().min(1990).max(2100).optional(),
   opmerkingen: z.string().trim().max(1000).optional(),
+  locatie: z.string().trim().max(100).optional(),
+  inGebruikSinds: z.coerce.date().optional(),
+  extraVeldWaarde: z.string().trim().max(50).optional(),
 });
 
 export async function createMaterial(
@@ -87,6 +95,9 @@ export async function createMaterial(
     maat: formData.get("maat") || undefined,
     aanschafjaar: formData.get("aanschafjaar") || undefined,
     opmerkingen: formData.get("opmerkingen") || undefined,
+    locatie: formData.get("locatie") || undefined,
+    inGebruikSinds: formData.get("inGebruikSinds") || undefined,
+    extraVeldWaarde: formData.get("extraVeldWaarde") || undefined,
   });
 
   if (!parsed.success) {
@@ -113,11 +124,14 @@ export async function createMaterial(
       maat: parsed.data.maat || null,
       aanschafjaar: parsed.data.aanschafjaar ?? null,
       opmerkingen: parsed.data.opmerkingen || null,
+      locatie: parsed.data.locatie || null,
+      inGebruikSinds: parsed.data.inGebruikSinds ?? null,
+      extraVeldWaarde: parsed.data.extraVeldWaarde || null,
     },
   });
 
   revalidatePath(`/onderdeel/${departmentId}/materiaal`);
-  redirect(`/onderdeel/${departmentId}/materiaal/${encodeURIComponent(parsed.data.id)}`);
+  redirect(`/onderdeel/${departmentId}/materiaal?id=${encodeURIComponent(parsed.data.id)}`);
 }
 
 const bewerkSchema = z.object({
@@ -126,6 +140,9 @@ const bewerkSchema = z.object({
   maat: z.string().trim().max(30).optional(),
   aanschafjaar: z.coerce.number().int().min(1990).max(2100).optional(),
   opmerkingen: z.string().trim().max(1000).optional(),
+  locatie: z.string().trim().max(100).optional(),
+  inGebruikSinds: z.coerce.date().optional(),
+  extraVeldWaarde: z.string().trim().max(50).optional(),
   status: z.enum(["IN_GEBRUIK", "IN_REPARATIE", "BUITEN_GEBRUIK"]),
 });
 
@@ -142,6 +159,9 @@ export async function updateMaterial(
     maat: formData.get("maat") || undefined,
     aanschafjaar: formData.get("aanschafjaar") || undefined,
     opmerkingen: formData.get("opmerkingen") || undefined,
+    locatie: formData.get("locatie") || undefined,
+    inGebruikSinds: formData.get("inGebruikSinds") || undefined,
+    extraVeldWaarde: formData.get("extraVeldWaarde") || undefined,
     status: formData.get("status"),
   });
 
@@ -169,13 +189,15 @@ export async function updateMaterial(
       maat: parsed.data.maat || null,
       aanschafjaar: parsed.data.aanschafjaar ?? null,
       opmerkingen: parsed.data.opmerkingen || null,
+      locatie: parsed.data.locatie || null,
+      inGebruikSinds: parsed.data.inGebruikSinds ?? null,
+      extraVeldWaarde: parsed.data.extraVeldWaarde || null,
       status: parsed.data.status as MaterialStatus,
     },
   });
 
   const departmentId = huidig.category.departmentId;
   revalidatePath(`/onderdeel/${departmentId}/materiaal`);
-  revalidatePath(`/onderdeel/${departmentId}/materiaal/${encodeURIComponent(materialId)}`);
   revalidatePath(`/onderdeel/${departmentId}/overzicht`);
   return undefined;
 }

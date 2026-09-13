@@ -15,7 +15,7 @@ export function DeleteMaterialButton({ materialId }: { materialId: string }) {
           startTransition(() => deleteMaterial(materialId));
         }
       }}
-      className="mt-3 w-full rounded-lg border border-danger px-4 py-2.5 text-[13.5px] font-semibold text-danger disabled:opacity-60"
+      className="w-full rounded-lg border border-red px-4 py-2.5 text-[13.5px] font-semibold text-red transition-colors hover:bg-red-tint disabled:opacity-60"
     >
       {pending ? "Bezig..." : "Materiaal verwijderen"}
     </button>

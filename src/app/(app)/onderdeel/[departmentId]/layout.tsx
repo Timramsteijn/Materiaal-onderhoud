@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { AppHeader } from "@/components/app-header";
-import { BottomNav } from "@/components/bottom-nav";
+import { AppShell } from "@/components/app-shell";
 
 export default async function DepartmentLayout({
   children,
@@ -21,10 +20,8 @@ export default async function DepartmentLayout({
   const isDutyManager = session!.user.role === "DUTY_MANAGER";
 
   return (
-    <>
-      <AppHeader department={department} />
-      <main className="flex-1 pb-24">{children}</main>
-      <BottomNav isDutyManager={isDutyManager} departmentId={department.id} />
-    </>
+    <AppShell department={department} isDutyManager={isDutyManager}>
+      {children}
+    </AppShell>
   );
 }

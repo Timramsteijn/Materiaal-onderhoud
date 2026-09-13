@@ -16,10 +16,10 @@ export default async function NieuwMateriaalPage({
   });
 
   return (
-    <div className="px-4 pt-4">
-      <h1 className="mb-4 text-xl text-ink">Nieuw materiaal</h1>
+    <div className="px-[18px] pb-8 pt-4 desktop:mx-auto desktop:max-w-lg desktop:px-6 desktop:pt-6">
+      <h1 className="mb-4 text-[22px] text-ink">Nieuw materiaal</h1>
       {categories.length === 0 ? (
-        <p className="text-ink-soft">
+        <p className="text-text-muted">
           Er zijn nog geen categorieen in dit onderdeel. Vraag een duty manager om er
           eerst een aan te maken via Beheer.
         </p>

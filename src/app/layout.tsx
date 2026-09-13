@@ -1,17 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Oswald, IBM_Plex_Sans } from "next/font/google";
+import { Archivo, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-const oswald = Oswald({
-  variable: "--font-oswald",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  style: ["italic"],
+  weight: ["700", "800", "900"],
 });
 
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -33,14 +34,14 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#12181F",
+  themeColor: "#122028",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nl" className={`${oswald.variable} ${plexSans.variable} h-full`}>
+    <html lang="nl" className={`${archivo.variable} ${sourceSans.variable} h-full`}>
       <body className="min-h-full antialiased">{children}</body>
     </html>
   );

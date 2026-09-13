@@ -6,11 +6,23 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-const STANDAARD_ACTIES = [
-  "Visueel controleren op beschadiging",
-  "Slijpen van de kanten",
-  "Controle van de bindingen",
-  "Algehele onderhoudsbeurt (slijpen kanten + belag)",
+// Onderhoudsacties uit het Materiaalonderhoud-ontwerp, gedeeld door alle
+// categorieen binnen Ski & Snowboard.
+const SKI_SNOWBOARD_ACTIES = [
+  "Slijpen",
+  "Waxen",
+  "Binding controleren",
+  "Schoenmaat aanpassen",
+  "Reparatie",
+  "Afkeuren",
+];
+
+const SKI_SNOWBOARD_CATEGORIEEN = [
+  { naam: "Ski", prefix: "SKI", extraVeldLabel: "DIN" },
+  { naam: "Snowboard", prefix: "SB", extraVeldLabel: null },
+  { naam: "Schoenen", prefix: "SCH", extraVeldLabel: null },
+  { naam: "Helm", prefix: "HLM", extraVeldLabel: null },
+  { naam: "Stokken", prefix: "STK", extraVeldLabel: null },
 ];
 
 const OVERIGE_ONDERDELEN = ["Mountainbike", "Boogschieten", "Klimmateriaal", "Kano & Kajak & SUP"];
@@ -26,17 +38,19 @@ async function main() {
     await prisma.department.upsert({ where: { naam }, update: {}, create: { naam } });
   }
 
-  await prisma.category.upsert({
-    where: { naam: "Ski" },
-    update: {},
-    create: { naam: "Ski", prefix: "SKI", acties: STANDAARD_ACTIES, departmentId: skiSnowboard.id },
-  });
-
-  await prisma.category.upsert({
-    where: { naam: "Snowboard" },
-    update: {},
-    create: { naam: "Snowboard", prefix: "SB", acties: STANDAARD_ACTIES, departmentId: skiSnowboard.id },
-  });
+  for (const { naam, prefix, extraVeldLabel } of SKI_SNOWBOARD_CATEGORIEEN) {
+    await prisma.category.upsert({
+      where: { naam },
+      update: { prefix, acties: SKI_SNOWBOARD_ACTIES, extraVeldLabel, departmentId: skiSnowboard.id },
+      create: {
+        naam,
+        prefix,
+        acties: SKI_SNOWBOARD_ACTIES,
+        extraVeldLabel,
+        departmentId: skiSnowboard.id,
+      },
+    });
+  }
 
   const adminGebruikersnaam = "beheer";
   const bestaandeAdmin = await prisma.user.findUnique({

@@ -17,9 +17,20 @@ export const ROLE_LABELS: Record<Role, string> = {
   DUTY_MANAGER: "Duty manager",
 };
 
-/** De onderhoudsactie die telt als "algehele onderhoudsbeurt" voor de aandacht-nodig-lijst. */
-export const GROTE_BEURT_TREFWOORD = "algehele onderhoudsbeurt";
+/**
+ * Aantal maanden zonder onderhoudsregistratie waarna materiaal in de
+ * "aandacht nodig"-lijst verschijnt. Categorie-onafhankelijk: elke
+ * geregistreerde onderhoudsactie (niet één specifieke "grote beurt") telt
+ * als onderhoudsmoment, zodat dit ook werkt voor categorieën met heel
+ * andere onderhoudsacties.
+ */
+export const AANDACHT_NODIG_MAANDEN = 9;
 
-export function isGroteBeurt(actie: string): boolean {
-  return actie.toLowerCase().includes(GROTE_BEURT_TREFWOORD);
+export function dagenSinds(datum: Date): number {
+  return Math.floor((Date.now() - datum.getTime()) / 86_400_000);
+}
+
+export function heeftAandachtNodig(laatsteOnderhoud: Date | null, aangemaakt: Date): boolean {
+  const referentie = laatsteOnderhoud ?? aangemaakt;
+  return dagenSinds(referentie) > AANDACHT_NODIG_MAANDEN * 30;
 }

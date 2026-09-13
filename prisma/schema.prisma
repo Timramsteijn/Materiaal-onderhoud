@@ -55,6 +55,9 @@ model Category {
   prefix       String     @unique
   /// Onderhoudsacties die voor deze categorie gelden, in weergavevolgorde
   acties       String[]
+  /// Naam van een optioneel extra specificatieveld voor materiaal in deze
+  /// categorie (bv. "DIN" bij Ski). Leeg = geen extra veld.
+  extraVeldLabel String?
   departmentId String
   department   Department @relation(fields: [departmentId], references: [id])
   aangemaakt   DateTime   @default(now())
@@ -75,6 +78,10 @@ model Material {
   aanschafjaar Int?
   status       MaterialStatus   @default(IN_GEBRUIK)
   opmerkingen  String?
+  locatie      String?
+  inGebruikSinds DateTime?
+  /// Waarde voor het categorie-specifieke extra veld (bv. DIN-waarde bij Ski)
+  extraVeldWaarde String?
   aangemaakt   DateTime         @default(now())
   logs         MaintenanceLog[]
 

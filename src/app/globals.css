@@ -1,41 +1,91 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #eef1f3;
-  --panel: #ffffff;
-  --ink: #1b232c;
-  --ink-soft: #5c6670;
-  --graphite: #12181f;
-  --graphite-2: #1d2732;
-  --amber: #f2a93b;
-  --amber-dark: #ce8a1d;
-  --ice: #2e8fc0;
-  --ice-dark: #236e97;
-  --good: #3c9a5f;
-  --good-bg: #e7f4ec;
-  --danger: #d64550;
-  --danger-bg: #fbeaec;
-  --border: #dce2e7;
+  /* inkt / chrome */
+  --ink: #122028;
+  --ink-light: #1b2c36;
+  --border-dark: #2f4350;
+  --text-dark-secondary: #8b9aa3;
+
+  /* op licht */
+  --text-muted: #566b76;
+  --text-medium: #3c5260;
+  --bg: #e7e3da;
+  --canvas: #d8d3c8;
+  --border-light: #d8d3c8;
+  --card-border: #dad5ca;
+  --input-fill: #f3f0e9;
+  --card: #ffffff;
+
+  /* oranje */
+  --orange: #f4622b;
+  --orange-hover: #d9501c;
+  --orange-tint: #fbe6dc;
+
+  /* staalblauw */
+  --steel: #3f6e8c;
+  --steel-dark: #2e5470;
+  --steel-tint: #e4e9ec;
+
+  /* status */
+  --green: #3c9a5f;
+  --green-text: #2f7b4c;
+  --green-tint: #e7f4ec;
+  --red: #d64550;
+  --red-tint: #fbeaec;
+  --toggle-off: #c2bcb0;
+
+  /* radii */
+  --radius-frame-phone: 30px;
+  --radius-frame-desktop: 14px;
+  --radius-card: 10px;
+  --radius-input: 8px;
+  --radius-pill: 999px;
+
+  /* shadows */
+  --shadow-card-light: 0 2px 8px rgba(18, 32, 40, 0.05);
+  --shadow-card: 0 3px 10px rgba(18, 32, 40, 0.06);
+  --shadow-card-alt: 0 3px 12px rgba(18, 32, 40, 0.06);
+  --shadow-card-hover: 0 8px 20px rgba(18, 32, 40, 0.12);
+  --shadow-frame: 0 18px 40px rgba(18, 32, 40, 0.22);
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-panel: var(--panel);
   --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-graphite: var(--graphite);
-  --color-graphite-2: var(--graphite-2);
-  --color-amber: var(--amber);
-  --color-amber-dark: var(--amber-dark);
-  --color-ice: var(--ice);
-  --color-ice-dark: var(--ice-dark);
-  --color-good: var(--good);
-  --color-good-bg: var(--good-bg);
-  --color-danger: var(--danger);
-  --color-danger-bg: var(--danger-bg);
-  --color-border: var(--border);
-  --font-display: var(--font-oswald);
-  --font-body: var(--font-plex);
+  --color-ink-light: var(--ink-light);
+  --color-border-dark: var(--border-dark);
+  --color-text-dark-secondary: var(--text-dark-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-medium: var(--text-medium);
+  --color-bg: var(--bg);
+  --color-canvas: var(--canvas);
+  --color-border-light: var(--border-light);
+  --color-card-border: var(--card-border);
+  --color-input-fill: var(--input-fill);
+  --color-card: var(--card);
+  --color-orange: var(--orange);
+  --color-orange-hover: var(--orange-hover);
+  --color-orange-tint: var(--orange-tint);
+  --color-steel: var(--steel);
+  --color-steel-dark: var(--steel-dark);
+  --color-steel-tint: var(--steel-tint);
+  --color-green: var(--green);
+  --color-green-text: var(--green-text);
+  --color-green-tint: var(--green-tint);
+  --color-red: var(--red);
+  --color-red-tint: var(--red-tint);
+  --color-toggle-off: var(--toggle-off);
+
+  --radius-card: var(--radius-card);
+  --radius-input: var(--radius-input);
+  --radius-pill: var(--radius-pill);
+  --radius-frame-phone: var(--radius-frame-phone);
+  --radius-frame-desktop: var(--radius-frame-desktop);
+
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-source-sans);
+
+  --breakpoint-desktop: 900px;
 }
 
 * {
@@ -59,8 +109,19 @@ h2,
 h3,
 .label-font {
   font-family: var(--font-display), sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.2px;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--orange);
+  color: var(--ink);
 }
 
 @media print {

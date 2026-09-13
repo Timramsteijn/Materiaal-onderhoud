@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Download } from "@/components/icons";
 
 export function ImportForm() {
   const [bezig, setBezig] = useState(false);
@@ -12,8 +13,11 @@ export function ImportForm() {
       encType="multipart/form-data"
       onSubmit={() => setBezig(true)}
     >
-      <label className="mb-1.5 block text-[12.5px] font-semibold text-ink-soft" htmlFor="bestand">
-        Importeer Excel-bestand (tabblad &quot;Materiaal&quot;, optioneel &quot;Onderhoudslog&quot;)
+      <label
+        className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-text-dark-secondary"
+        htmlFor="bestand"
+      >
+        Excel-bestand (tabblad &quot;Materiaal&quot;, optioneel &quot;Onderhoudslog&quot;)
       </label>
       <input
         id="bestand"
@@ -21,14 +25,15 @@ export function ImportForm() {
         type="file"
         accept=".xlsx,.xls"
         required
-        className="block w-full text-[13px]"
+        className="block w-full text-[13px] text-ink"
       />
       <button
         type="submit"
         disabled={bezig}
-        className="mt-2 rounded-lg bg-ice px-4 py-2 text-[13px] font-semibold text-white disabled:opacity-60"
+        className="mt-2.5 flex items-center gap-1.5 rounded-full bg-steel px-4 py-2 text-[13px] font-bold uppercase tracking-[0.03em] text-white disabled:opacity-60"
       >
-        {bezig ? "Bezig met uploaden..." : "⬆️ Importeren"}
+        <Download size={15} strokeWidth={2} />
+        {bezig ? "Bezig met uploaden..." : "Importeren"}
       </button>
     </form>
   );

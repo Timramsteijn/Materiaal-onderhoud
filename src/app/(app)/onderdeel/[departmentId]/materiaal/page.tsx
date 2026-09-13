@@ -1,19 +1,40 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { StatusBadge } from "@/components/status-badge";
+import { auth } from "@/lib/auth";
+import { ROLE_LABELS } from "@/lib/domain";
+import { MaterialCard } from "./material-card";
+import { MaterialDetail } from "./material-detail";
+import { SearchBar } from "./search-bar";
+import { TopBar } from "@/components/top-bar";
+import { Plus, ScanLine } from "@/components/icons";
 
 export default async function MateriaalPage({
   params,
   searchParams,
 }: {
   params: Promise<{ departmentId: string }>;
-  searchParams: Promise<{ categorie?: string; q?: string }>;
+  searchParams: Promise<{ categorie?: string; q?: string; id?: string }>;
 }) {
   const { departmentId } = await params;
-  const { categorie, q } = await searchParams;
+  const { categorie, q, id } = await searchParams;
   const base = `/onderdeel/${departmentId}`;
+  const listHref = (extra?: Record<string, string | undefined>) => {
+    const p = new URLSearchParams();
+    if (categorie) p.set("categorie", categorie);
+    if (q) p.set("q", q);
+    if (extra) {
+      for (const [k, v] of Object.entries(extra)) {
+        if (v) p.set(k, v);
+        else p.delete(k);
+      }
+    }
+    const qs = p.toString();
+    return `${base}/materiaal${qs ? `?${qs}` : ""}`;
+  };
 
-  const [categories, materialen] = await Promise.all([
+  const [session, categories, materialen] = await Promise.all([
+    auth(),
     prisma.category.findMany({ where: { departmentId }, orderBy: { naam: "asc" } }),
     prisma.material.findMany({
       where: {
@@ -29,109 +50,154 @@ export default async function MateriaalPage({
             }
           : {}),
       },
-      include: { category: true },
+      include: {
+        category: { select: { naam: true } },
+        logs: { orderBy: { datum: "desc" }, take: 1, select: { datum: true } },
+      },
       orderBy: { id: "asc" },
     }),
   ]);
 
+  let materiaalDetail = null;
+  if (id) {
+    const found = await prisma.material.findUnique({
+      where: { id },
+      include: {
+        category: { select: { naam: true, acties: true, extraVeldLabel: true, departmentId: true } },
+        logs: {
+          orderBy: { datum: "desc" },
+          take: 10,
+          include: { uitgevoerdDoor: { select: { naam: true } } },
+        },
+        _count: { select: { logs: true } },
+      },
+    });
+    if (found && found.category.departmentId !== departmentId) {
+      redirect(`/onderdeel/${found.category.departmentId}/materiaal?id=${encodeURIComponent(id)}`);
+    }
+    materiaalDetail = found;
+  }
+
+  const heeftDetail = Boolean(id);
+  const actieveCategorieNaam = categories.find((c) => c.id === categorie)?.naam;
+
   return (
-    <div className="px-4 pt-4">
-      <div className="mb-3 flex items-center justify-between">
-        <h1 className="text-xl text-ink">Materiaal</h1>
+    <>
+      <TopBar userNaam={session!.user.naam} userRoleLabel={ROLE_LABELS[session!.user.role]}>
+        <SearchBar />
         <Link
-          href={`${base}/materiaal/nieuw`}
-          className="rounded-full bg-amber px-3.5 py-1.5 text-[13px] font-semibold text-graphite"
+          href={`${base}/scan`}
+          className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-orange px-4 text-[13px] font-bold uppercase tracking-[0.03em] text-white transition-colors hover:bg-orange-hover"
         >
-          + Nieuw
+          <ScanLine size={16} strokeWidth={2} />
+          QR scannen
         </Link>
-      </div>
+      </TopBar>
 
-      <form className="mb-3 flex gap-2" action={`${base}/materiaal`}>
-        <input
-          type="search"
-          name="q"
-          defaultValue={q}
-          placeholder="Zoek op ID, merk of model..."
-          className="flex-1 rounded-lg border border-border bg-white px-3 py-2 text-sm text-ink"
-        />
-        {categorie && <input type="hidden" name="categorie" value={categorie} />}
-      </form>
-
-      {categories.length > 1 && (
-        <div className="no-scrollbar mb-3 flex items-center gap-2 overflow-x-auto">
-          <FilterPill href={`${base}/materiaal`} active={!categorie} label="Alles" />
-          {categories.map((c) => (
-            <FilterPill
-              key={c.id}
-              href={`${base}/materiaal?categorie=${c.id}`}
-              active={categorie === c.id}
-              label={c.naam}
-            />
-          ))}
-        </div>
-      )}
-
-      {materialen.length > 0 && (
-        <Link
-          href={`${base}/materiaal/print${categorie ? `?categorie=${categorie}` : ""}`}
-          className="mb-3 inline-block text-[12.5px] font-semibold text-ice-dark"
+      <div className="desktop:flex desktop:items-start">
+        <div
+          className={`${heeftDetail ? "hidden desktop:block" : "block"} px-[18px] pt-4 desktop:w-[392px] desktop:shrink-0 desktop:border-r desktop:border-border-light desktop:px-4 desktop:pt-5`}
         >
-          🖨️ Printvel voor {categorie ? "deze selectie" : "alle materiaal"} ({materialen.length})
-        </Link>
-      )}
+          <div className="flex gap-2 desktop:hidden">
+            <SearchBar />
+            <Link
+              href={`${base}/materiaal/nieuw`}
+              aria-label="Nieuw materiaal"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink text-white"
+            >
+              <Plus size={20} strokeWidth={2.2} />
+            </Link>
+          </div>
 
-      {materialen.length === 0 ? (
-        <div className="rounded-xl bg-panel py-10 text-center text-ink-soft">
-          Geen materiaal gevonden.
-        </div>
-      ) : (
-        <ul className="space-y-2">
-          {materialen.map((m) => (
-            <li key={m.id}>
+          {categories.length > 1 && (
+            <div className="no-scrollbar mt-3 flex items-center gap-2 overflow-x-auto">
+              <FilterPill
+                href={listHref({ categorie: undefined, id: undefined })}
+                active={!categorie}
+                label="Alles"
+              />
+              {categories.map((c) => (
+                <FilterPill
+                  key={c.id}
+                  href={listHref({ categorie: c.id, id: undefined })}
+                  active={categorie === c.id}
+                  label={c.naam}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="mt-2.5 flex items-center justify-between gap-2">
+            <p className="text-[12px] text-text-muted">
+              {materialen.length} {materialen.length === 1 ? "stuk" : "stuks"}
+              {actieveCategorieNaam ? ` · ${actieveCategorieNaam}` : ""}
+            </p>
+            <div className="flex items-center gap-3">
+              {materialen.length > 0 && (
+                <Link
+                  href={`${base}/materiaal/print${categorie ? `?categorie=${categorie}` : ""}`}
+                  className="text-[11.5px] font-semibold text-steel-dark"
+                >
+                  printvel
+                </Link>
+              )}
               <Link
-                href={`${base}/materiaal/${encodeURIComponent(m.id)}`}
-                prefetch={false}
-                className="flex items-center justify-between rounded-xl bg-panel px-3.5 py-3 shadow-sm"
+                href={`${base}/materiaal/nieuw`}
+                className="hidden text-[11.5px] font-semibold text-steel-dark desktop:inline"
               >
-                <div className="min-w-0">
-                  <p className="label-font text-[15px] text-ink">
-                    {m.id}{" "}
-                    <span className="ml-1 rounded bg-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft">
-                      {m.category.naam}
-                    </span>
-                  </p>
-                  <p className="truncate text-[12.5px] text-ink-soft">
-                    {m.merk} {m.model}
-                    {m.maat ? ` · ${m.maat}` : ""}
-                  </p>
-                </div>
-                <StatusBadge status={m.status} />
+                + nieuw
               </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+            </div>
+          </div>
+
+          {materialen.length === 0 ? (
+            <div className="mt-3 rounded-[10px] border border-dashed border-card-border bg-card py-10 text-center text-[13px] text-text-muted">
+              Geen materiaal gevonden.
+            </div>
+          ) : (
+            <ul className="mt-3 space-y-2.5">
+              {materialen.map((m) => (
+                <li key={m.id}>
+                  <MaterialCard
+                    material={m}
+                    href={listHref({ id: m.id })}
+                    active={id === m.id}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className={`${heeftDetail ? "block" : "hidden desktop:block"} min-w-0 flex-1`}>
+          {materiaalDetail ? (
+            <MaterialDetail
+              material={materiaalDetail}
+              role={session!.user.role}
+              base={base}
+              userNaam={session!.user.naam}
+              backHref={listHref({ id: undefined })}
+            />
+          ) : (
+            <div className="hidden h-full items-center justify-center p-10 text-center text-[13px] text-text-muted desktop:flex">
+              Selecteer materiaal uit de lijst om details te bekijken.
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
-function FilterPill({
-  href,
-  active,
-  label,
-}: {
-  href: string;
-  active: boolean;
-  label: string;
-}) {
+function FilterPill({ href, active, label }: { href: string; active: boolean; label: string }) {
   return (
     <Link
       href={href}
       prefetch={false}
-      className={`shrink-0 rounded-full border px-3 py-1.5 text-[12.5px] font-medium ${
+      className={`shrink-0 rounded-full border px-3.5 py-[9px] font-display text-[11.5px] font-bold uppercase italic transition-colors ${
         active
-          ? "border-graphite bg-graphite text-white"
-          : "border-border bg-panel text-ink-soft"
+          ? "border-ink bg-ink text-orange"
+          : "border-border-light bg-card text-text-medium hover:border-steel"
       }`}
     >
       {label}

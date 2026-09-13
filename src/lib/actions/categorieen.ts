@@ -17,6 +17,7 @@ const categorySchema = z.object({
     .max(10)
     .regex(/^[A-Za-z0-9]+$/, "Alleen letters en cijfers")
     .transform((v) => v.toUpperCase()),
+  extraVeldLabel: z.string().trim().max(30).optional(),
 });
 
 export async function createCategory(
@@ -29,6 +30,7 @@ export async function createCategory(
     departmentId: formData.get("departmentId"),
     naam: formData.get("naam"),
     prefix: formData.get("prefix"),
+    extraVeldLabel: formData.get("extraVeldLabel") || undefined,
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Controleer de velden." };
@@ -50,6 +52,7 @@ export async function createCategory(
       naam: parsed.data.naam,
       prefix: parsed.data.prefix,
       acties: [],
+      extraVeldLabel: parsed.data.extraVeldLabel || null,
       departmentId: parsed.data.departmentId,
     },
   });
