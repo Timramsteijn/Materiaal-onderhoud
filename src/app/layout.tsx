@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Source_Sans_3 } from "next/font/google";
+import { Carter_One, Figtree } from "next/font/google";
 import "./globals.css";
+import { ServiceWorker } from "@/components/service-worker";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const carterOne = Carter_One({
+  variable: "--font-carter-one",
   subsets: ["latin"],
-  style: ["italic"],
-  weight: ["700", "800", "900"],
+  weight: ["400"],
 });
 
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -34,15 +34,18 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#122028",
+  themeColor: "#15212b",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="nl" className={`${archivo.variable} ${sourceSans.variable} h-full`}>
-      <body className="min-h-full antialiased">{children}</body>
+    <html lang="nl" className={`${carterOne.variable} ${figtree.variable} h-full`}>
+      <body className="min-h-full antialiased">
+        {children}
+        <ServiceWorker />
+      </body>
     </html>
   );
 }

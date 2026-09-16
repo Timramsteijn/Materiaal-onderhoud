@@ -1,19 +1,21 @@
 import type { NextAuthConfig } from "next-auth";
 import type { JWT } from "next-auth/jwt";
-import type { Role } from "@prisma/client";
+import type { Rol } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       naam: string;
-      role: Role;
+      rol: Rol;
+      functie: string;
     };
   }
   interface User {
     id: string;
     naam: string;
-    role: Role;
+    rol: Rol;
+    functie: string;
   }
 }
 
@@ -24,22 +26,23 @@ declare module "next-auth" {
 interface AppJWT extends JWT {
   id: string;
   naam: string;
-  role: Role;
+  rol: Rol;
+  functie: string;
 }
 
 /**
  * Edge-veilige basisconfiguratie (geen Prisma/bcrypt hier): wordt zowel door
- * de middleware (route-bescherming) als door de volledige auth-config met de
+ * de proxy (route-bescherming) als door de volledige auth-config met de
  * credentials-provider gebruikt, zodat beide dezelfde JWT/sessie-vorm delen.
  */
 export const authConfig: NextAuthConfig = {
   session: { strategy: "jwt" },
-  pages: { signIn: "/login" },
+  pages: { signIn: "/inloggen" },
   providers: [],
   callbacks: {
     authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user;
-      const isOnLogin = request.nextUrl.pathname.startsWith("/login");
+      const isOnLogin = request.nextUrl.pathname.startsWith("/inloggen");
       if (isOnLogin) {
         if (isLoggedIn) {
           return Response.redirect(new URL("/", request.nextUrl));
@@ -53,7 +56,8 @@ export const authConfig: NextAuthConfig = {
       if (user) {
         appToken.id = user.id;
         appToken.naam = user.naam;
-        appToken.role = user.role;
+        appToken.rol = user.rol;
+        appToken.functie = user.functie;
       }
       return appToken;
     },
@@ -61,7 +65,8 @@ export const authConfig: NextAuthConfig = {
       const appToken = token as AppJWT;
       session.user.id = appToken.id;
       session.user.naam = appToken.naam;
-      session.user.role = appToken.role;
+      session.user.rol = appToken.rol;
+      session.user.functie = appToken.functie;
       return session;
     },
   },

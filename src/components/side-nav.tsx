@@ -3,47 +3,51 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { buildNavItems } from "@/lib/nav-items";
-import { Mountain } from "@/components/icons";
+import { Logo } from "@/components/logo";
 
 export function SideNav({
-  isDutyManager,
-  departmentId,
-  departmentNaam,
+  slug,
+  onderdeelNaam,
+  isBeheerder,
 }: {
-  isDutyManager: boolean;
-  departmentId?: string;
-  departmentNaam?: string;
+  slug: string;
+  onderdeelNaam: string;
+  isBeheerder: boolean;
 }) {
   const pathname = usePathname();
-  const items = buildNavItems({ departmentId, isDutyManager });
+  const items = buildNavItems({ slug, isBeheerder });
 
   return (
-    <aside className="no-print hidden w-[232px] shrink-0 flex-col bg-ink py-5 desktop:flex">
-      <div className="mb-3 flex items-center gap-2.5 border-b border-border-dark px-5 pb-5">
-        <span className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[10px] border-2 border-orange">
-          <Mountain size={17} strokeWidth={2} className="text-orange" />
-        </span>
-        <p className="font-display text-[13px] font-extrabold uppercase italic leading-tight text-white">
+    <aside className="no-print hidden w-[232px] shrink-0 flex-col bg-navy py-5 desktop:flex">
+      <Link
+        href={`/${slug}/scannen`}
+        prefetch={false}
+        className="mb-4 flex items-center gap-2.5 border-b border-border-dark px-5 pb-5 text-creme"
+      >
+        <Logo variant="merkteken" size={26} className="text-accent" />
+        <span className="font-body text-[13px] font-extrabold uppercase leading-[1.15] tracking-[0.1em]">
           Materiaal
           <br />
           Onderhoud
-        </p>
-      </div>
+        </span>
+      </Link>
 
       <nav className="flex flex-1 flex-col gap-1 px-3">
         {items.map((item) => {
-          const active = pathname.startsWith(item.href.split("?")[0]);
+          const actief = pathname.startsWith(item.href);
           return (
             <Link
               key={item.href}
               href={item.href}
               prefetch={false}
-              className={`flex items-center gap-2.5 rounded-full px-3 py-[11px] transition-colors ${
-                active ? "bg-orange text-white" : "text-text-dark-secondary hover:bg-ink-light hover:text-white"
+              className={`motion flex items-center gap-2.5 rounded-full px-3 py-[11px] ${
+                actief
+                  ? "bg-accent text-accent-on"
+                  : "text-text-on-dark hover:bg-navy-light hover:text-creme"
               }`}
             >
-              <item.Icon size={18} strokeWidth={1.8} />
-              <span className="font-display text-[12.5px] font-bold uppercase italic tracking-[0.04em]">
+              <item.Icon size={18} strokeWidth={2} />
+              <span className="text-[12.5px] font-bold uppercase tracking-[0.08em]">
                 {item.label}
               </span>
             </Link>
@@ -51,23 +55,21 @@ export function SideNav({
         })}
       </nav>
 
-      {departmentId && departmentNaam ? (
-        <div className="border-t border-border-dark px-5 pt-4">
-          <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-text-dark-secondary">
-            Onderdeel
-          </p>
-          <p className="font-display mt-1 text-[13px] font-extrabold italic uppercase text-orange">
-            {departmentNaam}
-          </p>
-          <Link
-            href="/onderdeel"
-            prefetch={false}
-            className="mt-1 inline-block border-b border-border-dark text-[11.5px] text-text-dark-secondary hover:text-white"
-          >
-            wissel van onderdeel
-          </Link>
-        </div>
-      ) : null}
+      <div className="mt-4 border-t border-border-dark px-5 pt-4">
+        <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-text-on-dark">
+          Onderdeel
+        </p>
+        <p className="mt-1 text-[12.5px] font-extrabold uppercase tracking-[0.06em] text-accent">
+          {onderdeelNaam}
+        </p>
+        <Link
+          href="/onderdeel"
+          prefetch={false}
+          className="motion mt-1 inline-block border-b border-border-dark text-[11.5px] text-text-on-dark hover:text-creme"
+        >
+          wissel van onderdeel
+        </Link>
+      </div>
     </aside>
   );
 }

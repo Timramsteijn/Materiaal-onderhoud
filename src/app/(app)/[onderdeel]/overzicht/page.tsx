@@ -1,0 +1,242 @@
+import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
+import {
+  AANDACHT_NODIG_MAANDEN,
+  STATUS_LABELS,
+  dagenSinds,
+  formatAantal,
+  formatTijd,
+} from "@/lib/domain";
+import { TopBar } from "@/components/top-bar";
+import { Kaart, KaartTitel } from "@/components/ui";
+import { AlertTriangle, ChevronRight, Download } from "@/components/icons";
+
+const MAAND = 30 * 86_400_000;
+
+export default async function OverzichtPage({
+  params,
+}: {
+  params: Promise<{ onderdeel: string }>;
+}) {
+  const { onderdeel: slug } = await params;
+  const [session, onderdeel] = await Promise.all([auth(), getOnderdeel(slug)]);
+
+  const nu = new Date();
+  const twaalfMaanden = new Date(nu.getTime() - 12 * MAAND);
+
+  const [perStatus, perCategorie, perActie, categorieen, materiaal] = await Promise.all([
+    prisma.materiaal.groupBy({
+      by: ["status"],
+      where: { onderdeelId: onderdeel.id },
+      _count: { _all: true },
+    }),
+    prisma.materiaal.groupBy({
+      by: ["categorieId"],
+      where: { onderdeelId: onderdeel.id },
+      _count: { _all: true },
+    }),
+    prisma.logRegel.groupBy({
+      by: ["actieNaam"],
+      where: { materiaal: { onderdeelId: onderdeel.id }, tijdstip: { gte: twaalfMaanden } },
+      _count: { _all: true },
+      orderBy: { _count: { actieNaam: "desc" } },
+      take: 6,
+    }),
+    getCategorieen(onderdeel.id),
+    prisma.materiaal.findMany({
+      where: { onderdeelId: onderdeel.id },
+      select: {
+        id: true,
+        materiaalId: true,
+        merkModel: true,
+        laatsteOnderhoud: true,
+        inGebruikSinds: true,
+      },
+    }),
+  ]);
+
+  const aantal = (s: string) => perStatus.find((p) => p.status === s)?._count._all ?? 0;
+  const totaal = perStatus.reduce((som, p) => som + p._count._all, 0);
+  const registraties12Maanden = perActie.reduce((som, a) => som + a._count._all, 0);
+
+  const maxActie = Math.max(1, ...perActie.map((a) => a._count._all));
+  const maxCategorie = Math.max(1, ...perCategorie.map((c) => c._count._all));
+
+  // Aandacht nodig = langer dan 9 maanden geen enkele onderhoudsactie. Berekend.
+  const aandachtNodig = materiaal
+    .map((m) => ({ ...m, dagen: dagenSinds(m.laatsteOnderhoud ?? m.inGebruikSinds) }))
+    .filter((m) => m.dagen > AANDACHT_NODIG_MAANDEN * 30)
+    .sort((a, b) => b.dagen - a.dagen)
+    .slice(0, 12);
+
+  return (
+    <>
+      <TopBar
+        titel="Overzicht"
+        subregel={`Bijgewerkt vandaag ${formatTijd(nu)}`}
+        medewerkerNaam={session!.user.naam}
+        functie={session!.user.functie}
+      >
+        <a
+          href={`/api/export?onderdeel=${slug}`}
+          className="motion ml-auto flex h-10 shrink-0 items-center gap-1.5 rounded-full border-[1.5px] border-ink px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-ink hover:bg-neutral-fill"
+        >
+          <Download size={15} strokeWidth={2} />
+          Exporteren
+        </a>
+      </TopBar>
+
+      <main className="flex-1 px-[18px] pb-24 pt-4 desktop:px-6 desktop:pb-8 desktop:pt-5">
+        <div className="desktop:hidden">
+          <h1 className="display text-[22px] text-ink">Overzicht</h1>
+          <p className="mb-4 mt-0.5 text-[13px] text-text-muted">
+            Bijgewerkt vandaag {formatTijd(nu)}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2.5 desktop:grid-cols-4 desktop:gap-4">
+          <Tegel n={totaal} label="Totaal materiaal" variant="donker" />
+          <Tegel n={aantal("IN_GEBRUIK")} label={STATUS_LABELS.IN_GEBRUIK} variant="groen" />
+          <Tegel n={aantal("IN_REPARATIE")} label={STATUS_LABELS.IN_REPARATIE} variant="amber" />
+          <Tegel n={aantal("BUITEN_GEBRUIK")} label={STATUS_LABELS.BUITEN_GEBRUIK} variant="rood" />
+        </div>
+
+        <div className="mt-4 desktop:grid desktop:grid-cols-[1.15fr_1fr] desktop:gap-4">
+          {/* Onderhoud per actie — staven in de accentkleur, afkeuren rood */}
+          <Kaart>
+            <KaartTitel>Onderhoud per actie</KaartTitel>
+            <p className="mb-3 text-[11.5px] text-text-muted">
+              Laatste 12 maanden · {formatAantal(registraties12Maanden)} registraties
+            </p>
+            {perActie.length === 0 ? (
+              <p className="text-[13px] text-text-muted">Nog geen onderhoud geregistreerd.</p>
+            ) : (
+              <div className="flex items-end gap-2.5">
+                {perActie.map((a) => (
+                  <div key={a.actieNaam} className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+                    <span className="text-[12px] font-bold text-ink">{a._count._all}</span>
+                    <div className="flex h-[150px] w-full flex-col justify-end desktop:h-[190px]">
+                      <div
+                        className={`w-full rounded-t ${
+                          a.actieNaam.toLowerCase().startsWith("afkeur") ? "bg-red-text" : "bg-accent"
+                        }`}
+                        style={{ height: `${Math.max(4, (a._count._all / maxActie) * 100)}%` }}
+                      />
+                    </div>
+                    <span className="w-full truncate text-center text-[10.5px] text-text-muted">
+                      {a.actieNaam}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Kaart>
+
+          {/* Per categorie — pill-balken */}
+          <Kaart className="mt-3 desktop:mt-0">
+            <KaartTitel>Per categorie</KaartTitel>
+            <div className="mt-3 space-y-2.5">
+              {categorieen.map((c) => {
+                const n = perCategorie.find((p) => p.categorieId === c.id)?._count._all ?? 0;
+                return (
+                  <div key={c.id}>
+                    <div className="flex justify-between text-[12.5px] text-ink">
+                      <span>{c.naam}</span>
+                      <span className="font-bold">{formatAantal(n)}</span>
+                    </div>
+                    <div className="mt-1 h-[8px] overflow-hidden rounded-full bg-zand">
+                      <div
+                        className="h-full rounded-full bg-accent"
+                        style={{ width: `${(n / maxCategorie) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+              {categorieen.length === 0 && (
+                <p className="text-[13px] text-text-muted">Nog geen categorieën ingericht.</p>
+              )}
+            </div>
+          </Kaart>
+        </div>
+
+        {/* Aandacht nodig */}
+        <Kaart className="mt-3">
+          <div className="flex items-center gap-1.5">
+            <AlertTriangle size={16} strokeWidth={2.2} className="text-red-text" />
+            <h2 className="font-body text-[12px] font-extrabold uppercase tracking-[0.14em] text-red-text">
+              Aandacht nodig
+            </h2>
+          </div>
+          <p className="mb-3 mt-0.5 text-[11.5px] text-text-muted">
+            Langer dan {AANDACHT_NODIG_MAANDEN} maanden geen onderhoud geregistreerd.
+          </p>
+
+          {aandachtNodig.length === 0 ? (
+            <p className="text-[13px] text-text-muted">
+              Al het materiaal in {onderdeel.naam} is binnen {AANDACHT_NODIG_MAANDEN} maanden
+              onderhouden.
+            </p>
+          ) : (
+            <ul className="divide-y divide-zand">
+              {aandachtNodig.map((m) => (
+                <li key={m.id}>
+                  <Link
+                    href={`/${slug}/materiaal/${encodeURIComponent(m.materiaalId)}`}
+                    prefetch={false}
+                    className="motion flex items-center gap-3 py-2.5 hover:bg-zand"
+                  >
+                    <span className="w-[100px] shrink-0 text-[14px] font-extrabold text-ink desktop:w-[110px]">
+                      {m.materiaalId}
+                    </span>
+                    <span className="min-w-0 flex-1 truncate text-[13px] text-text-medium">
+                      {m.merkModel}
+                    </span>
+                    <span className="shrink-0 rounded-full bg-red-tint px-2.5 py-1 text-[11px] font-bold text-red-text">
+                      {m.dagen} dgn
+                    </span>
+                    <ChevronRight size={16} strokeWidth={2} className="shrink-0 text-text-muted" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Kaart>
+      </main>
+    </>
+  );
+}
+
+const TEGEL_STIJL = {
+  donker: "bg-navy text-creme",
+  groen: "bg-creme text-green-figure",
+  amber: "bg-creme text-amber-text",
+  rood: "bg-creme text-red-text",
+} as const;
+
+function Tegel({
+  n,
+  label,
+  variant,
+}: {
+  n: number;
+  label: string;
+  variant: keyof typeof TEGEL_STIJL;
+}) {
+  return (
+    <div
+      className={`rounded-card border border-border-light p-3.5 text-center shadow-[var(--shadow-light)] ${TEGEL_STIJL[variant]}`}
+    >
+      <p className="display text-[34px] leading-none desktop:text-[40px]">{formatAantal(n)}</p>
+      <p
+        className={`mt-1.5 text-[11px] ${
+          variant === "donker" ? "text-text-on-dark" : "text-text-muted"
+        }`}
+      >
+        {label}
+      </p>
+    </div>
+  );
+}

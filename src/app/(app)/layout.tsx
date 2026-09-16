@@ -6,11 +6,11 @@ export default async function AppLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
   if (!session?.user) {
-    redirect("/login");
+    redirect("/inloggen");
   }
 
   return (
-    <div className="mx-auto min-h-full max-w-[560px] bg-bg desktop:mx-0 desktop:max-w-none">
+    <div className="mx-auto min-h-full max-w-[560px] bg-zand desktop:mx-0 desktop:max-w-none">
       {children}
     </div>
   );

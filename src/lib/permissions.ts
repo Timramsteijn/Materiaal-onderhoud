@@ -1,25 +1,35 @@
-import type { Role } from "@prisma/client";
+import type { Rol } from "@prisma/client";
 
-export function isDutyManager(role: Role): boolean {
-  return role === "DUTY_MANAGER";
+export function isBeheerder(rol: Rol): boolean {
+  return rol === "BEHEERDER";
 }
 
-/** Alleen duty managers mogen materiaal definitief verwijderen. */
-export function canDeleteMaterial(role: Role): boolean {
-  return isDutyManager(role);
+/** Registreren mag iedereen. */
+export function magRegistreren(): boolean {
+  return true;
 }
 
-/** Alleen duty managers mogen materiaal afkeuren ("Buiten gebruik / afgekeurd"). */
-export function canSetOutOfService(role: Role): boolean {
-  return isDutyManager(role);
+/** Verwijderen, importeren, goedkeuren en medewerkerbeheer: alleen beheerders. */
+export function magVerwijderen(rol: Rol): boolean {
+  return isBeheerder(rol);
 }
 
-/** Alleen duty managers beheren categorieen en hun onderhoudsacties. */
-export function canManageCategories(role: Role): boolean {
-  return isDutyManager(role);
+export function magImporteren(rol: Rol): boolean {
+  return isBeheerder(rol);
 }
 
-/** Alleen duty managers beheren medewerkeraccounts. */
-export function canManageUsers(role: Role): boolean {
-  return isDutyManager(role);
+/**
+ * Een afkeuring definitief doorvoeren mag alleen een beheerder; een medewerker
+ * kan afkeuren wél aanvragen (die zet het materiaal op "Ter goedkeuring").
+ */
+export function magAfkeuringGoedkeuren(rol: Rol): boolean {
+  return isBeheerder(rol);
+}
+
+export function magCategorieenBeheren(rol: Rol): boolean {
+  return isBeheerder(rol);
+}
+
+export function magMedewerkersBeheren(rol: Rol): boolean {
+  return isBeheerder(rol);
 }

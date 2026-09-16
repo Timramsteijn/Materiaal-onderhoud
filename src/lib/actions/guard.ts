@@ -1,20 +1,20 @@
 import "server-only";
 
 import { auth } from "@/lib/auth";
-import { isDutyManager } from "@/lib/permissions";
+import { isBeheerder } from "@/lib/permissions";
 
 export class ActionError extends Error {}
 
-export async function requireUser() {
+export async function requireMedewerker() {
   const session = await auth();
   if (!session?.user) throw new ActionError("Niet ingelogd.");
   return session.user;
 }
 
-export async function requireDutyManager() {
-  const user = await requireUser();
-  if (!isDutyManager(user.role)) {
-    throw new ActionError("Alleen duty managers mogen dit doen.");
+export async function requireBeheerder() {
+  const medewerker = await requireMedewerker();
+  if (!isBeheerder(medewerker.rol)) {
+    throw new ActionError("Alleen beheerders mogen dit doen.");
   }
-  return user;
+  return medewerker;
 }

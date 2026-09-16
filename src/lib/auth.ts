@@ -20,15 +20,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        const user = await prisma.user.findUnique({
+        const medewerker = await prisma.medewerker.findUnique({
           where: { gebruikersnaam: gebruikersnaam.trim().toLowerCase() },
         });
-        if (!user || !user.actief) return null;
+        if (!medewerker || !medewerker.actief) return null;
 
-        const ok = await bcrypt.compare(wachtwoord, user.wachtwoordHash);
+        const ok = await bcrypt.compare(wachtwoord, medewerker.wachtwoordHash);
         if (!ok) return null;
 
-        return { id: user.id, naam: user.naam, role: user.role };
+        return {
+          id: medewerker.id,
+          naam: medewerker.naam,
+          rol: medewerker.rol,
+          functie: medewerker.functie,
+        };
       },
     }),
   ],

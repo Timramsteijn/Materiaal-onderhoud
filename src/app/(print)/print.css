@@ -1,0 +1,257 @@
+/* Printweergaven — QR-labels.
+   ------------------------------------------------------------------
+   Twee bladmaten, allebei letterlijk uit het ontwerp overgenomen:
+
+   · Los label  264 × 166 ontwerp-px = exact 70 × 44 mm. Eén ontwerp-px is
+     hier één CSS-px (96 dpi), dus alle maten staan in px.
+   · Printvel   595 × 842 ontwerp-px = exact A4. Eén ontwerp-px is hier één
+     punt (72 dpi), dus alle maten staan in pt. 595pt × 841pt blijft net
+     binnen het A4-pagina-vak (595,28 × 841,89 pt), zodat er nooit een leeg
+     extra vel uitrolt door afrondingsverschil.
+
+   Kleuren komen uit de tokens in globals.css; het accent komt van de
+   wrapper (accentStyle), nooit hardgecodeerd in een regel hieronder. */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* ---------- scherm: de vellen op de zandgrond ---------- */
+
+.print-blad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 0 18px 48px;
+  overflow-x: auto;
+}
+
+/* Smaller dan een vel: links uitlijnen, anders is de linkerhelft van het vel
+   niet bereikbaar met horizontaal scrollen. */
+@media screen and (max-width: 860px) {
+  .print-blad {
+    align-items: flex-start;
+  }
+}
+
+/* ---------- het vel ---------- */
+
+.vel {
+  width: 595pt;
+  height: 841pt;
+  flex: none;
+  padding: 36pt 30pt;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(21, 33, 43, 0.07);
+  /* Het witte vel en de donkere QR-vlakken moeten mee naar de printer. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.vel-kop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18pt;
+  margin-bottom: 18pt;
+}
+
+.vel-kop-titel {
+  font-weight: 800;
+  font-size: 13pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.vel-kop-meta {
+  font-size: 11pt;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ---------- sniplijnen: hulplijn op het scherm, niet op papier ---------- */
+
+.sniplijn {
+  border: 1px dashed #c2bcb0;
+}
+
+/* ---------- printvel: 12 labels in 3 × 4 ---------- */
+
+.raster {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0;
+}
+
+/* De negatieve marge laat aangrenzende cellen hun rand delen, zodat er één
+   doorlopend snijraster ontstaat in plaats van dubbele lijnen. */
+.cel {
+  margin: -0.5px 0 0 -0.5px;
+  padding: 12pt;
+  display: flex;
+  flex-direction: column;
+  gap: 8pt;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cel-boven {
+  display: flex;
+  gap: 10pt;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.cel-tekst {
+  flex: 1;
+  min-width: 0;
+}
+
+.cel-id {
+  font-weight: 800;
+  font-size: 15pt;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.cel-model {
+  margin-top: 4pt;
+  font-size: 10.5pt;
+  line-height: 1.25;
+  color: var(--text-medium);
+  overflow-wrap: anywhere;
+}
+
+.cel-voet {
+  margin-top: auto;
+  font-weight: 700;
+  font-size: 8.5pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ---------- los label: 70 × 44 mm ---------- */
+
+.label {
+  width: 264px;
+  height: 166px;
+  flex: none;
+  padding: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.label-tekst {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label-kicker {
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.label-id {
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.label-model {
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: var(--text-medium);
+  overflow-wrap: anywhere;
+}
+
+.label-onderdeel {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+/* ---------- QR: donker vlak met de code erin ---------- */
+
+.qr {
+  flex: none;
+  background: var(--navy);
+  border-radius: 6px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.qr img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.qr-groot {
+  width: 104px;
+  height: 104px;
+  padding: 6px;
+}
+
+.qr-klein {
+  width: 58pt;
+  height: 58pt;
+  padding: 4pt;
+}
+
+/* ---------- papier ---------- */
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+    margin: 0;
+  }
+
+  .print-blad {
+    display: block;
+    padding: 0;
+    gap: 0;
+    background: #ffffff;
+    overflow: visible;
+  }
+
+  .vel {
+    box-shadow: none;
+    margin: 0;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .vel:last-of-type {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  /* De sniplijn blijft als onzichtbare rand staan: de maatvoering van het
+     raster verspringt niet, maar er wordt geen lijn afgedrukt. */
+  .sniplijn {
+    border-color: transparent !important;
+  }
+}

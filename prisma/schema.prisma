@@ -7,100 +7,184 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  INSTRUCTEUR
-  DUTY_MANAGER
+enum Rol {
+  BEHEERDER
+  MEDEWERKER
+  STAGIAIR
 }
 
-enum MaterialStatus {
+enum Status {
   IN_GEBRUIK
   IN_REPARATIE
   BUITEN_GEBRUIK
+  TER_GOEDKEURING
 }
 
-model User {
-  id             String           @id @default(cuid())
+enum VeldType {
+  TEKST
+  GETAL
+  BEREIK
+  DATUM
+  KEUZE
+}
+
+enum LogSoort {
+  REGISTRATIE
+  AFKEURING_AANGEVRAAGD
+  AFKEURING_GOEDGEKEURD
+  AFKEURING_AFGEWEZEN
+}
+
+model Medewerker {
+  id             String      @id @default(cuid())
   naam           String
-  gebruikersnaam String           @unique
+  gebruikersnaam String      @unique
   wachtwoordHash String
-  role           Role             @default(INSTRUCTEUR)
-  actief         Boolean          @default(true)
-  aangemaakt     DateTime         @default(now())
-  logs           MaintenanceLog[]
+  rol            Rol         @default(MEDEWERKER)
+  /// Vrije tekst, bv. "Beheerder · Ski & Snowboard"
+  functie        String      @default("")
+  actief         Boolean     @default(true)
+  aangemaakt     DateTime    @default(now())
+  logregels      LogRegel[]
+  beheerlog      BeheerLog[]
 
-  @@map("users")
+  @@map("medewerkers")
 }
 
-/// Een onderdeel/activiteit van het bedrijf (bv. "Ski & Snowboard",
-/// "Mountainbike", "Boogschieten"). Medewerkers kiezen na het inloggen een
-/// onderdeel om mee te werken; alles daarbinnen (materiaal, log, overzicht)
-/// is gescoped tot dat onderdeel. Duty managers voegen nieuwe onderdelen toe
-/// via Beheer, zonder dat de applicatie herbouwd hoeft te worden.
-model Department {
-  id         String     @id @default(cuid())
-  naam       String     @unique
-  aangemaakt DateTime   @default(now())
-  categories Category[]
+/// Een bedrijfsonderdeel. Puur configuratie: categorieën bepalen de acties en
+/// velden, dus een nieuw onderdeel toevoegen kost geen code.
+model Onderdeel {
+  id             String      @id @default(cuid())
+  naam           String      @unique
+  slug           String      @unique
+  /// Accentkleur van dit onderdeel; overal via CSS-variabelen doorgevoerd.
+  accent         String
+  accentPressed  String
+  accentTint     String
+  /// Sleutel van het icoon (zie components/icons.tsx)
+  icoon          String
+  uitgelicht     Boolean     @default(false)
+  sortering      Int         @default(0)
+  /// Alleen voor onderdelen die nog niet zijn ingericht: toont het aantal op
+  /// het keuzescherm zolang er nog geen materiaal in de database staat.
+  aantalIndicatie Int        @default(0)
+  aangemaakt     DateTime    @default(now())
+  categorieen    Categorie[]
+  materiaal      Materiaal[]
 
-  @@map("departments")
+  @@map("onderdelen")
 }
 
-/// Een materiaalcategorie binnen een onderdeel (bv. Ski, Snowboard).
-/// Nieuwe categorieen kunnen door een duty manager via de UI worden toegevoegd
-/// zonder dat de applicatie herbouwd hoeft te worden.
-model Category {
+model Categorie {
+  id          String            @id @default(cuid())
+  onderdeelId String
+  onderdeel   Onderdeel         @relation(fields: [onderdeelId], references: [id], onDelete: Cascade)
+  naam        String
+  sortering   Int               @default(0)
+  archivedAt  DateTime?
+  acties      OnderhoudsActie[]
+  velden      VeldDefinitie[]
+  materiaal   Materiaal[]
+
+  @@unique([onderdeelId, naam])
+  @@index([onderdeelId])
+  @@map("categorieen")
+}
+
+/// Onderhoudsacties horen bij een categorie, niet bij het onderdeel: Ski en
+/// Snowboard zitten in hetzelfde onderdeel en hebben tóch eigen actielijsten.
+model OnderhoudsActie {
+  id          String    @id @default(cuid())
+  categorieId String
+  categorie   Categorie @relation(fields: [categorieId], references: [id], onDelete: Cascade)
+  naam        String
+  /// Markeert de actie die de goedkeuringsflow start.
+  isAfkeuren  Boolean   @default(false)
+  sortering   Int       @default(0)
+  /// Verwijderen = archiveren; bestaande logregels blijven ongemoeid.
+  archivedAt  DateTime?
+
+  @@index([categorieId])
+  @@map("onderhoudsacties")
+}
+
+/// Per categorie eigen materiaalvelden (Ski heeft DIN-bereik, E-MTB een
+/// accucapaciteit). De waarden staan als JSON op het materiaal.
+model VeldDefinitie {
+  id          String    @id @default(cuid())
+  categorieId String
+  categorie   Categorie @relation(fields: [categorieId], references: [id], onDelete: Cascade)
+  naam        String
+  type        VeldType  @default(TEKST)
+  eenheid     String?
+  opties      String[]
+  sortering   Int       @default(0)
+  archivedAt  DateTime?
+
+  @@index([categorieId])
+  @@map("velddefinities")
+}
+
+model Materiaal {
+  id               String     @id @default(cuid())
+  /// Zoals op de QR-sticker; handmatig ingevoerd, nooit gegenereerd.
+  materiaalId      String
+  onderdeelId      String
+  onderdeel        Onderdeel  @relation(fields: [onderdeelId], references: [id])
+  categorieId      String
+  categorie        Categorie  @relation(fields: [categorieId], references: [id])
+  merkModel        String
+  locatie          String     @default("")
+  status           Status     @default(IN_GEBRUIK)
+  /// Status waarnaar teruggedraaid wordt als een afkeuring wordt afgewezen.
+  statusVoorKeuring Status?
+  inGebruikSinds   DateTime   @default(now())
+  laatsteOnderhoud DateTime?
+  aantalBeurten    Int        @default(0)
+  /// { velddefinitieId: waarde }
+  veldwaarden      Json       @default("{}")
+  aangemaakt       DateTime   @default(now())
+  logregels        LogRegel[]
+
+  @@unique([onderdeelId, materiaalId])
+  @@index([categorieId])
+  @@map("materiaal")
+}
+
+/// Onveranderlijk: een correctie is een nieuwe registratie, geen bewerking.
+model LogRegel {
+  id             String     @id @default(cuid())
+  materiaalDbId  String
+  materiaal      Materiaal  @relation(fields: [materiaalDbId], references: [id], onDelete: Cascade)
+  /// Tekstkopie, blijft staan als de actie wordt gearchiveerd.
+  actieNaam      String
+  actieId        String?
+  opmerking      String     @default("")
+  /// Alleen gevuld als deze registratie de status wijzigde.
+  statusNa       Status?
+  medewerkerId   String
+  medewerker     Medewerker @relation(fields: [medewerkerId], references: [id])
+  /// Tekstkopie van de naam op het moment van registreren.
+  medewerkerNaam String
+  tijdstip       DateTime   @default(now())
+  soort          LogSoort   @default(REGISTRATIE)
+  /// Idempotentie voor de offline wachtrij.
+  clientId       String     @unique
+
+  @@index([materiaalDbId])
+  @@index([tijdstip])
+  @@map("logregels")
+}
+
+/// Auditspoor van beheerwijzigingen: acties, velden, medewerkers, imports.
+model BeheerLog {
   id           String     @id @default(cuid())
-  naam         String     @unique
-  /// Korte prefix voor automatische materiaal-ID's, bv. "SKI", "SB"
-  prefix       String     @unique
-  /// Onderhoudsacties die voor deze categorie gelden, in weergavevolgorde
-  acties       String[]
-  /// Naam van een optioneel extra specificatieveld voor materiaal in deze
-  /// categorie (bv. "DIN" bij Ski). Leeg = geen extra veld.
-  extraVeldLabel String?
-  departmentId String
-  department   Department @relation(fields: [departmentId], references: [id])
-  aangemaakt   DateTime   @default(now())
-  materialen   Material[]
+  medewerkerId String
+  medewerker   Medewerker @relation(fields: [medewerkerId], references: [id])
+  wat          String
+  detail       Json       @default("{}")
+  tijdstip     DateTime   @default(now())
 
-  @@index([departmentId])
-  @@map("categories")
-}
-
-model Material {
-  /// Materiaal-ID zoals op de QR-code, uniek over alle categorieen heen
-  id           String           @id
-  categoryId   String
-  category     Category         @relation(fields: [categoryId], references: [id])
-  merk         String
-  model        String
-  maat         String?
-  aanschafjaar Int?
-  status       MaterialStatus   @default(IN_GEBRUIK)
-  opmerkingen  String?
-  locatie      String?
-  inGebruikSinds DateTime?
-  /// Waarde voor het categorie-specifieke extra veld (bv. DIN-waarde bij Ski)
-  extraVeldWaarde String?
-  aangemaakt   DateTime         @default(now())
-  logs         MaintenanceLog[]
-
-  @@index([categoryId])
-  @@map("materials")
-}
-
-model MaintenanceLog {
-  id               String          @id @default(cuid())
-  datum            DateTime        @default(now())
-  materialId       String
-  material         Material        @relation(fields: [materialId], references: [id], onDelete: Cascade)
-  actie            String
-  uitgevoerdDoorId String
-  uitgevoerdDoor   User            @relation(fields: [uitgevoerdDoorId], references: [id])
-  opmerkingen      String?
-  nieuweStatus     MaterialStatus?
-
-  @@index([materialId])
-  @@index([datum])
-  @@map("maintenance_logs")
+  @@index([tijdstip])
+  @@map("beheerlog")
 }

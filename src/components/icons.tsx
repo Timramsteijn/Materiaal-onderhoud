@@ -11,6 +11,7 @@ import {
   Printer,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   ArrowRight,
   Check,
   Plus,
@@ -18,7 +19,10 @@ import {
   Download,
   Upload,
   AlertTriangle,
-  Triangle,
+  CircleAlert,
+  Lock,
+  Trash2,
+  WifiOff,
   Bike,
   Target,
   Mountain,
@@ -37,6 +41,7 @@ export {
   Printer,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   ArrowRight,
   Check,
   Plus,
@@ -44,7 +49,10 @@ export {
   Download,
   Upload,
   AlertTriangle,
-  Triangle,
+  CircleAlert,
+  Lock,
+  Trash2,
+  WifiOff,
   Bike,
   Target,
   Mountain,
@@ -58,9 +66,9 @@ export type IconComponent = (props: LucideProps) => ReactNode;
 /**
  * Lucide heeft geen ski-icoon. Zelfgetekend in dezelfde stijl (24x24 grid,
  * stroke-only, ronde caps/joins) uit twee afgeronde ski's met bindingen en
- * twee stokken, voor het onderdeel "Ski & Snowboard".
+ * twee stokken.
  */
-export function SkiIcon({ size = 24, strokeWidth = 1.9, ...props }: LucideProps) {
+export function SkiIcon({ size = 24, strokeWidth = 2, ...props }: LucideProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -82,4 +90,17 @@ export function SkiIcon({ size = 24, strokeWidth = 1.9, ...props }: LucideProps)
       <path d="M13 21.5h9" />
     </svg>
   );
+}
+
+/** Iconen per onderdeel, opgezocht op de `icoon`-sleutel uit de database. */
+export const ONDERDEEL_ICONEN: Record<string, IconComponent> = {
+  ski: SkiIcon,
+  bike: Bike,
+  target: Target,
+  mountain: Mountain,
+  waves: Waves,
+};
+
+export function onderdeelIcoon(sleutel: string): IconComponent {
+  return ONDERDEEL_ICONEN[sleutel] ?? Package;
 }
