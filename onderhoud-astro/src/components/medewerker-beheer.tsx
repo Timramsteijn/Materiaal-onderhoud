@@ -93,8 +93,10 @@ export function MedewerkerBeheer({
                 m.actief ? "bg-green-figure" : "bg-toggle-off"
               }`}
             >
+              {/* left-0 is nodig: zonder houvast zet de browser het bolletje
+                  gecentreerd, en dan schuift het buiten het spoor. */}
               <span
-                className={`motion absolute top-[3px] h-5 w-5 rounded-full bg-creme ${
+                className={`motion absolute left-0 top-[3px] h-5 w-5 rounded-full bg-creme ${
                   m.actief ? "translate-x-[21px]" : "translate-x-[3px]"
                 }`}
               />

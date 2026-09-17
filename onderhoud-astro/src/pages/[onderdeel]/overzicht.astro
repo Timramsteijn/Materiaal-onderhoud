@@ -51,6 +51,7 @@ const [perStatus, perCategorie, perActie, categorieen, stukken] = await Promise.
       id: materiaal.id,
       materiaalId: materiaal.materiaalId,
       merkModel: materiaal.merkModel,
+      categorieId: materiaal.categorieId,
       laatsteOnderhoud: materiaal.laatsteOnderhoud,
       inGebruikSinds: materiaal.inGebruikSinds,
     })
@@ -66,11 +67,22 @@ const maxActie = Math.max(1, ...perActie.map((a) => a.aantal));
 const maxCategorie = Math.max(1, ...perCategorie.map((c) => c.aantal));
 
 // Aandacht nodig = langer dan 9 maanden geen enkele onderhoudsactie. Berekend.
-const aandachtNodig = stukken
+// Zelfde regel als het filter op de materiaallijst, zodat doorklikken klopt.
+const aandachtAlles = stukken
   .map((m) => ({ ...m, dagen: dagenSinds(m.laatsteOnderhoud ?? m.inGebruikSinds) }))
   .filter((m) => m.dagen > AANDACHT_NODIG_MAANDEN * 30)
-  .sort((a, b) => b.dagen - a.dagen)
-  .slice(0, 12);
+  .sort((a, b) => b.dagen - a.dagen);
+
+// De kaart toont er hooguit twaalf; de rest staat achter "alles zien".
+const aandachtNodig = aandachtAlles.slice(0, 12);
+
+const aandachtPerCategorie = new Map<string, number>();
+for (const m of aandachtAlles) {
+  aandachtPerCategorie.set(m.categorieId, (aandachtPerCategorie.get(m.categorieId) ?? 0) + 1);
+}
+
+const materiaalUrl = (params: Record<string, string>) =>
+  `/${slug}/materiaal?${new URLSearchParams(params)}`;
 
 const TEGEL_STIJL = {
   donker: "bg-navy text-creme",
@@ -141,7 +153,11 @@ const tegels = [
           ) : (
             <div class="flex items-end gap-2.5">
               {perActie.map((a) => (
-                <div class="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+                <a
+                  href={`/${slug}/log?actie=${encodeURIComponent(a.actieNaam)}`}
+                  title={`Alle registraties van "${a.actieNaam}" bekijken`}
+                  class="motion flex min-w-0 flex-1 flex-col items-center gap-1.5 rounded px-1 py-1 hover:bg-zand"
+                >
                   <span class="text-[12px] font-bold text-ink">{a.aantal}</span>
                   <div class="flex h-[150px] w-full flex-col justify-end desktop:h-[190px]">
                     <div
@@ -154,7 +170,7 @@ const tegels = [
                   <span class="w-full truncate text-center text-[10.5px] text-text-muted">
                     {a.actieNaam}
                   </span>
-                </div>
+                </a>
               ))}
             </div>
           )
@@ -168,17 +184,39 @@ const tegels = [
           {
             categorieen.map((c) => {
               const n = perCategorie.find((p) => p.categorieId === c.id)?.aantal ?? 0;
+              const teLang = aandachtPerCategorie.get(c.id) ?? 0;
               return (
-                <div>
-                  <div class="flex justify-between text-[12.5px] text-ink">
-                    <span>{c.naam}</span>
-                    <span class="font-bold">{formatAantal(n)}</span>
-                  </div>
-                  <div class="mt-1 h-[8px] overflow-hidden rounded-full bg-zand">
-                    <div
-                      class="h-full rounded-full bg-accent"
-                      style={`width: ${(n / maxCategorie) * 100}%`}
-                    />
+                // Twee losse links naast elkaar: een link in een link mag niet.
+                <div class="flex items-center gap-2">
+                  <a
+                    href={materiaalUrl({ categorie: c.id })}
+                    title={`Al het materiaal in ${c.naam} bekijken`}
+                    class="motion min-w-0 flex-1 rounded px-1 py-0.5 hover:bg-zand"
+                  >
+                    <div class="flex justify-between gap-2 text-[12.5px] text-ink">
+                      <span class="truncate">{c.naam}</span>
+                      <span class="font-bold">{formatAantal(n)}</span>
+                    </div>
+                    <div class="mt-1 h-[8px] overflow-hidden rounded-full bg-zand">
+                      <div
+                        class="h-full rounded-full bg-accent"
+                        style={`width: ${(n / maxCategorie) * 100}%`}
+                      />
+                    </div>
+                  </a>
+                  {/* Vaste breedte, ook zonder badge: anders worden de balken
+                      van categorieën met aandacht korter en vergelijken ze niet. */}
+                  <div class="w-[52px] shrink-0 text-right">
+                    {teLang > 0 && (
+                      <a
+                        href={materiaalUrl({ categorie: c.id, aandacht: "1" })}
+                        title={`${teLang}x in ${c.naam} langer dan ${AANDACHT_NODIG_MAANDEN} maanden geen onderhoud`}
+                        class="motion inline-flex items-center gap-1 rounded-full bg-amber-tint px-2 py-1 text-[11px] font-bold text-amber-text hover:underline"
+                      >
+                        <AlertTriangle size={11} strokeWidth={2.4} />
+                        {teLang}
+                      </a>
+                    )}
                   </div>
                 </div>
               );
@@ -195,11 +233,23 @@ const tegels = [
 
     {/* Aandacht nodig */}
     <Kaart className="mt-3">
-      <div class="flex items-center gap-1.5">
-        <AlertTriangle size={16} strokeWidth={2.2} className="text-red-text" />
-        <h2 class="font-body text-[12px] font-extrabold uppercase tracking-[0.14em] text-red-text">
-          Aandacht nodig
-        </h2>
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5">
+          <AlertTriangle size={16} strokeWidth={2.2} className="text-red-text" />
+          <h2 class="font-body text-[12px] font-extrabold uppercase tracking-[0.14em] text-red-text">
+            Aandacht nodig
+          </h2>
+        </div>
+        {
+          aandachtAlles.length > 0 && (
+            <a
+              href={materiaalUrl({ aandacht: "1" })}
+              class="shrink-0 text-[11.5px] font-bold text-link hover:underline"
+            >
+              alles zien ({aandachtAlles.length})
+            </a>
+          )
+        }
       </div>
       <p class="mb-3 mt-0.5 text-[11.5px] text-text-muted">
         Langer dan {AANDACHT_NODIG_MAANDEN} maanden geen onderhoud geregistreerd.

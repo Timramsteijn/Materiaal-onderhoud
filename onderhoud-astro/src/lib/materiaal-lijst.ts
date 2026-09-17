@@ -2,8 +2,9 @@ import { and, asc, count, eq, like, or, sql } from "drizzle-orm";
 
 import { db } from "./context";
 import { categorieen, materiaal } from "../db/schema";
+import { heeftAandachtNodig } from "./domein";
 
-export type LijstFilters = { q?: string; categorie?: string };
+export type LijstFilters = { q?: string; categorie?: string; aandacht?: boolean };
 
 /** Materiaal van één onderdeel, gefilterd op zoekterm en categorie. */
 export async function haalMateriaal(onderdeelId: string, filters: LijstFilters) {
@@ -35,6 +36,7 @@ export async function haalMateriaal(onderdeelId: string, filters: LijstFilters) 
         locatie: materiaal.locatie,
         status: materiaal.status,
         laatsteOnderhoud: materiaal.laatsteOnderhoud,
+        inGebruikSinds: materiaal.inGebruikSinds,
         categorieNaam: categorieen.naam,
       })
       .from(materiaal)
@@ -43,7 +45,13 @@ export async function haalMateriaal(onderdeelId: string, filters: LijstFilters) 
       .orderBy(asc(materiaal.materiaalId)),
   ]);
 
-  return { totaal: totaal[0]?.aantal ?? 0, materiaal: rijen };
+  // Het aandacht-filter draait bewust in JavaScript: zo beslist overal exact
+  // dezelfde functie wie aandacht nodig heeft — overzicht, badge en lijst.
+  const gefilterd = filters.aandacht
+    ? rijen.filter((r) => heeftAandachtNodig(r.laatsteOnderhoud, r.inGebruikSinds))
+    : rijen;
+
+  return { totaal: totaal[0]?.aantal ?? 0, materiaal: gefilterd };
 }
 
 export type MateriaalRij = Awaited<ReturnType<typeof haalMateriaal>>["materiaal"][number];

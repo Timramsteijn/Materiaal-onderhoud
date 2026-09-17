@@ -64,6 +64,8 @@ const basis = `/${slug}/materiaal`;
 const filters = {
   q: Astro.url.searchParams.get("q") ?? undefined,
   categorie: Astro.url.searchParams.get("categorie") ?? undefined,
+  // Vanaf het overzicht: alleen materiaal dat te lang niet onderhouden is.
+  aandacht: Astro.url.searchParams.get("aandacht") === "1",
 };
 
 // De QR bevat de volledige URL van dit kaartje, zodat een scan met de gewone

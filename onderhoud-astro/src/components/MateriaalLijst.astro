@@ -2,7 +2,7 @@
 import { Zoekveld } from "@/components/zoekveld";
 import { StatusBadge, CategorieBadge, Pill, LegeToestand, OutlineKnop } from "@/components/ui";
 import { Search, Plus } from "@/components/icons";
-import { formatDatum } from "@/lib/domein";
+import { AANDACHT_NODIG_MAANDEN, formatDatum, heeftAandachtNodig } from "@/lib/domein";
 import { getCategorieen } from "@/lib/onderdeel";
 import { haalMateriaal, type LijstFilters } from "@/lib/materiaal-lijst";
 
@@ -28,8 +28,10 @@ function href(extra: LijstFilters) {
   const p = new URLSearchParams();
   const q = extra.q ?? filters.q;
   const categorie = "categorie" in extra ? extra.categorie : filters.categorie;
+  const aandacht = "aandacht" in extra ? extra.aandacht : filters.aandacht;
   if (q) p.set("q", q);
   if (categorie) p.set("categorie", categorie);
+  if (aandacht) p.set("aandacht", "1");
   const qs = p.toString();
   return qs ? `${basis}?${qs}` : basis;
 }
@@ -40,6 +42,7 @@ const actieveCategorie = categorieen.find((c) => c.id === filters.categorie);
 const query = new URLSearchParams();
 if (filters.q) query.set("q", filters.q);
 if (filters.categorie) query.set("categorie", filters.categorie);
+if (filters.aandacht) query.set("aandacht", "1");
 const queryString = query.toString();
 ---
 
@@ -70,10 +73,17 @@ const queryString = query.toString();
     )
   }
 
+  {/* Los van de categorieën: combineert ermee in plaats van ze te vervangen. */}
+  <div class="mt-2 flex items-center gap-2">
+    <Pill href={href({ aandacht: !filters.aandacht })} actief={Boolean(filters.aandacht)}>
+      Aandacht nodig
+    </Pill>
+  </div>
+
   <p class="mt-2.5 text-[12px] text-text-muted">
     {materiaal.length} van {totaal} stuks{
       actieveCategorie ? ` · ${actieveCategorie.naam}` : " · alle categorieën"
-    }
+    }{filters.aandacht ? ` · langer dan ${AANDACHT_NODIG_MAANDEN} maanden geen onderhoud` : ""}
   </p>
 
   {
@@ -83,17 +93,21 @@ const queryString = query.toString();
           icoon={<Search size={26} strokeWidth={2} />}
           kop="Geen materiaal gevonden"
           uitleg={
-            filters.q
-              ? `Geen materiaal in ${onderdeelNaam} dat overeenkomt met "${filters.q}"${
+            filters.aandacht
+              ? `Al het materiaal in ${onderdeelNaam}${
                   actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
-                }.`
-              : `Er staat nog geen materiaal in ${onderdeelNaam}${
-                  actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
-                }.`
+                } is binnen ${AANDACHT_NODIG_MAANDEN} maanden onderhouden.`
+              : filters.q
+                ? `Geen materiaal in ${onderdeelNaam} dat overeenkomt met "${filters.q}"${
+                    actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
+                  }.`
+                : `Er staat nog geen materiaal in ${onderdeelNaam}${
+                    actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
+                  }.`
           }
           acties={
             <>
-              {(filters.q || filters.categorie) && (
+              {(filters.q || filters.categorie || filters.aandacht) && (
                 <OutlineKnop href={basis}>Filter wissen</OutlineKnop>
               )}
               <a
@@ -119,6 +133,7 @@ const queryString = query.toString();
             .filter(Boolean)
             .join(" · ");
           const actief = actiefId === m.materiaalId;
+          const aandacht = heeftAandachtNodig(m.laatsteOnderhoud, m.inGebruikSinds);
           return (
             <li>
               <a
@@ -133,6 +148,11 @@ const queryString = query.toString();
                       {m.materiaalId}
                     </span>
                     <CategorieBadge naam={m.categorieNaam} />
+                    {aandacht && (
+                      <span class="shrink-0 whitespace-nowrap rounded-full bg-amber-tint px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.06em] text-amber-text">
+                        Aandacht
+                      </span>
+                    )}
                   </p>
                   <p class="truncate text-[13.5px] text-text-medium">{m.merkModel}</p>
                   <p class="truncate text-[12px] text-text-muted">{meta}</p>
