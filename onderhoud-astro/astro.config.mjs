@@ -27,5 +27,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    css: {
+      // Tailwind loopt via de Vite-plugin hierboven, dus PostCSS heeft niets te
+      // doen. Een lege config zet ook de zoektocht omhoog stil: zonder dit pakt
+      // Vite de postcss.config.mjs van de Next.js-app in de map erboven op.
+      postcss: {},
+    },
   },
 });
