@@ -1,4 +1,8 @@
 import { defineMiddleware } from "astro:middleware";
+import { eq } from "drizzle-orm";
+
+import { db } from "@/lib/context";
+import { medewerkers } from "@/db/schema";
 
 /**
  * Alles zit achter de login. Assets serveert Cloudflare zelf (die komen niet
@@ -10,8 +14,36 @@ function isOpen(pad: string): boolean {
   return OPEN_PADEN.some((open) => pad === open || pad.startsWith(`${open}/`));
 }
 
+/**
+ * Alleen tijdens ontwikkelen: zet `ONTWIKKEL_INLOG=t.verhoeven` in een
+ * .env-bestand en je slaat het inlogscherm over. `import.meta.env.DEV` is bij
+ * het bouwen een constante, dus dit blok verdwijnt volledig uit een
+ * productiebuild — het kan nooit per ongeluk meeliften naar Cloudflare.
+ */
+async function ontwikkelMedewerker() {
+  const gebruikersnaam = import.meta.env.ONTWIKKEL_INLOG;
+  if (!import.meta.env.DEV || !gebruikersnaam) return null;
+
+  const rij = await db().query.medewerkers.findFirst({
+    where: eq(medewerkers.gebruikersnaam, String(gebruikersnaam).trim().toLowerCase()),
+  });
+  if (!rij) return null;
+
+  return { id: rij.id, naam: rij.naam, rol: rij.rol, functie: rij.functie };
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
-  const medewerker = (await context.session?.get("medewerker")) ?? null;
+  let medewerker = (await context.session?.get("medewerker")) ?? null;
+
+  if (!medewerker) {
+    const ontwikkel = await ontwikkelMedewerker();
+    if (ontwikkel) {
+      // In de sessie zetten, want de actions lezen daar hun medewerker uit.
+      context.session?.set("medewerker", ontwikkel);
+      medewerker = ontwikkel;
+    }
+  }
+
   context.locals.medewerker = medewerker;
 
   const pad = context.url.pathname;

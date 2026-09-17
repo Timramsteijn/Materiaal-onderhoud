@@ -58,6 +58,20 @@ npm run dev
 Ctrl+C. Wil je met schone gegevens opnieuw beginnen, verwijder dan de map
 `.wrangler` en draai `db:migrate` en `seed` nog eens.
 
+### Het inlogscherm overslaan tijdens ontwikkelen
+
+Kopieer `.env.voorbeeld` naar `.env` en je werkt meteen als de medewerker die
+daarin staat:
+
+```
+ONTWIKKEL_INLOG=t.verhoeven
+```
+
+Dit werkt alleen met `npm run dev`. In een productiebuild wordt de hele
+opzoeking tot `return null` gecompileerd, dus hij kan daar niet aanstaan — ook
+niet als de variabele op de server gezet zou worden. `.env` staat in
+`.gitignore`; weghalen zet de gewone login terug.
+
 De seed maakt vier accounts aan, allemaal met het wachtwoord uit
 `SEED_ADMIN_WACHTWOORD`:
 

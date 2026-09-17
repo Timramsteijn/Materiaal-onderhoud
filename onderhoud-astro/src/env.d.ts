@@ -1,6 +1,15 @@
 /// <reference types="astro/client" />
 /// <reference types="@cloudflare/workers-types" />
 
+interface ImportMetaEnv {
+  /** Ontwikkelhulp: sla het inlogscherm over als deze gebruikersnaam bestaat. */
+  readonly ONTWIKKEL_INLOG?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 interface Env {
   DB: D1Database;
   SESSION: KVNamespace;
