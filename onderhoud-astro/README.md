@@ -43,12 +43,20 @@ SEED_ADMIN_WACHTWOORD='kies-een-wachtwoord' npm run seed
 npm run dev          # http://localhost:4321
 ```
 
-Op Windows zet je die variabele apart, want de regel hierboven is bash-syntax:
+Op Windows (CMD) zet je die variabele apart, want de regel hierboven is
+bash-syntax:
 
 ```
+npm install
+npm run db:migrate
 set SEED_ADMIN_WACHTWOORD=kies-een-wachtwoord
 npm run seed
+npm run dev
 ```
+
+`npm run dev` blijft draaien zolang het venster openstaat; stoppen doe je met
+Ctrl+C. Wil je met schone gegevens opnieuw beginnen, verwijder dan de map
+`.wrangler` en draai `db:migrate` en `seed` nog eens.
 
 De seed maakt vier accounts aan, allemaal met het wachtwoord uit
 `SEED_ADMIN_WACHTWOORD`:
