@@ -10,9 +10,10 @@ dist/
 .dev.vars
 .dev.vars.*
 
-# env
+# env — het voorbeeldbestand mag wel mee, het is geen echte configuratie
 .env
 .env.*
+!.env.voorbeeld
 
 # misc
 .DS_Store
