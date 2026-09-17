@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 
 import { db } from "@/lib/context";
 import { medewerkers } from "@/db/schema";
+import { databaseMeldingAntwoord, isDatabaseNietIngericht } from "@/lib/database-melding";
 
 /**
  * Alles zit achter de login. Assets serveert Cloudflare zelf (die komen niet
@@ -33,6 +34,19 @@ async function ontwikkelMedewerker() {
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  try {
+    return await afhandelen(context, next);
+  } catch (fout) {
+    // Een lege database is geen storing maar een openstaande installatiestap.
+    if (isDatabaseNietIngericht(fout)) return databaseMeldingAntwoord();
+    throw fout;
+  }
+});
+
+type Context = Parameters<Parameters<typeof defineMiddleware>[0]>[0];
+type Volgende = Parameters<Parameters<typeof defineMiddleware>[0]>[1];
+
+async function afhandelen(context: Context, next: Volgende) {
   let medewerker = (await context.session?.get("medewerker")) ?? null;
 
   if (!medewerker) {
@@ -60,4 +74,4 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   return next();
-});
+}

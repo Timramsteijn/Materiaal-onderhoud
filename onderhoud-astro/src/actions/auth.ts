@@ -2,6 +2,7 @@ import { defineAction } from "astro:actions";
 import { z } from "astro/zod";
 
 import { inloggen as inlogPoging } from "@/lib/auth";
+import { isDatabaseNietIngericht } from "@/lib/database-melding";
 
 export const inloggen = defineAction({
   accept: "form",
@@ -23,7 +24,19 @@ export const inloggen = defineAction({
       };
     }
 
-    const medewerker = await inlogPoging(context.session, naam, geheim);
+    let medewerker;
+    try {
+      medewerker = await inlogPoging(context.session, naam, geheim);
+    } catch (fout) {
+      // Hier is de melding nuttiger dan een 500: er is niets stuk, de database
+      // moet alleen nog gemigreerd en geseed worden.
+      if (!isDatabaseNietIngericht(fout)) throw fout;
+      return {
+        ok: false as const,
+        gebruikersnaam: naam,
+        melding: "De database is nog niet ingericht. Draai `npm run db:migrate` en `npm run seed`.",
+      };
+    }
     // Bewust één neutrale melding: het inlogscherm verraadt niet of een
     // gebruikersnaam bestaat.
     return medewerker
