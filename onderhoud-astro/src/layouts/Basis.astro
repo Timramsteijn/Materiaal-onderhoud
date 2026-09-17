@@ -1,0 +1,43 @@
+---
+import "../styles/globals.css";
+
+interface Props {
+  titel?: string;
+  /** Extra klassen op <body>, bv. voor het printvel. */
+  bodyClass?: string;
+}
+
+const { titel, bodyClass = "" } = Astro.props;
+const volledigeTitel = titel ? `${titel} — Materiaalonderhoud` : "Materiaalonderhoud — Outdoor Valley";
+---
+
+<!doctype html>
+<html lang="nl" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#15212b" />
+    <meta
+      name="description"
+      content="Scan, log en beheer onderhoud aan verhuurmateriaal (ski's, snowboards en meer)."
+    />
+    <title>{volledigeTitel}</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/icons/icon.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Onderhoud" />
+  </head>
+  <body class={`min-h-full antialiased ${bodyClass}`}>
+    <slot />
+    {/* Registreert de service worker zodat de app installeerbaar is (PWA). */}
+    <script is:inline>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").catch(() => {
+          // Registratie mislukt (bv. onbeveiligde herkomst) — de app werkt gewoon.
+        });
+      }
+    </script>
+  </body>
+</html>

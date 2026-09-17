@@ -1,0 +1,66 @@
+---
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { Zoekveld } from "@/components/zoekveld";
+import MateriaalLijst from "@/components/MateriaalLijst.astro";
+import { ScanLine, Package, Plus } from "@/components/icons";
+import { getOnderdeel } from "@/lib/onderdeel";
+
+const slug = Astro.params.onderdeel!;
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const medewerker = Astro.locals.medewerker!;
+const filters = {
+  q: Astro.url.searchParams.get("q") ?? undefined,
+  categorie: Astro.url.searchParams.get("categorie") ?? undefined,
+};
+const basis = `/${slug}/materiaal`;
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Materiaal">
+  <TopBar medewerkerNaam={medewerker.naam} functie={medewerker.functie}>
+    <div class="flex min-w-0 flex-1 items-center gap-3">
+      <div class="min-w-0 max-w-[420px] flex-1">
+        <Zoekveld client:idle pad={basis} query={Astro.url.searchParams.toString()} />
+      </div>
+      <a
+        href={`/${slug}/scannen`}
+        class="motion flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-accent-on hover:bg-accent-pressed"
+      >
+        <ScanLine size={16} strokeWidth={2} />
+        QR scannen
+      </a>
+      <a
+        href={`${basis}/nieuw`}
+        class="motion flex h-10 shrink-0 items-center gap-1.5 rounded-full border-[1.5px] border-ink px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-ink hover:bg-neutral-fill"
+      >
+        <Plus size={16} strokeWidth={2} />
+        Nieuw
+      </a>
+    </div>
+  </TopBar>
+
+  <main class="flex flex-1 pb-24 desktop:pb-0">
+    <div
+      class="w-full desktop:w-[392px] desktop:shrink-0 desktop:overflow-y-auto desktop:border-r desktop:border-border-light"
+    >
+      <MateriaalLijst
+        slug={slug}
+        onderdeelId={onderdeel.id}
+        onderdeelNaam={onderdeel.naam}
+        filters={filters}
+      />
+    </div>
+
+    {/* Rechterkolom op desktop: nog geen materiaal geselecteerd */}
+    <div class="hidden flex-1 items-center justify-center p-10 text-center desktop:flex">
+      <div class="max-w-[36ch] text-text-muted">
+        <Package size={28} strokeWidth={2} className="mx-auto mb-3" />
+        <p class="text-[13.5px]">
+          Kies materiaal uit de lijst om het kaartje te bekijken, of scan de QR-sticker.
+        </p>
+      </div>
+    </div>
+  </main>
+</Onderdeel>

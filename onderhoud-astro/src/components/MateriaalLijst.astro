@@ -1,0 +1,148 @@
+---
+import { Zoekveld } from "@/components/zoekveld";
+import { StatusBadge, CategorieBadge, Pill, LegeToestand, OutlineKnop } from "@/components/ui";
+import { Search, Plus } from "@/components/icons";
+import { formatDatum } from "@/lib/domein";
+import { getCategorieen } from "@/lib/onderdeel";
+import { haalMateriaal, type LijstFilters } from "@/lib/materiaal-lijst";
+
+interface Props {
+  slug: string;
+  onderdeelId: string;
+  onderdeelNaam: string;
+  filters: LijstFilters;
+  /** Markeert het geopende materiaal in de master/detail op desktop. */
+  actiefId?: string;
+}
+
+const { slug, onderdeelId, onderdeelNaam, filters, actiefId } = Astro.props;
+
+const [{ totaal, materiaal }, categorieen] = await Promise.all([
+  haalMateriaal(onderdeelId, filters),
+  getCategorieen(onderdeelId),
+]);
+
+const basis = `/${slug}/materiaal`;
+
+function href(extra: LijstFilters) {
+  const p = new URLSearchParams();
+  const q = extra.q ?? filters.q;
+  const categorie = "categorie" in extra ? extra.categorie : filters.categorie;
+  if (q) p.set("q", q);
+  if (categorie) p.set("categorie", categorie);
+  const qs = p.toString();
+  return qs ? `${basis}?${qs}` : basis;
+}
+
+const actieveCategorie = categorieen.find((c) => c.id === filters.categorie);
+
+// Het zoekveld houdt de overige filters vast.
+const query = new URLSearchParams();
+if (filters.q) query.set("q", filters.q);
+if (filters.categorie) query.set("categorie", filters.categorie);
+const queryString = query.toString();
+---
+
+<div class="px-[18px] pt-4 desktop:px-4 desktop:pt-5">
+  <div class="flex gap-2 desktop:hidden">
+    <Zoekveld client:idle pad={basis} query={queryString} />
+    <a
+      href={`${basis}/nieuw`}
+      aria-label="Nieuw materiaal"
+      class="motion flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-accent-on hover:bg-accent-pressed"
+    >
+      <Plus size={20} strokeWidth={2} />
+    </a>
+  </div>
+
+  {
+    categorieen.length > 0 && (
+      <div class="no-scrollbar mt-3 flex items-center gap-2 overflow-x-auto desktop:flex-wrap">
+        <Pill href={href({ categorie: undefined })} actief={!filters.categorie}>
+          Alles
+        </Pill>
+        {categorieen.map((c) => (
+          <Pill href={href({ categorie: c.id })} actief={filters.categorie === c.id}>
+            {c.naam}
+          </Pill>
+        ))}
+      </div>
+    )
+  }
+
+  <p class="mt-2.5 text-[12px] text-text-muted">
+    {materiaal.length} van {totaal} stuks{
+      actieveCategorie ? ` · ${actieveCategorie.naam}` : " · alle categorieën"
+    }
+  </p>
+
+  {
+    materiaal.length === 0 ? (
+      <div class="mt-3">
+        <LegeToestand
+          icoon={<Search size={26} strokeWidth={2} />}
+          kop="Geen materiaal gevonden"
+          uitleg={
+            filters.q
+              ? `Geen materiaal in ${onderdeelNaam} dat overeenkomt met "${filters.q}"${
+                  actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
+                }.`
+              : `Er staat nog geen materiaal in ${onderdeelNaam}${
+                  actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
+                }.`
+          }
+          acties={
+            <>
+              {(filters.q || filters.categorie) && (
+                <OutlineKnop href={basis}>Filter wissen</OutlineKnop>
+              )}
+              <a
+                href={`${basis}/nieuw`}
+                class="motion lift flex min-h-[44px] items-center gap-2 rounded-full bg-accent px-5 text-[13px] font-extrabold uppercase tracking-[0.08em] text-accent-on hover:bg-accent-pressed"
+              >
+                <Plus size={16} strokeWidth={2} />
+                Nieuw
+              </a>
+            </>
+          }
+        />
+      </div>
+    ) : (
+      <ul class="mt-3 space-y-2.5 pb-4">
+        {materiaal.map((m) => {
+          const meta = [
+            m.locatie,
+            m.laatsteOnderhoud
+              ? `laatste onderhoud ${formatDatum(m.laatsteOnderhoud)}`
+              : "nog geen onderhoud",
+          ]
+            .filter(Boolean)
+            .join(" · ");
+          const actief = actiefId === m.materiaalId;
+          return (
+            <li>
+              <a
+                href={`${basis}/${encodeURIComponent(m.materiaalId)}`}
+                class={`motion flex items-center justify-between gap-3 rounded-card border bg-creme p-3.5 shadow-[var(--shadow-light)] hover:shadow-[var(--shadow-hover)] ${
+                  actief ? "border-accent" : "border-border-light hover:border-accent"
+                }`}
+              >
+                <div class="min-w-0">
+                  <p class="flex items-center gap-1.5">
+                    <span class="text-[16px] font-extrabold tracking-[0.02em] text-ink">
+                      {m.materiaalId}
+                    </span>
+                    <CategorieBadge naam={m.categorieNaam} />
+                  </p>
+                  <p class="truncate text-[13.5px] text-text-medium">{m.merkModel}</p>
+                  <p class="truncate text-[12px] text-text-muted">{meta}</p>
+                </div>
+                <StatusBadge status={m.status} />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    )
+  }
+</div>

@@ -1,0 +1,286 @@
+---
+import { actions } from "astro:actions";
+import { and, asc, count, desc, eq, isNull } from "drizzle-orm";
+
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { Zoekveld } from "@/components/zoekveld";
+import MateriaalLijst from "@/components/MateriaalLijst.astro";
+import { OfflineMelding } from "@/components/offline-melding";
+import { RegistratieFormulier } from "@/components/registratie-formulier";
+import { MateriaalBewerken } from "@/components/materiaal-bewerken";
+import { StatusBadge, CategorieBadge, Kaart, KaartTitel } from "@/components/ui";
+import { ChevronLeft, Printer, ScanLine, Plus } from "@/components/icons";
+import { db } from "@/lib/context";
+import { getOnderdeel } from "@/lib/onderdeel";
+import { categorieen, logregels, materiaal, onderhoudsacties, velddefinities } from "@/db/schema";
+import { formatDatum, formatTijd } from "@/lib/domein";
+import { isBeheerder } from "@/lib/permissies";
+import { materiaalUrl } from "@/lib/url";
+import { qrSvg } from "@/lib/qr";
+
+const slug = Astro.params.onderdeel!;
+const materiaalId = decodeURIComponent(Astro.params.materiaalId!);
+
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const stuk = await db().query.materiaal.findFirst({
+  where: and(eq(materiaal.onderdeelId, onderdeel.id), eq(materiaal.materiaalId, materiaalId)),
+});
+// Een materiaal-URL uit een ander onderdeel geeft 404 — geen stille wissel.
+if (!stuk) return Astro.rewrite("/404");
+
+const [categorie, acties, velden, historie, totaalLog] = await Promise.all([
+  db().query.categorieen.findFirst({ where: eq(categorieen.id, stuk.categorieId) }),
+  db()
+    .select()
+    .from(onderhoudsacties)
+    .where(
+      and(eq(onderhoudsacties.categorieId, stuk.categorieId), isNull(onderhoudsacties.archivedAt))
+    )
+    .orderBy(asc(onderhoudsacties.sortering)),
+  db()
+    .select()
+    .from(velddefinities)
+    .where(
+      and(eq(velddefinities.categorieId, stuk.categorieId), isNull(velddefinities.archivedAt))
+    )
+    .orderBy(asc(velddefinities.sortering)),
+  db()
+    .select()
+    .from(logregels)
+    .where(eq(logregels.materiaalDbId, stuk.id))
+    .orderBy(desc(logregels.tijdstip))
+    .limit(3),
+  db().select({ aantal: count() }).from(logregels).where(eq(logregels.materiaalDbId, stuk.id)),
+]);
+
+const aantalLogregels = totaalLog[0]?.aantal ?? 0;
+const veldwaarden = JSON.parse(stuk.veldwaarden || "{}") as Record<string, string>;
+
+const medewerker = Astro.locals.medewerker!;
+const basis = `/${slug}/materiaal`;
+const filters = {
+  q: Astro.url.searchParams.get("q") ?? undefined,
+  categorie: Astro.url.searchParams.get("categorie") ?? undefined,
+};
+
+// De QR bevat de volledige URL van dit kaartje, zodat een scan met de gewone
+// telefooncamera ook buiten de app werkt.
+const qr = qrSvg(materiaalUrl(Astro.url, slug, stuk.materiaalId), { kleur: "#f4f2ec" });
+
+const nu = new Date();
+const nuLabel = `${formatDatum(nu)} om ${formatTijd(nu)}`;
+
+const specs = [
+  { label: "Categorie", waarde: categorie?.naam ?? "—" },
+  { label: "Merk / model", waarde: stuk.merkModel },
+  { label: "Locatie", waarde: stuk.locatie || "—" },
+  { label: "In gebruik sinds", waarde: formatDatum(stuk.inGebruikSinds) },
+  {
+    label: "Laatste groot onderhoud",
+    waarde: stuk.laatsteOnderhoud ? formatDatum(stuk.laatsteOnderhoud) : "Nog niet",
+  },
+  { label: "Onderhoudsbeurten", waarde: String(stuk.aantalBeurten) },
+];
+---
+
+<Onderdeel onderdeel={onderdeel} titel={stuk.materiaalId}>
+  <TopBar medewerkerNaam={medewerker.naam} functie={medewerker.functie}>
+    <div class="flex min-w-0 flex-1 items-center gap-3">
+      <div class="min-w-0 max-w-[420px] flex-1">
+        <Zoekveld client:idle pad={basis} query={Astro.url.searchParams.toString()} />
+      </div>
+      <a
+        href={`/${slug}/scannen`}
+        class="motion flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-accent-on hover:bg-accent-pressed"
+      >
+        <ScanLine size={16} strokeWidth={2} />
+        QR scannen
+      </a>
+      <a
+        href={`${basis}/nieuw`}
+        class="motion flex h-10 shrink-0 items-center gap-1.5 rounded-full border-[1.5px] border-ink px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-ink hover:bg-neutral-fill"
+      >
+        <Plus size={16} strokeWidth={2} />
+        Nieuw
+      </a>
+    </div>
+  </TopBar>
+
+  <main class="flex flex-1 pb-24 desktop:pb-0">
+    {/* Masterkolom: op mobiel verborgen — het kaartje is daar een eigen pagina */}
+    <div
+      class="hidden desktop:block desktop:w-[392px] desktop:shrink-0 desktop:overflow-y-auto desktop:border-r desktop:border-border-light"
+    >
+      <MateriaalLijst
+        slug={slug}
+        onderdeelId={onderdeel.id}
+        onderdeelNaam={onderdeel.naam}
+        filters={filters}
+        actiefId={stuk.materiaalId}
+      />
+    </div>
+
+    <div class="min-w-0 flex-1 px-[18px] pt-4 desktop:overflow-y-auto desktop:px-6 desktop:pt-6">
+      <a
+        href={basis}
+        class="motion mb-3 flex items-center gap-1 text-[13px] font-semibold text-link hover:underline desktop:hidden"
+      >
+        <ChevronLeft size={16} strokeWidth={2} />
+        Terug naar materiaal
+      </a>
+
+      <OfflineMelding client:idle />
+
+      {/* Kopkaart */}
+      <Kaart className="flex items-start justify-between gap-4">
+        <div class="min-w-0">
+          <p class="text-[26px] font-extrabold leading-tight tracking-[0.02em] text-ink desktop:text-[32px]">
+            {stuk.materiaalId}
+          </p>
+          <p class="mt-0.5 text-[14px] text-text-medium">{stuk.merkModel}</p>
+          <div class="mt-2 flex flex-wrap items-center gap-1.5">
+            {categorie && <CategorieBadge naam={categorie.naam} />}
+            <StatusBadge status={stuk.status} />
+          </div>
+        </div>
+        <div class="shrink-0 text-center">
+          <div
+            class="flex h-[78px] w-[78px] items-center justify-center rounded-card bg-navy p-1.5 desktop:h-[72px] desktop:w-[72px]"
+            role="img"
+            aria-label={`QR-code voor ${stuk.materiaalId}`}
+            set:html={qr}
+          />
+          <a
+            href={`${basis}/${encodeURIComponent(stuk.materiaalId)}/labels`}
+            class="motion mt-1.5 inline-flex items-center gap-1 text-[11.5px] font-bold text-link hover:underline"
+          >
+            <Printer size={13} strokeWidth={2} />
+            printen
+          </a>
+        </div>
+      </Kaart>
+
+      {/* Specificaties: algemeen + de velden van déze categorie */}
+      <Kaart className="mt-3 desktop:grid desktop:grid-cols-2 desktop:gap-x-8">
+        <div>
+          <KaartTitel>Algemeen</KaartTitel>
+          <dl class="mt-1">
+            {
+              specs.map((spec) => (
+                <div class="flex items-baseline justify-between gap-4 border-b border-zand py-2.5 last:border-b-0">
+                  <dt class="text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted">
+                    {spec.label}
+                  </dt>
+                  <dd class="text-right text-[13.5px] text-ink">{spec.waarde}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        {
+          velden.length > 0 && (
+            <div class="mt-4 desktop:mt-0">
+              <h3 class="font-body text-[12px] font-extrabold uppercase tracking-[0.14em] text-link">
+                Velden van categorie {categorie?.naam}
+              </h3>
+              <dl class="mt-1">
+                {velden.map((veld) => (
+                  <div class="flex items-baseline justify-between gap-4 border-b border-zand py-2.5 last:border-b-0">
+                    <dt class="text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted">
+                      {veld.naam}
+                    </dt>
+                    <dd class="text-right text-[13.5px] text-ink">
+                      {veldwaarden[veld.id]
+                        ? `${veldwaarden[veld.id]}${veld.eenheid ? ` ${veld.eenheid}` : ""}`
+                        : "—"}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )
+        }
+      </Kaart>
+
+      <div class="mt-3 desktop:flex desktop:items-start desktop:gap-4">
+        <RegistratieFormulier
+          client:load
+          materiaalDbId={stuk.id}
+          materiaalLabel={stuk.materiaalId}
+          acties={acties.map((a) => ({ id: a.id, naam: a.naam, isAfkeuren: a.isAfkeuren }))}
+          medewerkerNaam={medewerker.naam}
+          nuLabel={nuLabel}
+          actieUrl={`${Astro.url.pathname}${actions.registreerOnderhoud.queryString}`}
+        />
+
+        {/* Historie */}
+        <Kaart className="mt-3 desktop:mt-0 desktop:w-[300px] desktop:shrink-0">
+          <div class="flex items-center justify-between gap-2">
+            <KaartTitel>Historie</KaartTitel>
+            {
+              aantalLogregels > historie.length && (
+                <a
+                  href={`/${slug}/log?materiaal=${encodeURIComponent(stuk.materiaalId)}`}
+                  class="text-[11.5px] font-bold text-link hover:underline"
+                >
+                  alles zien ({aantalLogregels})
+                </a>
+              )
+            }
+          </div>
+
+          {
+            historie.length === 0 ? (
+              <p class="mt-2 text-[13px] text-text-muted">Nog geen onderhoud geregistreerd.</p>
+            ) : (
+              <ul class="mt-3 space-y-3">
+                {historie.map((log) => (
+                  <li class="relative border-l-2 border-border-light pl-3.5">
+                    <span class="absolute -left-[5.5px] top-1.5 h-[9px] w-[9px] rounded-full bg-accent" />
+                    <div class="flex items-baseline justify-between gap-2">
+                      <p class="text-[14px] font-extrabold text-ink">{log.actieNaam}</p>
+                      <p class="shrink-0 text-[12px] text-text-muted">{formatDatum(log.tijdstip)}</p>
+                    </div>
+                    <p class="text-[12.5px] text-text-muted">
+                      {log.medewerkerNaam} · {formatTijd(log.tijdstip)}
+                    </p>
+                    {log.opmerking && (
+                      <p class="mt-0.5 text-[13px] text-text-medium">
+                        &ldquo;{log.opmerking}&rdquo;
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </Kaart>
+      </div>
+
+      <div class="mt-3 pb-4">
+        <MateriaalBewerken
+          client:idle
+          materiaal={{
+            id: stuk.id,
+            merkModel: stuk.merkModel,
+            locatie: stuk.locatie,
+            inGebruikSinds: stuk.inGebruikSinds.toISOString().slice(0, 10),
+          }}
+          velden={velden.map((v) => ({
+            id: v.id,
+            naam: v.naam,
+            eenheid: v.eenheid,
+            waarde: veldwaarden[v.id] ?? "",
+          }))}
+          magVerwijderen={isBeheerder(medewerker.rol)}
+          bewerkUrl={`${Astro.url.pathname}${actions.bewerkMateriaal.queryString}`}
+          verwijderUrl={`${Astro.url.pathname}${actions.verwijderMateriaal.queryString}`}
+        />
+      </div>
+    </div>
+  </main>
+</Onderdeel>

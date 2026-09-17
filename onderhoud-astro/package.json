@@ -1,0 +1,48 @@
+{
+  "name": "onderhoud-astro",
+  "version": "1.0.0",
+  "description": "Materiaalonderhoud — Outdoor Valley (Astro op Cloudflare Workers + D1)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler dev",
+    "astro": "astro",
+    "check": "astro check",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 migrations apply onderhoud --local",
+    "db:migrate:remote": "wrangler d1 migrations apply onderhoud --remote",
+    "seed": "node scripts/seed.mjs",
+    "seed:remote": "node scripts/seed.mjs --remote",
+    "e2e": "node e2e/app.cjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.3.2",
+    "@astrojs/react": "^6.0.6",
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource/carter-one": "^5.3.0",
+    "astro": "^7.3.3",
+    "drizzle-orm": "^0.45.2",
+    "html5-qrcode": "^2.3.8",
+    "lucide-react": "^1.46.0",
+    "qrcode-generator": "^2.0.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "xlsx": "^0.18.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@cloudflare/workers-types": "^5.20260917.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "drizzle-kit": "^0.31.10",
+    "lucide-static": "^1.46.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  },
+  "type": "module",
+  "private": true
+}

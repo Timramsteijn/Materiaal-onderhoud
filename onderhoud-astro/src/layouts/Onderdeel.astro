@@ -1,0 +1,45 @@
+---
+import Basis from "./Basis.astro";
+import { SideNav } from "@/components/side-nav";
+import { BottomNav } from "@/components/bottom-nav";
+import { AppHeader } from "@/components/app-header";
+import { accentCss } from "@/lib/accent";
+import { isBeheerder } from "@/lib/permissies";
+import type { Onderdeel } from "@/db/schema";
+
+interface Props {
+  /** Al opgehaald door de pagina zelf, zodat er geen dubbele query nodig is. */
+  onderdeel: Onderdeel;
+  titel?: string;
+}
+
+const { onderdeel, titel } = Astro.props;
+const medewerker = Astro.locals.medewerker!;
+const beheerder = isBeheerder(medewerker.rol);
+const pad = Astro.url.pathname;
+---
+
+<Basis titel={titel ?? onderdeel.naam}>
+  <div class="mx-auto min-h-full max-w-[560px] bg-zand desktop:mx-0 desktop:max-w-none">
+    <div style={accentCss(onderdeel)} class="min-h-full">
+      {/*
+        Onder ~900px navy header + vaste tabbalk, vanaf ~900px navy zijnav.
+        De topbalk hoort hier bewust niet bij: die inhoud verschilt per pagina,
+        dus elke pagina rendert zijn eigen <TopBar>.
+      */}
+      <div class="flex min-h-full flex-col desktop:flex-row">
+        <SideNav
+          slug={onderdeel.slug}
+          onderdeelNaam={onderdeel.naam}
+          isBeheerder={beheerder}
+          pad={pad}
+        />
+        <div class="flex min-w-0 flex-1 flex-col">
+          <AppHeader onderdeelNaam={onderdeel.naam} />
+          <slot />
+          <BottomNav slug={onderdeel.slug} isBeheerder={beheerder} pad={pad} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Basis>

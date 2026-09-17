@@ -1,0 +1,63 @@
+---
+import { actions } from "astro:actions";
+
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { ChevronLeft } from "@/components/icons";
+import { NieuwMateriaalFormulier } from "@/components/nieuw-materiaal-formulier";
+import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
+
+const slug = Astro.params.onderdeel!;
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const medewerker = Astro.locals.medewerker!;
+const categorieen = await getCategorieen(onderdeel.id);
+const beginId = Astro.url.searchParams.get("id") ?? "";
+const vandaag = new Date().toISOString().slice(0, 10);
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Nieuw materiaal">
+  <TopBar
+    titel="Nieuw materiaal"
+    subregel={`Wordt toegevoegd aan ${onderdeel.naam}`}
+    medewerkerNaam={medewerker.naam}
+    functie={medewerker.functie}
+  />
+
+  <main class="flex-1 px-[18px] pb-24 pt-4 desktop:px-6 desktop:pb-8 desktop:pt-6">
+    <a
+      href={`/${slug}/materiaal`}
+      class="motion mb-3 flex items-center gap-1 text-[13px] font-semibold text-link hover:underline"
+    >
+      <ChevronLeft size={16} strokeWidth={2} />
+      Terug naar materiaal
+    </a>
+
+    <div class="desktop:hidden">
+      <h1 class="display text-[22px] text-ink">Nieuw materiaal</h1>
+      <p class="mb-4 mt-1 text-[13px] text-text-muted">
+        Wordt toegevoegd aan {onderdeel.naam}.
+      </p>
+    </div>
+
+    {
+      categorieen.length === 0 ? (
+        <p class="text-[13.5px] text-text-muted">
+          Er zijn nog geen categorieën in dit onderdeel. Vraag een beheerder om er eerst een aan te
+          maken via Beheer.
+        </p>
+      ) : (
+        <NieuwMateriaalFormulier
+          client:load
+          slug={slug}
+          onderdeelId={onderdeel.id}
+          categorieen={categorieen.map((c) => ({ id: c.id, naam: c.naam }))}
+          beginId={beginId}
+          vandaag={vandaag}
+          actieUrl={`${Astro.url.pathname}${actions.maakMateriaal.queryString}`}
+        />
+      )
+    }
+  </main>
+</Onderdeel>

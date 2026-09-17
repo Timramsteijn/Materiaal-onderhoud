@@ -1,0 +1,27 @@
+---
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { ScanView } from "@/components/scan-view";
+import { getOnderdeel } from "@/lib/onderdeel";
+
+const onderdeel = await getOnderdeel(Astro.params.onderdeel!);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const medewerker = Astro.locals.medewerker!;
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Scannen">
+  <TopBar
+    titel="Scannen"
+    subregel="Houd de QR-sticker voor de camera of typ het Materiaal-ID"
+    medewerkerNaam={medewerker.naam}
+    functie={medewerker.functie}
+  />
+  {/* De scanner heeft de camera nodig, dus dit is het enige stuk dat hydrateert. */}
+  <ScanView
+    client:load
+    slug={onderdeel.slug}
+    onderdeelId={onderdeel.id}
+    onderdeelNaam={onderdeel.naam}
+  />
+</Onderdeel>

@@ -1,0 +1,101 @@
+---
+import { count } from "drizzle-orm";
+
+import Basis from "@/layouts/Basis.astro";
+import { AppHeader } from "@/components/app-header";
+import { UitlogKnop } from "@/components/uitlog-knop";
+import { Logo } from "@/components/logo";
+import { onderdeelIcoon, ArrowRight, ChevronRight } from "@/components/icons";
+import { accentCss } from "@/lib/accent";
+import { formatAantal } from "@/lib/domein";
+import { db } from "@/lib/context";
+import { materiaal, onderdelen } from "@/db/schema";
+
+const medewerker = Astro.locals.medewerker!;
+
+const [rijen, aantallen] = await Promise.all([
+  db().select().from(onderdelen).orderBy(onderdelen.sortering),
+  db().select({ onderdeelId: materiaal.onderdeelId, aantal: count() }).from(materiaal).groupBy(materiaal.onderdeelId),
+]);
+
+const aantalPerOnderdeel = new Map(aantallen.map((r) => [r.onderdeelId, r.aantal]));
+
+// Zolang een onderdeel nog niet is ingevoerd toont de kaart de indicatie.
+const kaarten = rijen.map((o) => ({
+  ...o,
+  aantal: aantalPerOnderdeel.get(o.id) || o.aantalIndicatie,
+}));
+---
+
+<Basis titel="Kies een onderdeel">
+  <div class="mx-auto flex min-h-full max-w-[560px] flex-col bg-zand desktop:mx-0 desktop:max-w-none">
+    <AppHeader medewerkerNaam={medewerker.naam} />
+
+    {/* Desktop: donkere topbalk, geen zijnav — er is nog geen onderdeel gekozen */}
+    <div class="no-print hidden h-[66px] items-center justify-between bg-navy px-6 desktop:flex">
+      <div class="flex items-center gap-2.5 text-creme">
+        <Logo variant="merkteken" size={26} className="text-accent" />
+        <span class="text-[13px] font-extrabold uppercase leading-[1.15] tracking-[0.1em]">
+          Materiaal<br />Onderhoud
+        </span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <p class="text-[13px] font-semibold text-creme">{medewerker.naam}</p>
+          <p class="text-[11px] text-text-on-dark">{medewerker.functie}</p>
+        </div>
+        <UitlogKnop variant="donker" />
+      </div>
+    </div>
+
+    <main class="flex-1 px-[18px] py-6 desktop:px-12 desktop:py-10">
+      <h1 class="display text-[24px] text-ink desktop:text-[30px]">Kies een onderdeel</h1>
+      <p class="mb-5 mt-1 text-[13.5px] text-text-muted">
+        Alles wat je hierna doet valt onder dit onderdeel.
+      </p>
+
+      <ul class="grid gap-3 desktop:grid-cols-3 desktop:gap-4">
+        {
+          kaarten.map((o) => {
+            const Icon = onderdeelIcoon(o.icoon);
+            return (
+              <li style={accentCss(o)}>
+                <a
+                  href={`/${o.slug}/scannen`}
+                  class={`motion lift flex h-full items-center gap-3.5 rounded-card bg-creme p-4 shadow-[var(--shadow-light)] desktop:flex-col desktop:items-start desktop:gap-3 desktop:p-5 ${
+                    o.uitgelicht
+                      ? "border-2 border-accent"
+                      : "border border-border-light hover:border-accent"
+                  }`}
+                >
+                  {/* Elke kaart draagt de eigen accentkleur van dat onderdeel */}
+                  <span class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-card bg-accent-tint text-accent-ink desktop:h-[52px] desktop:w-[52px]">
+                    <Icon size={24} strokeWidth={2} />
+                  </span>
+
+                  <div class="min-w-0 flex-1 desktop:w-full">
+                    <p class="display text-[17px] text-ink desktop:text-[19px]">{o.naam}</p>
+                    <p class="mt-0.5 text-[13px] text-text-muted">
+                      {formatAantal(o.aantal)} stuks{o.uitgelicht ? " · meest gebruikt" : ""}
+                    </p>
+                  </div>
+
+                  <ChevronRight
+                    size={20}
+                    strokeWidth={2}
+                    className="shrink-0 text-accent-ink desktop:hidden"
+                  />
+
+                  <span class="mt-1 hidden w-full items-center justify-between border-t border-border-light pt-3 text-[11px] font-extrabold uppercase tracking-[0.12em] text-accent-ink desktop:flex">
+                    Kies dit onderdeel
+                    <ArrowRight size={15} strokeWidth={2} />
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </main>
+  </div>
+</Basis>

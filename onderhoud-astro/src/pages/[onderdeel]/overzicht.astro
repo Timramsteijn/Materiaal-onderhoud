@@ -1,0 +1,240 @@
+---
+import { and, count, desc, eq, gte } from "drizzle-orm";
+
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { Kaart, KaartTitel } from "@/components/ui";
+import { AlertTriangle, ChevronRight, Download } from "@/components/icons";
+import { db } from "@/lib/context";
+import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
+import { logregels, materiaal } from "@/db/schema";
+import {
+  AANDACHT_NODIG_MAANDEN,
+  STATUS_LABELS,
+  dagenSinds,
+  formatAantal,
+  formatTijd,
+} from "@/lib/domein";
+
+const MAAND = 30 * 86_400_000;
+
+const slug = Astro.params.onderdeel!;
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const medewerker = Astro.locals.medewerker!;
+const nu = new Date();
+const twaalfMaanden = new Date(nu.getTime() - 12 * MAAND);
+
+const [perStatus, perCategorie, perActie, categorieen, stukken] = await Promise.all([
+  db()
+    .select({ status: materiaal.status, aantal: count() })
+    .from(materiaal)
+    .where(eq(materiaal.onderdeelId, onderdeel.id))
+    .groupBy(materiaal.status),
+  db()
+    .select({ categorieId: materiaal.categorieId, aantal: count() })
+    .from(materiaal)
+    .where(eq(materiaal.onderdeelId, onderdeel.id))
+    .groupBy(materiaal.categorieId),
+  db()
+    .select({ actieNaam: logregels.actieNaam, aantal: count() })
+    .from(logregels)
+    .innerJoin(materiaal, eq(materiaal.id, logregels.materiaalDbId))
+    .where(and(eq(materiaal.onderdeelId, onderdeel.id), gte(logregels.tijdstip, twaalfMaanden)))
+    .groupBy(logregels.actieNaam)
+    .orderBy(desc(count()))
+    .limit(6),
+  getCategorieen(onderdeel.id),
+  db()
+    .select({
+      id: materiaal.id,
+      materiaalId: materiaal.materiaalId,
+      merkModel: materiaal.merkModel,
+      laatsteOnderhoud: materiaal.laatsteOnderhoud,
+      inGebruikSinds: materiaal.inGebruikSinds,
+    })
+    .from(materiaal)
+    .where(eq(materiaal.onderdeelId, onderdeel.id)),
+]);
+
+const aantal = (s: string) => perStatus.find((p) => p.status === s)?.aantal ?? 0;
+const totaal = perStatus.reduce((som, p) => som + p.aantal, 0);
+const registraties12Maanden = perActie.reduce((som, a) => som + a.aantal, 0);
+
+const maxActie = Math.max(1, ...perActie.map((a) => a.aantal));
+const maxCategorie = Math.max(1, ...perCategorie.map((c) => c.aantal));
+
+// Aandacht nodig = langer dan 9 maanden geen enkele onderhoudsactie. Berekend.
+const aandachtNodig = stukken
+  .map((m) => ({ ...m, dagen: dagenSinds(m.laatsteOnderhoud ?? m.inGebruikSinds) }))
+  .filter((m) => m.dagen > AANDACHT_NODIG_MAANDEN * 30)
+  .sort((a, b) => b.dagen - a.dagen)
+  .slice(0, 12);
+
+const TEGEL_STIJL = {
+  donker: "bg-navy text-creme",
+  groen: "bg-creme text-green-figure",
+  amber: "bg-creme text-amber-text",
+  rood: "bg-creme text-red-text",
+} as const;
+
+const tegels = [
+  { n: totaal, label: "Totaal materiaal", variant: "donker" as const },
+  { n: aantal("IN_GEBRUIK"), label: STATUS_LABELS.IN_GEBRUIK, variant: "groen" as const },
+  { n: aantal("IN_REPARATIE"), label: STATUS_LABELS.IN_REPARATIE, variant: "amber" as const },
+  { n: aantal("BUITEN_GEBRUIK"), label: STATUS_LABELS.BUITEN_GEBRUIK, variant: "rood" as const },
+];
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Overzicht">
+  <TopBar
+    titel="Overzicht"
+    subregel={`Bijgewerkt vandaag ${formatTijd(nu)}`}
+    medewerkerNaam={medewerker.naam}
+    functie={medewerker.functie}
+  >
+    <a
+      href={`/api/export?onderdeel=${slug}`}
+      class="motion ml-auto flex h-10 shrink-0 items-center gap-1.5 rounded-full border-[1.5px] border-ink px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-ink hover:bg-neutral-fill"
+    >
+      <Download size={15} strokeWidth={2} />
+      Exporteren
+    </a>
+  </TopBar>
+
+  <main class="flex-1 px-[18px] pb-24 pt-4 desktop:px-6 desktop:pb-8 desktop:pt-5">
+    <div class="desktop:hidden">
+      <h1 class="display text-[22px] text-ink">Overzicht</h1>
+      <p class="mb-4 mt-0.5 text-[13px] text-text-muted">Bijgewerkt vandaag {formatTijd(nu)}</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2.5 desktop:grid-cols-4 desktop:gap-4">
+      {
+        tegels.map((t) => (
+          <div
+            class={`rounded-card border border-border-light p-3.5 text-center shadow-[var(--shadow-light)] ${TEGEL_STIJL[t.variant]}`}
+          >
+            <p class="display text-[34px] leading-none desktop:text-[40px]">{formatAantal(t.n)}</p>
+            <p
+              class={`mt-1.5 text-[11px] ${
+                t.variant === "donker" ? "text-text-on-dark" : "text-text-muted"
+              }`}
+            >
+              {t.label}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-4 desktop:grid desktop:grid-cols-[1.15fr_1fr] desktop:gap-4">
+      {/* Onderhoud per actie — staven in de accentkleur, afkeuren rood */}
+      <Kaart>
+        <KaartTitel>Onderhoud per actie</KaartTitel>
+        <p class="mb-3 text-[11.5px] text-text-muted">
+          Laatste 12 maanden · {formatAantal(registraties12Maanden)} registraties
+        </p>
+        {
+          perActie.length === 0 ? (
+            <p class="text-[13px] text-text-muted">Nog geen onderhoud geregistreerd.</p>
+          ) : (
+            <div class="flex items-end gap-2.5">
+              {perActie.map((a) => (
+                <div class="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+                  <span class="text-[12px] font-bold text-ink">{a.aantal}</span>
+                  <div class="flex h-[150px] w-full flex-col justify-end desktop:h-[190px]">
+                    <div
+                      class={`w-full rounded-t ${
+                        a.actieNaam.toLowerCase().startsWith("afkeur") ? "bg-red-text" : "bg-accent"
+                      }`}
+                      style={`height: ${Math.max(4, (a.aantal / maxActie) * 100)}%`}
+                    />
+                  </div>
+                  <span class="w-full truncate text-center text-[10.5px] text-text-muted">
+                    {a.actieNaam}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )
+        }
+      </Kaart>
+
+      {/* Per categorie — pill-balken */}
+      <Kaart className="mt-3 desktop:mt-0">
+        <KaartTitel>Per categorie</KaartTitel>
+        <div class="mt-3 space-y-2.5">
+          {
+            categorieen.map((c) => {
+              const n = perCategorie.find((p) => p.categorieId === c.id)?.aantal ?? 0;
+              return (
+                <div>
+                  <div class="flex justify-between text-[12.5px] text-ink">
+                    <span>{c.naam}</span>
+                    <span class="font-bold">{formatAantal(n)}</span>
+                  </div>
+                  <div class="mt-1 h-[8px] overflow-hidden rounded-full bg-zand">
+                    <div
+                      class="h-full rounded-full bg-accent"
+                      style={`width: ${(n / maxCategorie) * 100}%`}
+                    />
+                  </div>
+                </div>
+              );
+            })
+          }
+          {
+            categorieen.length === 0 && (
+              <p class="text-[13px] text-text-muted">Nog geen categorieën ingericht.</p>
+            )
+          }
+        </div>
+      </Kaart>
+    </div>
+
+    {/* Aandacht nodig */}
+    <Kaart className="mt-3">
+      <div class="flex items-center gap-1.5">
+        <AlertTriangle size={16} strokeWidth={2.2} className="text-red-text" />
+        <h2 class="font-body text-[12px] font-extrabold uppercase tracking-[0.14em] text-red-text">
+          Aandacht nodig
+        </h2>
+      </div>
+      <p class="mb-3 mt-0.5 text-[11.5px] text-text-muted">
+        Langer dan {AANDACHT_NODIG_MAANDEN} maanden geen onderhoud geregistreerd.
+      </p>
+
+      {
+        aandachtNodig.length === 0 ? (
+          <p class="text-[13px] text-text-muted">
+            Al het materiaal in {onderdeel.naam} is binnen {AANDACHT_NODIG_MAANDEN} maanden
+            onderhouden.
+          </p>
+        ) : (
+          <ul class="divide-y divide-zand">
+            {aandachtNodig.map((m) => (
+              <li>
+                <a
+                  href={`/${slug}/materiaal/${encodeURIComponent(m.materiaalId)}`}
+                  class="motion flex items-center gap-3 py-2.5 hover:bg-zand"
+                >
+                  <span class="w-[100px] shrink-0 text-[14px] font-extrabold text-ink desktop:w-[110px]">
+                    {m.materiaalId}
+                  </span>
+                  <span class="min-w-0 flex-1 truncate text-[13px] text-text-medium">
+                    {m.merkModel}
+                  </span>
+                  <span class="shrink-0 rounded-full bg-red-tint px-2.5 py-1 text-[11px] font-bold text-red-text">
+                    {m.dagen} dgn
+                  </span>
+                  <ChevronRight size={16} strokeWidth={2} className="shrink-0 text-text-muted" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </Kaart>
+  </main>
+</Onderdeel>

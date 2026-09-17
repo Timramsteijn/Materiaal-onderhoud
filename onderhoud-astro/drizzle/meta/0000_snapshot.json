@@ -1,0 +1,790 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "42a3e910-0a4d-4aca-89a1-5f0b5965a92d",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "beheerlog": {
+      "name": "beheerlog",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "medewerker_id": {
+          "name": "medewerker_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "wat": {
+          "name": "wat",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "detail": {
+          "name": "detail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'{}'"
+        },
+        "tijdstip": {
+          "name": "tijdstip",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "beheerlog_tijdstip": {
+          "name": "beheerlog_tijdstip",
+          "columns": [
+            "tijdstip"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "beheerlog_medewerker_id_medewerkers_id_fk": {
+          "name": "beheerlog_medewerker_id_medewerkers_id_fk",
+          "tableFrom": "beheerlog",
+          "tableTo": "medewerkers",
+          "columnsFrom": [
+            "medewerker_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "categorieen": {
+      "name": "categorieen",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "onderdeel_id": {
+          "name": "onderdeel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sortering": {
+          "name": "sortering",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "categorie_onderdeel_naam": {
+          "name": "categorie_onderdeel_naam",
+          "columns": [
+            "onderdeel_id",
+            "naam"
+          ],
+          "isUnique": true
+        },
+        "categorie_onderdeel": {
+          "name": "categorie_onderdeel",
+          "columns": [
+            "onderdeel_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "categorieen_onderdeel_id_onderdelen_id_fk": {
+          "name": "categorieen_onderdeel_id_onderdelen_id_fk",
+          "tableFrom": "categorieen",
+          "tableTo": "onderdelen",
+          "columnsFrom": [
+            "onderdeel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "logregels": {
+      "name": "logregels",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "materiaal_db_id": {
+          "name": "materiaal_db_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actie_naam": {
+          "name": "actie_naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actie_id": {
+          "name": "actie_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "opmerking": {
+          "name": "opmerking",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "''"
+        },
+        "status_na": {
+          "name": "status_na",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "medewerker_id": {
+          "name": "medewerker_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "medewerker_naam": {
+          "name": "medewerker_naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tijdstip": {
+          "name": "tijdstip",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "soort": {
+          "name": "soort",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'REGISTRATIE'"
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "logregels_client_id_unique": {
+          "name": "logregels_client_id_unique",
+          "columns": [
+            "client_id"
+          ],
+          "isUnique": true
+        },
+        "log_materiaal": {
+          "name": "log_materiaal",
+          "columns": [
+            "materiaal_db_id"
+          ],
+          "isUnique": false
+        },
+        "log_tijdstip": {
+          "name": "log_tijdstip",
+          "columns": [
+            "tijdstip"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "logregels_materiaal_db_id_materiaal_id_fk": {
+          "name": "logregels_materiaal_db_id_materiaal_id_fk",
+          "tableFrom": "logregels",
+          "tableTo": "materiaal",
+          "columnsFrom": [
+            "materiaal_db_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "logregels_medewerker_id_medewerkers_id_fk": {
+          "name": "logregels_medewerker_id_medewerkers_id_fk",
+          "tableFrom": "logregels",
+          "tableTo": "medewerkers",
+          "columnsFrom": [
+            "medewerker_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "materiaal": {
+      "name": "materiaal",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "materiaal_id": {
+          "name": "materiaal_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "onderdeel_id": {
+          "name": "onderdeel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "categorie_id": {
+          "name": "categorie_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "merk_model": {
+          "name": "merk_model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "locatie": {
+          "name": "locatie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "''"
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'IN_GEBRUIK'"
+        },
+        "status_voor_keuring": {
+          "name": "status_voor_keuring",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "in_gebruik_sinds": {
+          "name": "in_gebruik_sinds",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "laatste_onderhoud": {
+          "name": "laatste_onderhoud",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aantal_beurten": {
+          "name": "aantal_beurten",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "veldwaarden": {
+          "name": "veldwaarden",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'{}'"
+        },
+        "aangemaakt": {
+          "name": "aangemaakt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "materiaal_onderdeel_id": {
+          "name": "materiaal_onderdeel_id",
+          "columns": [
+            "onderdeel_id",
+            "materiaal_id"
+          ],
+          "isUnique": true
+        },
+        "materiaal_categorie": {
+          "name": "materiaal_categorie",
+          "columns": [
+            "categorie_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "materiaal_onderdeel_id_onderdelen_id_fk": {
+          "name": "materiaal_onderdeel_id_onderdelen_id_fk",
+          "tableFrom": "materiaal",
+          "tableTo": "onderdelen",
+          "columnsFrom": [
+            "onderdeel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "materiaal_categorie_id_categorieen_id_fk": {
+          "name": "materiaal_categorie_id_categorieen_id_fk",
+          "tableFrom": "materiaal",
+          "tableTo": "categorieen",
+          "columnsFrom": [
+            "categorie_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "medewerkers": {
+      "name": "medewerkers",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "gebruikersnaam": {
+          "name": "gebruikersnaam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "wachtwoord_hash": {
+          "name": "wachtwoord_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "rol": {
+          "name": "rol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'MEDEWERKER'"
+        },
+        "functie": {
+          "name": "functie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "''"
+        },
+        "actief": {
+          "name": "actief",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "aangemaakt": {
+          "name": "aangemaakt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "medewerkers_gebruikersnaam_unique": {
+          "name": "medewerkers_gebruikersnaam_unique",
+          "columns": [
+            "gebruikersnaam"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "onderdelen": {
+      "name": "onderdelen",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accent": {
+          "name": "accent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accent_pressed": {
+          "name": "accent_pressed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accent_tint": {
+          "name": "accent_tint",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "icoon": {
+          "name": "icoon",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "uitgelicht": {
+          "name": "uitgelicht",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "sortering": {
+          "name": "sortering",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "aantal_indicatie": {
+          "name": "aantal_indicatie",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "onderdelen_naam_unique": {
+          "name": "onderdelen_naam_unique",
+          "columns": [
+            "naam"
+          ],
+          "isUnique": true
+        },
+        "onderdelen_slug_unique": {
+          "name": "onderdelen_slug_unique",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "onderhoudsacties": {
+      "name": "onderhoudsacties",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "categorie_id": {
+          "name": "categorie_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_afkeuren": {
+          "name": "is_afkeuren",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "sortering": {
+          "name": "sortering",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "actie_categorie": {
+          "name": "actie_categorie",
+          "columns": [
+            "categorie_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "onderhoudsacties_categorie_id_categorieen_id_fk": {
+          "name": "onderhoudsacties_categorie_id_categorieen_id_fk",
+          "tableFrom": "onderhoudsacties",
+          "tableTo": "categorieen",
+          "columnsFrom": [
+            "categorie_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "velddefinities": {
+      "name": "velddefinities",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "categorie_id": {
+          "name": "categorie_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'TEKST'"
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "opties": {
+          "name": "opties",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'[]'"
+        },
+        "sortering": {
+          "name": "sortering",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "veld_categorie": {
+          "name": "veld_categorie",
+          "columns": [
+            "categorie_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "velddefinities_categorie_id_categorieen_id_fk": {
+          "name": "velddefinities_categorie_id_categorieen_id_fk",
+          "tableFrom": "velddefinities",
+          "tableTo": "categorieen",
+          "columnsFrom": [
+            "categorie_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}

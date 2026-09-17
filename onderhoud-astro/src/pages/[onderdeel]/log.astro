@@ -1,0 +1,267 @@
+---
+import { and, asc, count, desc, eq, gte, like, sql } from "drizzle-orm";
+
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { Zoekveld } from "@/components/zoekveld";
+import { LogFilters } from "@/components/log-filters";
+import { StatusBadge, CategorieBadge, LegeToestand, OutlineKnop } from "@/components/ui";
+import { ClipboardList, Download } from "@/components/icons";
+import { db } from "@/lib/context";
+import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
+import { dagKop, formatTijd } from "@/lib/domein";
+import {
+  categorieen as categorieenTabel,
+  logregels,
+  materiaal,
+  medewerkers,
+  onderhoudsacties,
+  type Status,
+} from "@/db/schema";
+
+const slug = Astro.params.onderdeel!;
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const medewerker = Astro.locals.medewerker!;
+const p = Astro.url.searchParams;
+const filters = {
+  q: p.get("q")?.trim() || undefined,
+  categorie: p.get("categorie") || undefined,
+  actie: p.get("actie") || undefined,
+  medewerker: p.get("medewerker") || undefined,
+  status: (p.get("status") as Status | null) || undefined,
+  materiaal: p.get("materiaal") || undefined,
+};
+
+function maandenGeleden(aantal: number): Date {
+  const d = new Date();
+  d.setMonth(d.getMonth() - aantal);
+  return d;
+}
+const twaalfMaanden = maandenGeleden(12);
+
+const voorwaarden = [
+  eq(materiaal.onderdeelId, onderdeel.id),
+  ...(filters.categorie ? [eq(materiaal.categorieId, filters.categorie)] : []),
+  ...(filters.materiaal
+    ? [eq(materiaal.materiaalId, filters.materiaal)]
+    : filters.q
+      ? [like(sql`lower(${materiaal.materiaalId})`, `%${filters.q.toLowerCase()}%`)]
+      : []),
+  ...(filters.actie ? [eq(logregels.actieNaam, filters.actie)] : []),
+  ...(filters.medewerker ? [eq(logregels.medewerkerNaam, filters.medewerker)] : []),
+  ...(filters.status ? [eq(logregels.statusNa, filters.status)] : []),
+];
+
+const [regels, categorieen, acties, actieveMedewerkers, aantalRij] = await Promise.all([
+  db()
+    .select({
+      id: logregels.id,
+      actieNaam: logregels.actieNaam,
+      medewerkerNaam: logregels.medewerkerNaam,
+      statusNa: logregels.statusNa,
+      tijdstip: logregels.tijdstip,
+      materiaalId: materiaal.materiaalId,
+      categorieNaam: categorieenTabel.naam,
+    })
+    .from(logregels)
+    .innerJoin(materiaal, eq(materiaal.id, logregels.materiaalDbId))
+    .innerJoin(categorieenTabel, eq(categorieenTabel.id, materiaal.categorieId))
+    .where(and(...voorwaarden))
+    .orderBy(desc(logregels.tijdstip))
+    .limit(200),
+  getCategorieen(onderdeel.id),
+  db()
+    .selectDistinct({ naam: onderhoudsacties.naam })
+    .from(onderhoudsacties)
+    .innerJoin(categorieenTabel, eq(categorieenTabel.id, onderhoudsacties.categorieId))
+    .where(eq(categorieenTabel.onderdeelId, onderdeel.id))
+    .orderBy(asc(onderhoudsacties.naam)),
+  db()
+    .select({ naam: medewerkers.naam })
+    .from(medewerkers)
+    .where(eq(medewerkers.actief, true))
+    .orderBy(asc(medewerkers.naam)),
+  db()
+    .select({ aantal: count() })
+    .from(logregels)
+    .innerJoin(materiaal, eq(materiaal.id, logregels.materiaalDbId))
+    .where(and(eq(materiaal.onderdeelId, onderdeel.id), gte(logregels.tijdstip, twaalfMaanden))),
+]);
+
+const aantal12Maanden = aantalRij[0]?.aantal ?? 0;
+
+// Groeperen per dag, in volgorde van nieuw naar oud.
+const groepen = new Map<string, typeof regels>();
+for (const regel of regels) {
+  const kop = dagKop(regel.tijdstip);
+  const bestaand = groepen.get(kop);
+  if (bestaand) bestaand.push(regel);
+  else groepen.set(kop, [regel]);
+}
+const dagen = [...groepen.entries()];
+
+const heeftFilter = Object.values(filters).some(Boolean);
+const basis = `/${slug}/log`;
+const thClass = "px-4 py-2.5 text-[10.5px] font-extrabold uppercase tracking-[0.12em] text-text-muted";
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Onderhoudslog">
+  <TopBar
+    titel="Onderhoudslog"
+    subregel={`${aantal12Maanden} registraties in de laatste 12 maanden`}
+    medewerkerNaam={medewerker.naam}
+    functie={medewerker.functie}
+  >
+    <a
+      href={`/api/export?onderdeel=${slug}`}
+      class="motion ml-auto flex h-10 shrink-0 items-center gap-1.5 rounded-full border-[1.5px] border-ink px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-ink hover:bg-neutral-fill"
+    >
+      <Download size={15} strokeWidth={2} />
+      Exporteren
+    </a>
+  </TopBar>
+
+  <main class="flex-1 px-[18px] pb-24 pt-4 desktop:px-6 desktop:pb-8 desktop:pt-5">
+    <h1 class="display text-[22px] text-ink desktop:hidden">Onderhoudslog</h1>
+
+    <div class="mt-3 desktop:mt-0 desktop:max-w-[340px]">
+      <Zoekveld
+        client:idle
+        pad={basis}
+        query={p.toString()}
+        placeholder="Zoek op Materiaal-ID"
+      />
+    </div>
+
+    <LogFilters
+      client:idle
+      pad={basis}
+      query={p.toString()}
+      categorieen={categorieen.map((c) => ({ id: c.id, naam: c.naam }))}
+      acties={acties.map((a) => a.naam)}
+      medewerkers={actieveMedewerkers.map((m) => m.naam)}
+    />
+
+    {
+      filters.materiaal && (
+        <p class="mt-2 text-[12.5px] text-text-muted">
+          Alleen registraties van {filters.materiaal} ·{" "}
+          <a href={basis} class="font-semibold text-link hover:underline">
+            toon alles
+          </a>
+        </p>
+      )
+    }
+
+    {
+      regels.length === 0 ? (
+        <div class="mt-4">
+          <LegeToestand
+            icoon={<ClipboardList size={26} strokeWidth={2} />}
+            kop="Geen registraties gevonden"
+            uitleg={`Er zijn geen registraties in ${onderdeel.naam} die aan deze filters voldoen.`}
+            acties={heeftFilter ? <OutlineKnop href={basis}>Filter wissen</OutlineKnop> : undefined}
+          />
+        </div>
+      ) : (
+        <>
+          {/* Mobiel: per dag gegroepeerd, elke groep één kaart */}
+          <div class="mt-4 space-y-4 desktop:hidden">
+            {dagen.map(([kop, groep]) => (
+              <section>
+                <h2 class="font-body mb-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted">
+                  {kop}
+                </h2>
+                <div class="divide-y divide-zand rounded-card border border-border-light bg-creme shadow-[var(--shadow-light)]">
+                  {groep.map((regel) => (
+                    <a
+                      href={`/${slug}/materiaal/${encodeURIComponent(regel.materiaalId)}`}
+                      class="motion flex items-center justify-between gap-3 p-3.5 hover:bg-zand"
+                    >
+                      <div class="min-w-0">
+                        <p class="flex items-baseline gap-2">
+                          <span class="text-[14.5px] font-extrabold text-ink">
+                            {regel.materiaalId}
+                          </span>
+                          <span class="text-[11.5px] text-text-muted">
+                            {formatTijd(regel.tijdstip)}
+                          </span>
+                        </p>
+                        <p class="truncate text-[13.5px] text-text-medium">{regel.actieNaam}</p>
+                        <p class="truncate text-[12px] text-text-muted">{regel.medewerkerNaam}</p>
+                      </div>
+                      {regel.statusNa && <StatusBadge status={regel.statusNa} />}
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          {/* Desktop: echte tabel met dagkoppen als tussenrij */}
+          <div class="mt-4 hidden overflow-hidden rounded-card border border-border-light bg-creme shadow-[var(--shadow-card)] desktop:block">
+            <table class="w-full table-fixed border-collapse text-left">
+              <thead>
+                <tr class="border-b-2 border-ink">
+                  <th class={`${thClass} w-[120px]`}>Materiaal</th>
+                  <th class={`${thClass} w-[150px]`}>Categorie</th>
+                  <th class={thClass}>Actie</th>
+                  <th class={`${thClass} w-[190px]`}>Medewerker</th>
+                  <th class={`${thClass} w-[150px]`}>Status na actie</th>
+                  <th class={`${thClass} w-[70px] text-right`}>Tijd</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dagen.map(([kop, groep]) => (
+                  <>
+                    <tr>
+                      <td
+                        colspan="6"
+                        class="border-b border-zand bg-[var(--zand)] px-4 py-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.12em] text-text-muted"
+                      >
+                        {kop}
+                      </td>
+                    </tr>
+                    {groep.map((regel) => (
+                      <tr class="motion border-b border-zand last:border-b-0 hover:bg-zand">
+                        <td class="px-4 py-2.5 align-middle">
+                          <a
+                            href={`/${slug}/materiaal/${encodeURIComponent(regel.materiaalId)}`}
+                            class="text-[14.5px] font-extrabold text-ink hover:underline"
+                          >
+                            {regel.materiaalId}
+                          </a>
+                        </td>
+                        <td class="px-4 py-2.5 align-middle">
+                          <CategorieBadge naam={regel.categorieNaam} />
+                        </td>
+                        <td class="px-4 py-2.5 align-middle text-[13.5px] text-ink">
+                          {regel.actieNaam}
+                        </td>
+                        <td class="px-4 py-2.5 align-middle text-[13px] text-text-medium">
+                          {regel.medewerkerNaam}
+                        </td>
+                        <td class="px-4 py-2.5 align-middle">
+                          {regel.statusNa && <StatusBadge status={regel.statusNa} />}
+                        </td>
+                        <td class="px-4 py-2.5 align-middle text-right text-[12.5px] text-text-muted">
+                          {formatTijd(regel.tijdstip)}
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mt-3 text-[12.5px] text-text-muted">
+            {aantal12Maanden} registraties in de laatste 12 maanden.
+          </p>
+        </>
+      )
+    }
+  </main>
+</Onderdeel>

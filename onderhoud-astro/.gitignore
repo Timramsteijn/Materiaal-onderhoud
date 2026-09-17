@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# build
+dist/
+.astro/
+
+# Cloudflare / wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# env
+.env
+.env.*
+
+# misc
+.DS_Store
+*.tsbuildinfo
+npm-debug.log*

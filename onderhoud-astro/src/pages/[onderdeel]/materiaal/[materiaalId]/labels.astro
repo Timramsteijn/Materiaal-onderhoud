@@ -1,0 +1,84 @@
+---
+import { and, asc, eq, isNull } from "drizzle-orm";
+
+import Basis from "@/layouts/Basis.astro";
+import { PrintKnop } from "@/components/print-knop";
+import { db } from "@/lib/context";
+import { getOnderdeel } from "@/lib/onderdeel";
+import { accentCss } from "@/lib/accent";
+import { materiaal, velddefinities } from "@/db/schema";
+import { decodeSegment, labelQr, labelUrl, veldwaardenVan } from "@/lib/label-data";
+import "@/styles/print.css";
+
+/** Veldnamen die als maatregel onder merk/model komen te staan. */
+const MAAT_VELDEN = ["lengte", "maat"];
+
+const slug = Astro.params.onderdeel!;
+const materiaalId = decodeSegment(Astro.params.materiaalId!);
+
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const stuk = await db().query.materiaal.findFirst({
+  where: and(eq(materiaal.onderdeelId, onderdeel.id), eq(materiaal.materiaalId, materiaalId)),
+});
+if (!stuk) return Astro.rewrite("/404");
+
+const velden = await db()
+  .select()
+  .from(velddefinities)
+  .where(and(eq(velddefinities.categorieId, stuk.categorieId), isNull(velddefinities.archivedAt)))
+  .orderBy(asc(velddefinities.sortering));
+
+// Maat komt uit de categorie-eigen velden, niet uit een vaste kolom: een nieuw
+// onderdeel hoeft daarvoor geen code te krijgen.
+const waarden = veldwaardenVan(stuk.veldwaarden);
+const maatVeld = velden.find(
+  (veld) => MAAT_VELDEN.includes(veld.naam.toLowerCase()) && waarden[veld.id]
+);
+const maat = maatVeld ? [waarden[maatVeld.id], maatVeld.eenheid].filter(Boolean).join(" ") : null;
+
+const qr = labelQr(labelUrl(Astro.url.origin, onderdeel.slug, stuk.materiaalId));
+---
+
+<Basis titel={`Label ${stuk.materiaalId}`} bodyClass="bg-zand">
+  <div style={accentCss(onderdeel)}>
+    <header
+      class="no-print mx-auto flex w-full max-w-[793px] flex-wrap items-end justify-between gap-4 px-[18px] py-6"
+    >
+      <div>
+        <p class="kicker text-[11px] text-text-muted">Printen</p>
+        <h1 class="mt-1 text-[22px] text-ink">Los label</h1>
+        <p class="mt-1 text-[13px] text-text-muted">
+          70 × 44 mm · {stuk.materiaalId} · {onderdeel.naam}
+        </p>
+        <p class="mt-1 text-[12px] text-text-muted">
+          Gestippelde lijn is de sniplijn en wordt niet geprint.
+        </p>
+      </div>
+      <PrintKnop client:load />
+    </header>
+
+    <div class="print-blad">
+      <div class="vel">
+        <div class="label sniplijn">
+          <div
+            class="qr qr-groot"
+            role="img"
+            aria-label={`QR-code naar ${stuk.materiaalId}`}
+            set:html={qr}
+          />
+          <div class="label-tekst">
+            <div class="label-kicker">Outdoor Valley</div>
+            <div class="label-id">{stuk.materiaalId}</div>
+            <div class="label-model">
+              {stuk.merkModel}
+              {maat && <><br />{maat}</>}
+            </div>
+            <div class="label-onderdeel">{onderdeel.naam}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Basis>

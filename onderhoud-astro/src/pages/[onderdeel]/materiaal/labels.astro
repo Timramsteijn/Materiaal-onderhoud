@@ -1,0 +1,141 @@
+---
+import { and, asc, eq, inArray } from "drizzle-orm";
+
+import Basis from "@/layouts/Basis.astro";
+import { PrintKnop } from "@/components/print-knop";
+import { db } from "@/lib/context";
+import { getOnderdeel } from "@/lib/onderdeel";
+import { accentCss } from "@/lib/accent";
+import { formatAantal, formatDatum } from "@/lib/domein";
+import { materiaal } from "@/db/schema";
+import { decodeSegment, labelQr, labelUrl } from "@/lib/label-data";
+import "@/styles/print.css";
+
+/** 12 labels per vel, in een raster van 3 × 4. */
+const PER_VEL = 12;
+
+/** Bovengrens op één printopdracht: 20 vellen. Daarboven eerst filteren. */
+const MAX_LABELS = 20 * PER_VEL;
+
+const slug = Astro.params.onderdeel!;
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+/** `?ids=SKI-0917,SB-0231` → de geselecteerde Materiaal-ID's, ontdubbeld. */
+const ids = [
+  ...new Set(
+    (Astro.url.searchParams.get("ids") ?? "")
+      .split(",")
+      .map((deel) => decodeSegment(deel.trim()))
+      .filter(Boolean)
+  ),
+];
+const categorieId = Astro.url.searchParams.get("categorie");
+
+// Met een selectie uit de materiaallijst drukken we precies die stuks af;
+// zonder selectie het hele onderdeel, eventueel op één categorie gefilterd.
+const gevonden = await db()
+  .select({ id: materiaal.id, materiaalId: materiaal.materiaalId, merkModel: materiaal.merkModel })
+  .from(materiaal)
+  .where(
+    and(
+      eq(materiaal.onderdeelId, onderdeel.id),
+      ...(ids.length > 0
+        ? [inArray(materiaal.materiaalId, ids)]
+        : categorieId
+          ? [eq(materiaal.categorieId, categorieId)]
+          : [])
+    )
+  )
+  .orderBy(asc(materiaal.materiaalId))
+  .limit(MAX_LABELS + 1);
+
+const afgekapt = gevonden.length > MAX_LABELS;
+const lijst = afgekapt ? gevonden.slice(0, MAX_LABELS) : gevonden;
+
+const labels = lijst.map((stuk) => ({
+  ...stuk,
+  qr: labelQr(labelUrl(Astro.url.origin, onderdeel.slug, stuk.materiaalId)),
+}));
+
+const vellen: (typeof labels)[] = [];
+for (let i = 0; i < labels.length; i += PER_VEL) {
+  vellen.push(labels.slice(i, i + PER_VEL));
+}
+
+const datum = formatDatum(new Date());
+const aantalRegel = `${formatAantal(labels.length)} label${labels.length === 1 ? "" : "s"} · ${datum}`;
+---
+
+<Basis titel={`Printvel ${onderdeel.naam}`} bodyClass="bg-zand">
+  <div style={accentCss(onderdeel)}>
+    <header
+      class="no-print mx-auto flex w-full max-w-[793px] flex-wrap items-end justify-between gap-4 px-[18px] py-6"
+    >
+      <div>
+        <p class="kicker text-[11px] text-text-muted">Printen</p>
+        <h1 class="mt-1 text-[22px] text-ink">Printvel A4</h1>
+        <p class="mt-1 text-[13px] text-text-muted">
+          12 labels per vel (3 × 4) · {aantalRegel} · {formatAantal(vellen.length)} vel{
+            vellen.length === 1 ? "" : "len"
+          }
+        </p>
+        <p class="mt-1 text-[12px] text-text-muted">
+          Gestippelde lijnen zijn de sniplijnen en worden niet geprint.
+        </p>
+        {
+          afgekapt && (
+            <p class="mt-1 text-[12px] font-bold text-amber-text">
+              Er passen maximaal {formatAantal(MAX_LABELS)} labels in één printopdracht. Maak een
+              selectie in de materiaallijst of filter op categorie.
+            </p>
+          )
+        }
+      </div>
+      {labels.length > 0 && <PrintKnop client:load />}
+    </header>
+
+    {
+      labels.length === 0 ? (
+        <p class="no-print mx-auto w-full max-w-[793px] px-[18px] pb-12 text-[13px] text-text-muted">
+          Geen materiaal gevonden in {onderdeel.naam}. Kies materiaal in de materiaallijst en print
+          de selectie opnieuw.
+        </p>
+      ) : (
+        <div class="print-blad">
+          {vellen.map((vel) => (
+            <div class="vel">
+              <div class="vel-kop">
+                <div class="vel-kop-titel">Materiaallabels · {onderdeel.naam}</div>
+                <div class="vel-kop-meta">{aantalRegel}</div>
+              </div>
+              <div class="raster">
+                {vel.map((label) => (
+                  <div class="cel sniplijn">
+                    <div class="cel-boven">
+                      <div
+                        class="qr qr-klein"
+                        role="img"
+                        aria-label={`QR-code naar ${label.materiaalId}`}
+                        set:html={label.qr}
+                      />
+                      <div class="cel-tekst">
+                        <div class="cel-id">{label.materiaalId}</div>
+                        <div class="cel-model">{label.merkModel}</div>
+                      </div>
+                    </div>
+                    <div class="cel-voet">Outdoor Valley · {onderdeel.naam}</div>
+                  </div>
+                ))}
+                {/* Lege cellen houden het snijraster op het laatste vel heel. */}
+                {Array.from({ length: PER_VEL - vel.length }).map(() => (
+                  <div class="cel sniplijn" aria-hidden="true" />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</Basis>

@@ -1,0 +1,201 @@
+---
+import { actions } from "astro:actions";
+import { and, asc, count, desc, eq, isNull } from "drizzle-orm";
+
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { Kaart, KaartTitel } from "@/components/ui";
+import { AfkeuringenKaart } from "@/components/afkeuringen";
+import { CategorieBeheer } from "@/components/categorie-beheer";
+import { MedewerkerBeheer } from "@/components/medewerker-beheer";
+import { ExcelKaart } from "@/components/excel-kaart";
+import { db } from "@/lib/context";
+import { getOnderdeel } from "@/lib/onderdeel";
+import { isBeheerder } from "@/lib/permissies";
+import { formatDatum, formatTijd } from "@/lib/domein";
+import {
+  beheerlog,
+  categorieen,
+  logregels,
+  materiaal,
+  medewerkers,
+  onderhoudsacties,
+  velddefinities,
+} from "@/db/schema";
+
+const slug = Astro.params.onderdeel!;
+const medewerker = Astro.locals.medewerker!;
+
+// Rolcheck ook hier, niet alleen in de navigatie.
+if (!isBeheerder(medewerker.rol)) return Astro.redirect(`/${slug}/scannen`);
+
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+
+const query = Astro.url.searchParams;
+
+const [rijen, alleMedewerkers, teKeuren, laatsteImport] = await Promise.all([
+  db()
+    .select()
+    .from(categorieen)
+    .where(and(eq(categorieen.onderdeelId, onderdeel.id), isNull(categorieen.archivedAt)))
+    .orderBy(asc(categorieen.sortering)),
+  db().select().from(medewerkers).orderBy(asc(medewerkers.naam)),
+  db()
+    .select()
+    .from(materiaal)
+    .where(and(eq(materiaal.onderdeelId, onderdeel.id), eq(materiaal.status, "TER_GOEDKEURING")))
+    .orderBy(asc(materiaal.materiaalId)),
+  db().query.beheerlog.findFirst({
+    where: eq(beheerlog.wat, "Excel-import"),
+    orderBy: desc(beheerlog.tijdstip),
+  }),
+]);
+
+// Per categorie de acties, velden en het aantal stuks materiaal.
+const categorieKaarten = await Promise.all(
+  rijen.map(async (c) => {
+    const [acties, velden, aantalRij] = await Promise.all([
+      db()
+        .select()
+        .from(onderhoudsacties)
+        .where(and(eq(onderhoudsacties.categorieId, c.id), isNull(onderhoudsacties.archivedAt)))
+        .orderBy(asc(onderhoudsacties.sortering)),
+      db()
+        .select()
+        .from(velddefinities)
+        .where(and(eq(velddefinities.categorieId, c.id), isNull(velddefinities.archivedAt)))
+        .orderBy(asc(velddefinities.sortering)),
+      db().select({ aantal: count() }).from(materiaal).where(eq(materiaal.categorieId, c.id)),
+    ]);
+    return {
+      id: c.id,
+      naam: c.naam,
+      aantal: aantalRij[0]?.aantal ?? 0,
+      acties: acties.map((a) => ({ id: a.id, naam: a.naam, isAfkeuren: a.isAfkeuren })),
+      velden: velden.map((v) => ({ id: v.id, naam: v.naam, eenheid: v.eenheid })),
+    };
+  })
+);
+
+// Bij elke openstaande afkeuring de aanvraag zelf erbij zoeken.
+const aanvragen = await Promise.all(
+  teKeuren.map(async (m) => {
+    const aanvraag = await db().query.logregels.findFirst({
+      where: and(
+        eq(logregels.materiaalDbId, m.id),
+        eq(logregels.soort, "AFKEURING_AANGEVRAAGD")
+      ),
+      orderBy: desc(logregels.tijdstip),
+    });
+    return {
+      id: m.id,
+      materiaalId: m.materiaalId,
+      merkModel: m.merkModel,
+      reden: aanvraag?.opmerking ?? "",
+      aangevraagdDoor: aanvraag?.medewerkerNaam ?? "onbekend",
+      wanneer: aanvraag
+        ? `${formatDatum(aanvraag.tijdstip)} · ${formatTijd(aanvraag.tijdstip)}`
+        : "",
+    };
+  })
+);
+
+const importDetail = JSON.parse(laatsteImport?.detail ?? "{}") as {
+  regels?: number;
+  overgeslagen?: number;
+};
+
+const pad = Astro.url.pathname;
+const urls = {
+  voegCategorieToe: `${pad}${actions.voegCategorieToe.queryString}`,
+  voegActieToe: `${pad}${actions.voegActieToe.queryString}`,
+  voegVeldToe: `${pad}${actions.voegVeldToe.queryString}`,
+  archiveerCategorie: `${pad}${actions.archiveerCategorie.queryString}`,
+  archiveerActie: `${pad}${actions.archiveerActie.queryString}`,
+  archiveerVeld: `${pad}${actions.archiveerVeld.queryString}`,
+};
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Beheer">
+  <TopBar
+    titel="Beheer"
+    subregel={`Onderdeel ${onderdeel.naam} · alleen zichtbaar voor beheerders`}
+    medewerkerNaam={medewerker.naam}
+    functie={medewerker.functie}
+  />
+
+  <main class="flex-1 px-[18px] pb-24 pt-4 desktop:px-6 desktop:pb-8 desktop:pt-5">
+    <div class="desktop:hidden">
+      <h1 class="display text-[22px] text-ink">Beheer</h1>
+      <p class="mb-4 mt-0.5 text-[13px] text-text-muted">Alleen zichtbaar voor beheerders.</p>
+    </div>
+
+    {
+      aanvragen.length > 0 && (
+        <AfkeuringenKaart
+          client:load
+          aanvragen={aanvragen}
+          goedkeurUrl={`${pad}${actions.keurAfkeuringGoed.queryString}`}
+          afwijsUrl={`${pad}${actions.wijsAfkeuringAf.queryString}`}
+        />
+      )
+    }
+
+    <div class="mt-4 desktop:grid desktop:grid-cols-[1.25fr_1fr] desktop:items-start desktop:gap-4">
+      <div class="desktop:col-span-2">
+        <ExcelKaart
+          client:idle
+          slug={slug}
+          laatsteImport={laatsteImport
+            ? {
+                datum: formatDatum(laatsteImport.tijdstip),
+                regels: importDetail.regels ?? 0,
+                overgeslagen: importDetail.overgeslagen ?? 0,
+              }
+            : null}
+          melding={query.get("ok") ? "ok" : query.get("error") ? "fout" : null}
+          meldingTekst={query.get("error") ??
+            (query.get("ok")
+              ? `${query.get("nieuw") ?? 0} nieuw, ${query.get("bijgewerkt") ?? 0} bijgewerkt, ${
+                  query.get("overgeslagen") ?? 0
+                } overgeslagen`
+              : "")}
+        />
+      </div>
+
+      <div class="mt-3 desktop:mt-0">
+        <Kaart>
+          <KaartTitel>Onderdeel · {onderdeel.naam}</KaartTitel>
+          <p class="mb-3 mt-1 text-[12.5px] text-text-muted">
+            Onderhoudsacties en eigen velden staan per categorie.
+          </p>
+          <CategorieBeheer
+            client:load
+            onderdeelId={onderdeel.id}
+            medewerkerNaam={medewerker.naam}
+            categorieen={categorieKaarten}
+            urls={urls}
+          />
+        </Kaart>
+      </div>
+
+      <div class="mt-3 desktop:mt-0">
+        <MedewerkerBeheer
+          client:load
+          medewerkerNaam={medewerker.naam}
+          huidigeId={medewerker.id}
+          medewerkers={alleMedewerkers.map((m) => ({
+            id: m.id,
+            naam: m.naam,
+            rol: m.rol,
+            functie: m.functie,
+            actief: m.actief,
+          }))}
+          toevoegUrl={`${pad}${actions.voegMedewerkerToe.queryString}`}
+          actiefUrl={`${pad}${actions.zetMedewerkerActief.queryString}`}
+        />
+      </div>
+    </div>
+  </main>
+</Onderdeel>

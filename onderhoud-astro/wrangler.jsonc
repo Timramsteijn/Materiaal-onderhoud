@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "onderhoud-outdoorvalley",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // De entry (main) en de assets vult de Astro-adapter zelf in.
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "onderhoud",
+      // Vervang door het echte id na `wrangler d1 create onderhoud`
+      "database_id": "local-dev",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      // Astro slaat sessies hierin op (de adapter verwacht de naam SESSION)
+      "binding": "SESSION",
+      "id": "local-dev"
+    }
+  ]
+}
