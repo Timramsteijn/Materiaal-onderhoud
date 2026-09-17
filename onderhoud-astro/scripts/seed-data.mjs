@@ -24,6 +24,7 @@ export const ONDERDELEN = [
         velden: [
           { naam: "Lengte", type: "GETAL", eenheid: "cm" },
           { naam: "DIN-bereik", type: "BEREIK" },
+          { naam: "Huidige DIN-waarde", type: "GETAL" },
           { naam: "Bindingtype", type: "TEKST" },
           { naam: "Radius", type: "GETAL", eenheid: "m" },
         ],

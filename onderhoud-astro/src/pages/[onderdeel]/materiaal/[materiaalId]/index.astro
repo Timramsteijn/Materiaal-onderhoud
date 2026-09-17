@@ -273,7 +273,9 @@ const specs = [
           velden={velden.map((v) => ({
             id: v.id,
             naam: v.naam,
+            type: v.type,
             eenheid: v.eenheid,
+            opties: JSON.parse(v.opties || "[]") as string[],
             waarde: veldwaarden[v.id] ?? "",
           }))}
           magVerwijderen={isBeheerder(medewerker.rol)}

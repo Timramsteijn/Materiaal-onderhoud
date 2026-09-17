@@ -29,15 +29,18 @@ export const zoekMateriaalId = defineAction({
 
 export const maakMateriaal = defineAction({
   accept: "form",
-  input: z.object({
-    onderdeelId: z.string().min(1),
-    categorieId: z.string().min(1),
-    // Het ID moet exact overeenkomen met de sticker; nooit automatisch genereren.
-    materiaalId: z.string().trim().min(1).max(40),
-    merkModel: z.string().trim().min(1).max(160),
-    locatie: z.string().trim().max(120).optional(),
-    inGebruikSinds: z.coerce.date(),
-  }),
+  input: z
+    .object({
+      onderdeelId: z.string().min(1),
+      categorieId: z.string().min(1),
+      // Het ID moet exact overeenkomen met de sticker; nooit automatisch genereren.
+      materiaalId: z.string().trim().min(1).max(40),
+      merkModel: z.string().trim().min(1).max(160),
+      locatie: z.string().trim().max(120).optional(),
+      inGebruikSinds: z.coerce.date(),
+    })
+    // De categorie-eigen velden komen binnen als veld:{id}; die staan niet vast.
+    .catchall(z.string().optional()),
   handler: async (invoer, context) => {
     await vereisMedewerker(context);
     const materiaalId = invoer.materiaalId.toUpperCase();
@@ -67,6 +70,18 @@ export const maakMateriaal = defineAction({
       });
     }
 
+    // De categorie-eigen velden mogen meteen mee; leeg laten mag ook.
+    const velden = await db()
+      .select()
+      .from(velddefinities)
+      .where(and(eq(velddefinities.categorieId, categorie.id), isNull(velddefinities.archivedAt)));
+
+    const veldwaarden: Record<string, string> = {};
+    for (const veld of velden) {
+      const waarde = invoer[`veld:${veld.id}`];
+      if (typeof waarde === "string" && waarde.trim()) veldwaarden[veld.id] = waarde.trim();
+    }
+
     // Nieuw materiaal start altijd op "In gebruik"; er is geen statusveld.
     await db()
       .insert(materiaal)
@@ -79,7 +94,7 @@ export const maakMateriaal = defineAction({
         locatie: invoer.locatie ?? "",
         inGebruikSinds: invoer.inGebruikSinds,
         status: "IN_GEBRUIK",
-        veldwaarden: "{}",
+        veldwaarden: JSON.stringify(veldwaarden),
         aangemaakt: new Date(),
       });
 

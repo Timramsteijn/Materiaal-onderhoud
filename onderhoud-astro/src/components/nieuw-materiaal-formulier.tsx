@@ -3,6 +3,13 @@ import { actions } from "astro:actions";
 
 import { Kaart, Label, Pill, PrimaireKnop, OutlineKnop, inputClass } from "@/components/ui";
 import { Check } from "@/components/icons";
+import { VeldInvoer, type VeldInvoerDefinitie } from "@/components/veld-invoer";
+
+export type NieuweCategorie = {
+  id: string;
+  naam: string;
+  velden: VeldInvoerDefinitie[];
+};
 
 export function NieuwMateriaalFormulier({
   slug,
@@ -14,7 +21,7 @@ export function NieuwMateriaalFormulier({
 }: {
   slug: string;
   onderdeelId: string;
-  categorieen: { id: string; naam: string }[];
+  categorieen: NieuweCategorie[];
   beginId: string;
   /** Server-side opgemaakt, zodat server- en clientrender identiek blijven. */
   vandaag: string;
@@ -23,6 +30,8 @@ export function NieuwMateriaalFormulier({
   const [categorieId, setCategorieId] = useState(categorieen[0]?.id ?? "");
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
+
+  const gekozen = categorieen.find((c) => c.id === categorieId);
 
   async function opslaan(event: ReactSubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -99,9 +108,24 @@ export function NieuwMateriaalFormulier({
           </div>
         </div>
 
-        <p className="mt-4 rounded-input bg-neutral-fill px-3 py-2.5 text-[12.5px] text-text-muted">
-          De eigen velden van de categorie vul je aan op het materiaalkaartje.
-        </p>
+        {/* De velden horen bij de categorie, dus ze wisselen mee met de keuze. */}
+        {gekozen && gekozen.velden.length > 0 && (
+          <div className="mt-4 border-t border-zand pt-4">
+            <h3 className="font-body mb-2 text-[12px] font-extrabold uppercase tracking-[0.14em] text-link">
+              Velden van categorie {gekozen.naam}
+            </h3>
+            <div className="grid gap-3 desktop:grid-cols-2">
+              {gekozen.velden.map((veld) => (
+                // key op de categorie: bij het wisselen beginnen de velden leeg.
+                <VeldInvoer key={`${gekozen.id}-${veld.id}`} veld={veld} idVoorvoegsel="nieuw" />
+              ))}
+            </div>
+            <p className="mt-2 text-[12px] text-text-muted">
+              Niet alles bij de hand? Laat leeg — je kunt het later op het materiaalkaartje
+              aanvullen.
+            </p>
+          </div>
+        )}
 
         {fout && <p className="mt-3 text-[12.5px] text-red-text">{fout}</p>}
 

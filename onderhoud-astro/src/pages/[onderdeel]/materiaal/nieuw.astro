@@ -5,14 +5,26 @@ import Onderdeel from "@/layouts/Onderdeel.astro";
 import { TopBar } from "@/components/top-bar";
 import { ChevronLeft } from "@/components/icons";
 import { NieuwMateriaalFormulier } from "@/components/nieuw-materiaal-formulier";
-import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
+import { getOnderdeel, getCategorieen, getVelden } from "@/lib/onderdeel";
 
 const slug = Astro.params.onderdeel!;
 const onderdeel = await getOnderdeel(slug);
 if (!onderdeel) return Astro.rewrite("/404");
 
 const medewerker = Astro.locals.medewerker!;
-const categorieen = await getCategorieen(onderdeel.id);
+const categorieen = await Promise.all(
+  (await getCategorieen(onderdeel.id)).map(async (c) => ({
+    id: c.id,
+    naam: c.naam,
+    velden: (await getVelden(c.id)).map((v) => ({
+      id: v.id,
+      naam: v.naam,
+      type: v.type,
+      eenheid: v.eenheid,
+      opties: JSON.parse(v.opties || "[]") as string[],
+    })),
+  }))
+);
 const beginId = Astro.url.searchParams.get("id") ?? "";
 const vandaag = new Date().toISOString().slice(0, 10);
 ---
@@ -52,7 +64,7 @@ const vandaag = new Date().toISOString().slice(0, 10);
           client:load
           slug={slug}
           onderdeelId={onderdeel.id}
-          categorieen={categorieen.map((c) => ({ id: c.id, naam: c.naam }))}
+          categorieen={categorieen}
           beginId={beginId}
           vandaag={vandaag}
           actieUrl={`${Astro.url.pathname}${actions.maakMateriaal.queryString}`}

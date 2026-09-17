@@ -4,8 +4,9 @@ import { actions } from "astro:actions";
 import { Kaart, Label, inputClass } from "@/components/ui";
 import { Trash2 } from "@/components/icons";
 import { BevestigModal } from "@/components/bevestig-modal";
+import { VeldInvoer, type VeldInvoerDefinitie } from "@/components/veld-invoer";
 
-type Veld = { id: string; naam: string; eenheid: string | null; waarde: string };
+type Veld = VeldInvoerDefinitie & { waarde: string };
 
 export function MateriaalBewerken({
   materiaal,
@@ -97,18 +98,7 @@ export function MateriaalBewerken({
 
             {/* Volledig datagestuurd: de velddefinities komen uit de categorie. */}
             {velden.map((veld) => (
-              <div key={veld.id}>
-                <Label htmlFor={`veld-${veld.id}`}>
-                  {veld.naam}
-                  {veld.eenheid ? ` (${veld.eenheid})` : ""}
-                </Label>
-                <input
-                  id={`veld-${veld.id}`}
-                  name={`veld:${veld.id}`}
-                  defaultValue={veld.waarde}
-                  className={inputClass}
-                />
-              </div>
+              <VeldInvoer key={veld.id} veld={veld} waarde={veld.waarde} />
             ))}
           </div>
 
