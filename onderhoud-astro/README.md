@@ -43,6 +43,13 @@ SEED_ADMIN_WACHTWOORD='kies-een-wachtwoord' npm run seed
 npm run dev          # http://localhost:4321
 ```
 
+Op Windows zet je die variabele apart, want de regel hierboven is bash-syntax:
+
+```
+set SEED_ADMIN_WACHTWOORD=kies-een-wachtwoord
+npm run seed
+```
+
 De seed maakt vier accounts aan, allemaal met het wachtwoord uit
 `SEED_ADMIN_WACHTWOORD`:
 

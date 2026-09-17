@@ -324,8 +324,10 @@ writeFileSync(bestand, sql);
 
 const doel = argumenten.includes("--remote") ? "--remote" : "--local";
 console.log(`Seeden (${doel}): ${regels.length} regels…`);
+// Op Windows is npx een .cmd-shim; zonder de extensie vindt execFileSync hem niet.
+const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 execFileSync(
-  "npx",
+  npx,
   ["wrangler", "d1", "execute", "onderhoud", doel, "--file", bestand, "--yes"],
   { stdio: "inherit" }
 );
