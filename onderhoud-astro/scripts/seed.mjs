@@ -11,13 +11,13 @@
  * overschreven — echte registraties blijven dus staan.
  */
 
-import { execFileSync } from "node:child_process";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { webcrypto as crypto } from "node:crypto";
 
 import { ONDERDELEN, MEDEWERKERS, MATERIAAL } from "./seed-data.mjs";
+import { wrangler } from "./wrangler.mjs";
 
 const ITERATIES = 210_000;
 
@@ -324,11 +324,5 @@ writeFileSync(bestand, sql);
 
 const doel = argumenten.includes("--remote") ? "--remote" : "--local";
 console.log(`Seeden (${doel}): ${regels.length} regels…`);
-// Op Windows is npx een .cmd-shim; zonder de extensie vindt execFileSync hem niet.
-const npx = process.platform === "win32" ? "npx.cmd" : "npx";
-execFileSync(
-  npx,
-  ["wrangler", "d1", "execute", "onderhoud", doel, "--file", bestand, "--yes"],
-  { stdio: "inherit" }
-);
+wrangler(["d1", "execute", "onderhoud", doel, "--file", bestand, "--yes"]);
 console.log("Seed klaar.");
