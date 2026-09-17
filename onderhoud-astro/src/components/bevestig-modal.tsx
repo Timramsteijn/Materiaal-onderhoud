@@ -1,16 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { AlertTriangle, Trash2 } from "@/components/icons";
 
 /**
  * Bevestiging bij verwijderen/archiveren. Altijd dezelfde opbouw: rode kicker,
  * de vraag als kop, de gevolgen, en het blok dat vertelt dat de wijziging
  * wordt gelogd. Gebruikt voor acties, velden, categorieën en medewerkers.
+ *
+ * De knop heet standaard "Verwijderen"; wie iets anders bevestigt — deactiveren
+ * bijvoorbeeld — geeft een eigen label en icoon mee, zodat de knop nooit iets
+ * anders belooft dan er gebeurt.
  */
 export function BevestigModal({
   vraag,
   gevolgen,
   medewerkerNaam,
   bezig,
+  bevestigLabel = "Verwijderen",
+  icoon,
   onBevestig,
   onAnnuleer,
 }: {
@@ -18,6 +24,8 @@ export function BevestigModal({
   gevolgen: string;
   medewerkerNaam?: string;
   bezig?: boolean;
+  bevestigLabel?: string;
+  icoon?: ReactNode;
   onBevestig: () => void;
   onAnnuleer: () => void;
 }) {
@@ -72,8 +80,8 @@ export function BevestigModal({
             onClick={onBevestig}
             className="motion flex min-h-[44px] items-center gap-2 rounded-full bg-red-text px-5 text-[13px] font-extrabold uppercase tracking-[0.08em] text-creme hover:bg-[#8a281e] disabled:opacity-60"
           >
-            <Trash2 size={15} strokeWidth={2} />
-            {bezig ? "Bezig…" : "Verwijderen"}
+            {icoon ?? <Trash2 size={15} strokeWidth={2} />}
+            {bezig ? "Bezig…" : bevestigLabel}
           </button>
         </div>
       </div>

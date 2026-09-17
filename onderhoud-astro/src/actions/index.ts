@@ -13,6 +13,7 @@ import {
   voegActieToe,
   voegCategorieToe,
   voegMedewerkerToe,
+  verwijderMedewerker,
   voegVeldToe,
   zetMedewerkerActief,
 } from "./beheer";
@@ -41,4 +42,5 @@ export const server = {
   archiveerVeld,
   voegMedewerkerToe,
   zetMedewerkerActief,
+  verwijderMedewerker,
 };

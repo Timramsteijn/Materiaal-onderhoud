@@ -4,10 +4,18 @@ import { actions } from "astro:actions";
 import { ROL_LABELS } from "@/lib/domein";
 import { Kaart, KaartTitel, Label, inputClass } from "@/components/ui";
 import { BevestigModal } from "@/components/bevestig-modal";
-import { Plus } from "@/components/icons";
+import { Plus, UserX } from "@/components/icons";
 import type { Rol } from "@/db/schema";
 
-type Medewerker = { id: string; naam: string; rol: Rol; functie: string; actief: boolean };
+type Medewerker = {
+  id: string;
+  naam: string;
+  rol: Rol;
+  functie: string;
+  actief: boolean;
+  /** Registraties plus beheerwijzigingen op naam; die historie blijft altijd staan. */
+  historie: number;
+};
 
 export function MedewerkerBeheer({
   medewerkers,
@@ -15,6 +23,7 @@ export function MedewerkerBeheer({
   medewerkerNaam,
   toevoegUrl,
   actiefUrl,
+  verwijderUrl,
 }: {
   medewerkers: Medewerker[];
   huidigeId: string;
@@ -22,11 +31,16 @@ export function MedewerkerBeheer({
   /** URL's van de Astro Actions; ook het doel als JavaScript uitstaat. */
   toevoegUrl: string;
   actiefUrl: string;
+  verwijderUrl: string;
 }) {
   const [nieuw, setNieuw] = useState(false);
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
   const [teDeactiveren, setTeDeactiveren] = useState<Medewerker | null>(null);
+  const [teVerwijderen, setTeVerwijderen] = useState<Medewerker | null>(null);
+
+  // Verwijderen mag pas ná deactiveren, en nooit als er historie op naam staat.
+  const magVerwijderen = (m: Medewerker) => !m.actief && m.id !== huidigeId && m.historie === 0;
 
   async function toevoegen(event: ReactSubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,8 +59,25 @@ export function MedewerkerBeheer({
     setBezig(true);
     const formData = new FormData();
     formData.set("medewerkerId", id);
-    formData.set("actief", actief ? "true" : "");
+    // Letterlijk "false" sturen: Astro leest een leeg veld dat wél aanwezig is
+    // als true, waardoor deactiveren niets deed.
+    formData.set("actief", actief ? "true" : "false");
     await actions.zetMedewerkerActief(formData);
+    window.location.reload();
+  }
+
+  async function verwijderen(id: string) {
+    setBezig(true);
+    setFout(null);
+    const formData = new FormData();
+    formData.set("medewerkerId", id);
+    const { error } = await actions.verwijderMedewerker(formData);
+    setBezig(false);
+    if (error) {
+      setTeVerwijderen(null);
+      setFout(error.message);
+      return;
+    }
     window.location.reload();
   }
 
@@ -79,28 +110,50 @@ export function MedewerkerBeheer({
               </span>
             </div>
 
-            <button
-              type="button"
-              role="switch"
-              aria-checked={m.actief}
-              aria-label={`${m.naam} ${m.actief ? "deactiveren" : "activeren"}`}
-              disabled={m.id === huidigeId || bezig}
-              onClick={() => {
-                if (m.actief) setTeDeactiveren(m);
-                else void zetActief(m.id, true);
-              }}
-              className={`motion relative h-[26px] w-[44px] shrink-0 rounded-full disabled:opacity-40 ${
-                m.actief ? "bg-green-figure" : "bg-toggle-off"
-              }`}
-            >
-              {/* left-0 is nodig: zonder houvast zet de browser het bolletje
-                  gecentreerd, en dan schuift het buiten het spoor. */}
-              <span
-                className={`motion absolute left-0 top-[3px] h-5 w-5 rounded-full bg-creme ${
-                  m.actief ? "translate-x-[21px]" : "translate-x-[3px]"
+            <div className="flex shrink-0 items-center gap-3">
+              {!m.actief && m.id !== huidigeId && (
+                magVerwijderen(m) ? (
+                  <button
+                    type="button"
+                    disabled={bezig}
+                    onClick={() => setTeVerwijderen(m)}
+                    className="motion text-[11.5px] font-bold text-red-text hover:underline disabled:opacity-40"
+                  >
+                    verwijderen
+                  </button>
+                ) : (
+                  <span
+                    className="text-[11.5px] text-text-muted"
+                    title="Deze medewerker staat in de historie en kan daarom niet meer verwijderd worden."
+                  >
+                    {m.historie} in historie
+                  </span>
+                )
+              )}
+
+              <button
+                type="button"
+                role="switch"
+                aria-checked={m.actief}
+                aria-label={`${m.naam} ${m.actief ? "deactiveren" : "activeren"}`}
+                disabled={m.id === huidigeId || bezig}
+                onClick={() => {
+                  if (m.actief) setTeDeactiveren(m);
+                  else void zetActief(m.id, true);
+                }}
+                className={`motion relative h-[26px] w-[44px] rounded-full disabled:opacity-40 ${
+                  m.actief ? "bg-green-figure" : "bg-toggle-off"
                 }`}
-              />
-            </button>
+              >
+                {/* left-0 is nodig: zonder houvast zet de browser het bolletje
+                    gecentreerd, en dan schuift het buiten het spoor. */}
+                <span
+                  className={`motion absolute left-0 top-[3px] h-5 w-5 rounded-full bg-creme ${
+                    m.actief ? "translate-x-[21px]" : "translate-x-[3px]"
+                  }`}
+                />
+              </button>
+            </div>
           </li>
         ))}
       </ul>
@@ -159,8 +212,6 @@ export function MedewerkerBeheer({
             </div>
           </div>
 
-          {fout && <p className="mt-2 text-[12.5px] text-red-text">{fout}</p>}
-
           <button
             type="submit"
             disabled={bezig}
@@ -170,6 +221,8 @@ export function MedewerkerBeheer({
           </button>
         </form>
       )}
+
+      {fout && <p className="mt-3 text-[12.5px] text-red-text">{fout}</p>}
 
       {/* Zonder JavaScript blijft (de)activeren bereikbaar via dit formulier. */}
       <noscript>
@@ -195,6 +248,25 @@ export function MedewerkerBeheer({
             Opslaan
           </button>
         </form>
+
+        {medewerkers.some(magVerwijderen) && (
+          <form method="post" action={verwijderUrl} className="mt-3 border-t border-zand pt-3">
+            <Label htmlFor="mw-verwijder-id">Gedeactiveerde medewerker verwijderen</Label>
+            <select id="mw-verwijder-id" name="medewerkerId" className={inputClass}>
+              {medewerkers.filter(magVerwijderen).map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.naam}
+                </option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              className="motion mt-2 h-11 rounded-full bg-red-text px-5 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-creme"
+            >
+              Verwijderen
+            </button>
+          </form>
+        )}
       </noscript>
 
       {teDeactiveren && (
@@ -203,8 +275,21 @@ export function MedewerkerBeheer({
           gevolgen="De medewerker kan niet meer inloggen. Bestaande registraties blijven op naam staan en worden niet gewijzigd."
           medewerkerNaam={medewerkerNaam}
           bezig={bezig}
+          bevestigLabel="Deactiveren"
+          icoon={<UserX size={15} strokeWidth={2} />}
           onAnnuleer={() => setTeDeactiveren(null)}
           onBevestig={() => void zetActief(teDeactiveren.id, false)}
+        />
+      )}
+
+      {teVerwijderen && (
+        <BevestigModal
+          vraag={`${teVerwijderen.naam} definitief verwijderen?`}
+          gevolgen="Het account verdwijnt uit de lijst en komt niet meer terug. Dit kan alleen omdat er geen registraties op deze naam staan."
+          medewerkerNaam={medewerkerNaam}
+          bezig={bezig}
+          onAnnuleer={() => setTeVerwijderen(null)}
+          onBevestig={() => void verwijderen(teVerwijderen.id)}
         />
       )}
     </Kaart>

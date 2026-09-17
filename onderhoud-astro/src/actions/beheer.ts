@@ -9,6 +9,7 @@ import { nieuwId } from "@/lib/id";
 import {
   beheerlog,
   categorieen,
+  logregels,
   medewerkers,
   onderdelen,
   onderhoudsacties,
@@ -290,6 +291,64 @@ export const zetMedewerkerActief = defineAction({
       actief ? "Medewerker geactiveerd" : "Medewerker gedeactiveerd",
       { naam: medewerker.naam }
     );
+    return { ok: true as const };
+  },
+});
+
+/**
+ * Verwijdert een medewerker definitief. Twee harde voorwaarden: de medewerker
+ * moet eerst gedeactiveerd zijn, en er mag geen historie op naam staan —
+ * registraties en beheerwijzigingen blijven altijd bewaard.
+ */
+export const verwijderMedewerker = defineAction({
+  accept: "form",
+  input: z.object({ medewerkerId: z.string().min(1) }),
+  handler: async ({ medewerkerId }, context) => {
+    const beheerder = await vereisBeheerder(context);
+    if (medewerkerId === beheerder.id) {
+      throw new ActionError({ code: "BAD_REQUEST", message: "Je kunt jezelf niet verwijderen." });
+    }
+
+    const medewerker = await db().query.medewerkers.findFirst({
+      where: eq(medewerkers.id, medewerkerId),
+    });
+    if (!medewerker) {
+      throw new ActionError({ code: "NOT_FOUND", message: "Medewerker niet gevonden." });
+    }
+
+    // Deactiveren is de omkeerbare stap en gaat er altijd aan vooraf.
+    if (medewerker.actief) {
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message: `${medewerker.naam} is nog actief. Deactiveer de medewerker eerst.`,
+      });
+    }
+
+    const [registraties, wijzigingen] = await Promise.all([
+      db()
+        .select({ aantal: count() })
+        .from(logregels)
+        .where(eq(logregels.medewerkerId, medewerker.id)),
+      db()
+        .select({ aantal: count() })
+        .from(beheerlog)
+        .where(eq(beheerlog.medewerkerId, medewerker.id)),
+    ]);
+    const historie = (registraties[0]?.aantal ?? 0) + (wijzigingen[0]?.aantal ?? 0);
+    if (historie > 0) {
+      throw new ActionError({
+        code: "CONFLICT",
+        message:
+          `${medewerker.naam} staat op ${historie} regel(s) in de historie. ` +
+          "Die blijven bewaard, dus verwijderen kan niet meer — gedeactiveerd is inloggen al onmogelijk.",
+      });
+    }
+
+    await db().delete(medewerkers).where(eq(medewerkers.id, medewerker.id));
+    await logBeheer(beheerder.id, "Medewerker verwijderd", {
+      naam: medewerker.naam,
+      gebruikersnaam: medewerker.gebruikersnaam,
+    });
     return { ok: true as const };
   },
 });

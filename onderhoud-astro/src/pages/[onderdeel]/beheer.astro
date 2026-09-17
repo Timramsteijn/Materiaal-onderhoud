@@ -52,6 +52,27 @@ const [rijen, alleMedewerkers, teKeuren, laatsteImport] = await Promise.all([
   }),
 ]);
 
+// Wie historie op naam heeft, kan niet meer verwijderd worden: registraties en
+// beheerwijzigingen blijven bewaard. Twee tellingen, in één keer opgehaald.
+const [registratiesPerMedewerker, wijzigingenPerMedewerker] = await Promise.all([
+  db()
+    .select({ medewerkerId: logregels.medewerkerId, aantal: count() })
+    .from(logregels)
+    .groupBy(logregels.medewerkerId),
+  db()
+    .select({ medewerkerId: beheerlog.medewerkerId, aantal: count() })
+    .from(beheerlog)
+    .groupBy(beheerlog.medewerkerId),
+]);
+
+const historiePerMedewerker = new Map<string, number>();
+for (const rij of [...registratiesPerMedewerker, ...wijzigingenPerMedewerker]) {
+  historiePerMedewerker.set(
+    rij.medewerkerId,
+    (historiePerMedewerker.get(rij.medewerkerId) ?? 0) + rij.aantal
+  );
+}
+
 // Per categorie de acties, velden en het aantal stuks materiaal.
 const categorieKaarten = await Promise.all(
   rijen.map(async (c) => {
@@ -191,9 +212,11 @@ const urls = {
             rol: m.rol,
             functie: m.functie,
             actief: m.actief,
+            historie: historiePerMedewerker.get(m.id) ?? 0,
           }))}
           toevoegUrl={`${pad}${actions.voegMedewerkerToe.queryString}`}
           actiefUrl={`${pad}${actions.zetMedewerkerActief.queryString}`}
+          verwijderUrl={`${pad}${actions.verwijderMedewerker.queryString}`}
         />
       </div>
     </div>
