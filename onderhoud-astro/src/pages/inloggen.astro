@@ -14,11 +14,12 @@ if (resultaat && !resultaat.error && resultaat.data.ok) {
   return Astro.redirect(bestemming, 303);
 }
 
+const mislukt = resultaat?.data && !resultaat.data.ok ? resultaat.data : undefined;
 const melding = resultaat?.error
-  ? "Vul je gebruikersnaam en wachtwoord in."
-  : resultaat?.data && !resultaat.data.ok
-    ? resultaat.data.melding
-    : undefined;
+  ? "Er ging iets mis bij het inloggen. Probeer het opnieuw."
+  : mislukt?.melding;
+// De gebruikersnaam blijft staan na een mislukte poging; het wachtwoord nooit.
+const ingevuldeNaam = mislukt?.gebruikersnaam ?? "";
 
 // `verder` blijft in de action-URL staan, zodat het na de POST nog bekend is.
 const actieUrl = new URL(Astro.url);
@@ -48,7 +49,7 @@ const actie = `${actieUrl.pathname}${actieUrl.search}`;
         </p>
       </div>
       <div class="desktop:hidden">
-        <LoginForm variant="donker" actie={actie} melding={melding} />
+        <LoginForm variant="donker" actie={actie} melding={melding} gebruikersnaam={ingevuldeNaam} />
       </div>
     </div>
 
@@ -59,7 +60,7 @@ const actie = `${actieUrl.pathname}${actieUrl.search}`;
         <p class="mb-6 mt-1 text-[13.5px] text-text-muted">
           Met je Outdoor Valley medewerkersaccount.
         </p>
-        <LoginForm variant="licht" actie={actie} melding={melding} />
+        <LoginForm variant="licht" actie={actie} melding={melding} gebruikersnaam={ingevuldeNaam} />
       </div>
     </div>
   </div>

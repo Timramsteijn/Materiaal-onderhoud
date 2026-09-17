@@ -9,11 +9,14 @@ export function LoginForm({
   variant = "licht",
   actie,
   melding,
+  gebruikersnaam = "",
 }: {
   variant?: "donker" | "licht";
   /** URL van de Astro Action (actions.inloggen). */
   actie: string;
   melding?: string;
+  /** Blijft staan na een mislukte poging, zodat je ziet wat je invulde. */
+  gebruikersnaam?: string;
 }) {
   const donker = variant === "donker";
 
@@ -36,6 +39,7 @@ export function LoginForm({
         name="gebruikersnaam"
         type="text"
         autoComplete="username"
+        defaultValue={gebruikersnaam}
         placeholder="t.verhoeven"
         required
         className={input}
