@@ -8,6 +8,7 @@ import { Zoekveld } from "@/components/zoekveld";
 import MateriaalLijst from "@/components/MateriaalLijst.astro";
 import { OfflineMelding } from "@/components/offline-melding";
 import { RegistratieFormulier } from "@/components/registratie-formulier";
+import { MeldingFormulier } from "@/components/melding-formulier";
 import { MateriaalBewerken } from "@/components/materiaal-bewerken";
 import { StatusBadge, CategorieBadge, Kaart, KaartTitel } from "@/components/ui";
 import { ChevronLeft, Printer, ScanLine, Plus } from "@/components/icons";
@@ -15,6 +16,7 @@ import { db } from "@/lib/context";
 import { getOnderdeel } from "@/lib/onderdeel";
 import { categorieen, logregels, materiaal, onderhoudsacties, velddefinities } from "@/db/schema";
 import { formatDatum, formatTijd } from "@/lib/domein";
+import { haalOpenVerzoeken } from "@/lib/verzoeken";
 import { isBeheerder } from "@/lib/permissies";
 import { materiaalUrl } from "@/lib/url";
 import { qrSvg } from "@/lib/qr";
@@ -31,7 +33,7 @@ const stuk = await db().query.materiaal.findFirst({
 // Een materiaal-URL uit een ander onderdeel geeft 404 — geen stille wissel.
 if (!stuk) return Astro.rewrite("/404");
 
-const [categorie, acties, velden, historie, totaalLog] = await Promise.all([
+const [categorie, acties, velden, historie, totaalLog, openVerzoeken] = await Promise.all([
   db().query.categorieen.findFirst({ where: eq(categorieen.id, stuk.categorieId) }),
   db()
     .select()
@@ -54,7 +56,16 @@ const [categorie, acties, velden, historie, totaalLog] = await Promise.all([
     .orderBy(desc(logregels.tijdstip))
     .limit(3),
   db().select({ aantal: count() }).from(logregels).where(eq(logregels.materiaalDbId, stuk.id)),
+  haalOpenVerzoeken(stuk.id),
 ]);
+
+const meldingen = openVerzoeken.map((v) => ({
+  id: v.id,
+  actieNaam: v.actieNaam,
+  opmerking: v.opmerking,
+  gemeldDoorNaam: v.gemeldDoorNaam,
+  gemeldLabel: `${formatDatum(v.gemeldOp)} om ${formatTijd(v.gemeldOp)}`,
+}));
 
 const aantalLogregels = totaalLog[0]?.aantal ?? 0;
 const veldwaarden = JSON.parse(stuk.veldwaarden || "{}") as Record<string, string>;
@@ -66,6 +77,8 @@ const filters = {
   categorie: Astro.url.searchParams.get("categorie") ?? undefined,
   // Vanaf het overzicht: alleen materiaal dat te lang niet onderhouden is.
   aandacht: Astro.url.searchParams.get("aandacht") === "1",
+  // Of juist alleen materiaal waarvoor iemand onderhoud heeft gemeld.
+  gemeld: Astro.url.searchParams.get("gemeld") === "1",
 };
 
 // De QR bevat de volledige URL van dit kaartje, zodat een scan met de gewone
@@ -208,12 +221,26 @@ const specs = [
         }
       </Kaart>
 
+      <div class="mt-3">
+        <MeldingFormulier
+          client:load
+          materiaalDbId={stuk.id}
+          acties={acties.filter((a) => !a.isAfkeuren).map((a) => ({ id: a.id, naam: a.naam }))}
+          meldingen={meldingen}
+          medewerkerNaam={medewerker.naam}
+          nuLabel={nuLabel}
+          meldUrl={`${Astro.url.pathname}${actions.meldOnderhoudNodig.queryString}`}
+          vervalUrl={`${Astro.url.pathname}${actions.laatVerzoekVervallen.queryString}`}
+        />
+      </div>
+
       <div class="mt-3 desktop:flex desktop:items-start desktop:gap-4">
         <RegistratieFormulier
           client:load
           materiaalDbId={stuk.id}
           materiaalLabel={stuk.materiaalId}
           acties={acties.map((a) => ({ id: a.id, naam: a.naam, isAfkeuren: a.isAfkeuren }))}
+          meldingen={meldingen.map((m) => ({ id: m.id, actieNaam: m.actieNaam }))}
           medewerkerNaam={medewerker.naam}
           nuLabel={nuLabel}
           actieUrl={`${Astro.url.pathname}${actions.registreerOnderhoud.queryString}`}

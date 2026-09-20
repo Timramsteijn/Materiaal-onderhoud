@@ -279,6 +279,7 @@ export const MATERIAAL = {
       inGebruikSinds: "2021-11-15",
       velden: { Lengte: "170", "DIN-bereik": "4 – 12", Bindingtype: "Tyrolia Attack 13", Radius: "15" },
       log: [{ actie: "Slijpen", dagen: 412, uur: 10, door: "Tim Verhoeven", opmerking: "Jaarlijkse beurt." }],
+      meldingen: [{ actie: "Slijpen", dagen: 1, uur: 16, minuut: 20, door: "Sanne de Groot", opmerking: "Kanten voelen bot, klant gleed weg in de bocht." }],
     },
     {
       materiaalId: "SB-0119",
@@ -319,6 +320,7 @@ export const MATERIAAL = {
       inGebruikSinds: "2024-03-12",
       velden: { Framemaat: "M", Wielmaat: "29", Versnellingen: "10", Veerweg: "100" },
       log: [{ actie: "Ketting reinigen", dagen: 3, uur: 9, minuut: 30, door: "Youssef El Amrani", opmerking: "Ketting gereinigd en gesmeerd." }],
+      meldingen: [{ actie: "Remmen controleren", dagen: 0, uur: 11, minuut: 5, door: "Sanne de Groot", opmerking: "Achterrem grijpt pas helemaal aan het eind." }],
     },
     {
       materiaalId: "MTB-0188",

@@ -1,4 +1,4 @@
-import { useState, type SubmitEvent as ReactSubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent as ReactSubmitEvent } from "react";
 import { actions } from "astro:actions";
 
 import { STATUS_KEUZES, STATUS_LABELS } from "@/lib/domein";
@@ -8,11 +8,13 @@ import { Check, Lock } from "@/components/icons";
 import type { Status } from "@/db/schema";
 
 type Actie = { id: string; naam: string; isAfkeuren: boolean };
+type Melding = { id: string; actieNaam: string };
 
 export function RegistratieFormulier({
   materiaalDbId,
   materiaalLabel,
   acties,
+  meldingen = [],
   medewerkerNaam,
   nuLabel,
   actieUrl,
@@ -20,6 +22,8 @@ export function RegistratieFormulier({
   materiaalDbId: string;
   materiaalLabel: string;
   acties: Actie[];
+  /** Open meldingen van dit materiaal; aanvinken rondt ze af. */
+  meldingen?: Melding[];
   medewerkerNaam: string;
   /** Server-side opgemaakt, zodat server- en clientrender identiek blijven. */
   nuLabel: string;
@@ -43,6 +47,13 @@ export function RegistratieFormulier({
   const gekozen = acties.find((a) => a.id === actieId);
   const isAfkeuring = gekozen?.isAfkeuren ?? false;
 
+  // Meldingen voor dezelfde actie staan meteen aangevinkt: dat is bijna altijd
+  // wat er gebeurt. Handmatig aanpassen blijft mogelijk.
+  const [afgevinkt, setAfgevinkt] = useState<string[]>([]);
+  useEffect(() => {
+    setAfgevinkt(meldingen.filter((m) => m.actieNaam === gekozen?.naam).map((m) => m.id));
+  }, [actieId]);
+
   async function verstuur(event: ReactSubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -64,6 +75,7 @@ export function RegistratieFormulier({
         actieNaam: gekozen?.naam ?? "",
         opmerking: String(formData.get("opmerking") ?? ""),
         nieuweStatus: nieuweStatus && !isAfkeuring ? nieuweStatus : undefined,
+        verzoekIds: isAfkeuring ? [] : afgevinkt,
         tijdstip: Date.now(),
       });
       setInWachtrij(true);
@@ -149,6 +161,40 @@ export function RegistratieFormulier({
             className="min-h-[82px] w-full rounded-input border border-border-light bg-creme px-3 py-2.5 text-[14px] text-ink placeholder:text-text-muted"
           />
         </div>
+
+        {meldingen.length > 0 && !isAfkeuring && (
+          <div className="mt-4">
+            <Label>Hiermee afgehandeld</Label>
+            <div className="space-y-1.5">
+              {meldingen.map((m) => (
+                <label
+                  key={m.id}
+                  className="flex items-center gap-2.5 text-[13.5px] text-ink"
+                >
+                  <input
+                    type="checkbox"
+                    name="verzoekIds"
+                    value={m.id}
+                    checked={afgevinkt.includes(m.id)}
+                    onChange={(e) => {
+                      setAfgevinkt((huidig) =>
+                        e.target.checked
+                          ? [...huidig, m.id]
+                          : huidig.filter((id) => id !== m.id)
+                      );
+                      setNaOpslaanAangeraakt(true);
+                    }}
+                    className="h-4 w-4 shrink-0 accent-[var(--accent)]"
+                  />
+                  <span>
+                    {m.actieNaam}
+                    <span className="text-text-muted"> — gemelde klus sluiten</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
 
         {!isAfkeuring && (
           <div className="mt-4">

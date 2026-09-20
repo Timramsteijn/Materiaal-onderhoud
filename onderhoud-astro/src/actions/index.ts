@@ -6,6 +6,7 @@ import {
   zoekMateriaalId,
 } from "./materiaal";
 import { keurAfkeuringGoed, registreerOnderhoud, wijsAfkeuringAf } from "./registratie";
+import { laatVerzoekVervallen, meldOnderhoudNodig } from "./verzoek";
 import {
   archiveerActie,
   archiveerCategorie,
@@ -32,6 +33,8 @@ export const server = {
   bewerkMateriaal,
   verwijderMateriaal,
   registreerOnderhoud,
+  meldOnderhoudNodig,
+  laatVerzoekVervallen,
   keurAfkeuringGoed,
   wijsAfkeuringAf,
   voegCategorieToe,

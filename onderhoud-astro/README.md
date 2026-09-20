@@ -186,6 +186,24 @@ er staat nergens een kleur hard in een component en nergens een
 `if (onderdeel === …)`. `--accent-on` wordt uit de luminantie afgeleid, zodat
 een licht accent navy tekst krijgt en een donker accent crème.
 
+### Melden en registreren zijn twee dingen
+
+Een instructeur die ziet dat een ski geslepen moet worden, **meldt** dat op het
+materiaalkaartje ("Onderhoud nodig"). Dat is géén logregel: het komt in de
+tabel `onderhoudsverzoeken` met status `OPEN`. De werkplaats ziet die meldingen
+op het overzicht, via het filter *Onderhoud gemeld* in de materiaallijst en aan
+de badge in de lijstregel.
+
+Wie het werk uitvoert, **registreert** het onderhoud zoals altijd. Staat de
+gekozen actie open als melding, dan is die in het registratieformulier al
+aangevinkt onder *Hiermee afgehandeld*; opslaan sluit de melding (status
+`AFGEROND`, met de naam van wie het deed en een verwijzing naar de logregel).
+
+Zo telt één slijpbeurt precies één keer mee in het log en in de cijfers. Een
+melding die toch niet nodig blijkt, wordt ingetrokken (`VERVALLEN`) en
+verdwijnt dus niet uit de historie. Afkeuren blijft buiten de meldingen: dat
+loopt via registreren mét goedkeuring.
+
 ### Afkeuren loopt via goedkeuring
 
 Kiest een medewerker een actie die als `isAfkeuren` staat gemarkeerd, dan gaat

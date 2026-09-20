@@ -11,6 +11,8 @@ export type WachtrijRegel = {
   actieNaam: string;
   opmerking: string;
   nieuweStatus?: string;
+  /** Meldingen die deze registratie afrondt. */
+  verzoekIds?: string[];
   tijdstip: number;
 };
 
@@ -128,6 +130,7 @@ export async function verstuurWachtrij(
     formData.set("opmerking", regel.opmerking);
     formData.set("clientId", regel.clientId);
     if (regel.nieuweStatus) formData.set("nieuweStatus", regel.nieuweStatus);
+    for (const id of regel.verzoekIds ?? []) formData.append("verzoekIds", id);
 
     try {
       const resultaat = await verstuur(formData);

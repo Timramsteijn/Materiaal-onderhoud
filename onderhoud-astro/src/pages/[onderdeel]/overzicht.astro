@@ -4,7 +4,7 @@ import { and, count, desc, eq, gte } from "drizzle-orm";
 import Onderdeel from "@/layouts/Onderdeel.astro";
 import { TopBar } from "@/components/top-bar";
 import { Kaart, KaartTitel } from "@/components/ui";
-import { AlertTriangle, ChevronRight, Download } from "@/components/icons";
+import { AlertTriangle, ChevronRight, CircleAlert, Download } from "@/components/icons";
 import { db } from "@/lib/context";
 import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
 import { logregels, materiaal } from "@/db/schema";
@@ -13,8 +13,10 @@ import {
   STATUS_LABELS,
   dagenSinds,
   formatAantal,
+  formatDatum,
   formatTijd,
 } from "@/lib/domein";
+import { haalOpenVerzoekenVanOnderdeel } from "@/lib/verzoeken";
 
 const MAAND = 30 * 86_400_000;
 
@@ -26,7 +28,7 @@ const medewerker = Astro.locals.medewerker!;
 const nu = new Date();
 const twaalfMaanden = new Date(nu.getTime() - 12 * MAAND);
 
-const [perStatus, perCategorie, perActie, categorieen, stukken] = await Promise.all([
+const [perStatus, perCategorie, perActie, categorieen, stukken, gemeld] = await Promise.all([
   db()
     .select({ status: materiaal.status, aantal: count() })
     .from(materiaal)
@@ -57,6 +59,7 @@ const [perStatus, perCategorie, perActie, categorieen, stukken] = await Promise.
     })
     .from(materiaal)
     .where(eq(materiaal.onderdeelId, onderdeel.id)),
+  haalOpenVerzoekenVanOnderdeel(onderdeel.id),
 ]);
 
 const aantal = (s: string) => perStatus.find((p) => p.status === s)?.aantal ?? 0;
@@ -230,6 +233,69 @@ const tegels = [
         </div>
       </Kaart>
     </div>
+
+    {/* Gemeld: iemand zag dat er iets moet gebeuren, de werkplaats pakt het op */}
+    <Kaart className={`mt-3 ${gemeld.length > 0 ? "border-amber-text" : ""}`}>
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5">
+          <CircleAlert
+            size={16}
+            strokeWidth={2.2}
+            className={gemeld.length > 0 ? "text-amber-text" : "text-text-muted"}
+          />
+          <h2 class="font-body text-[12px] font-extrabold uppercase tracking-[0.14em] text-ink">
+            Onderhoud gemeld
+          </h2>
+        </div>
+        {
+          gemeld.length > 0 && (
+            <a
+              href={materiaalUrl({ gemeld: "1" })}
+              class="shrink-0 text-[11.5px] font-bold text-link hover:underline"
+            >
+              in de lijst ({gemeld.length})
+            </a>
+          )
+        }
+      </div>
+      <p class="mb-3 mt-0.5 text-[11.5px] text-text-muted">
+        Gemeld door collega&rsquo;s, nog niet uitgevoerd. Afvinken doe je bij het registreren van
+        het onderhoud.
+      </p>
+
+      {
+        gemeld.length === 0 ? (
+          <p class="text-[13px] text-text-muted">
+            Er staat niets open in {onderdeel.naam}.
+          </p>
+        ) : (
+          <ul class="divide-y divide-zand">
+            {gemeld.slice(0, 12).map((v) => (
+              <li>
+                <a
+                  href={`/${slug}/materiaal/${encodeURIComponent(v.materiaalId)}`}
+                  class="motion flex items-center gap-3 py-2.5 hover:bg-zand"
+                >
+                  <span class="w-[100px] shrink-0 text-[14px] font-extrabold text-ink desktop:w-[110px]">
+                    {v.materiaalId}
+                  </span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-[13px] text-ink">
+                      <span class="font-bold">{v.actieNaam}</span>
+                      {v.opmerking ? ` — ${v.opmerking}` : ""}
+                    </span>
+                    <span class="block truncate text-[12px] text-text-muted">
+                      {v.merkModel} · {v.gemeldDoorNaam} · {formatDatum(v.gemeldOp)}
+                    </span>
+                  </span>
+                  <ChevronRight size={16} strokeWidth={2} className="shrink-0 text-text-muted" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </Kaart>
 
     {/* Aandacht nodig */}
     <Kaart className="mt-3">

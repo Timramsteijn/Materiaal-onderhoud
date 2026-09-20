@@ -20,6 +20,13 @@ export type Status = (typeof STATUSSEN)[number];
 export const VELDTYPES = ["TEKST", "GETAL", "BEREIK", "DATUM", "KEUZE"] as const;
 export type VeldType = (typeof VELDTYPES)[number];
 
+/**
+ * Een melding "dit moet gebeuren" leeft los van de registratie "dit is
+ * gebeurd". Anders telt hetzelfde slijpbeurtje twee keer mee in het log.
+ */
+export const VERZOEKSTATUSSEN = ["OPEN", "AFGEROND", "VERVALLEN"] as const;
+export type VerzoekStatus = (typeof VERZOEKSTATUSSEN)[number];
+
 export const LOGSOORTEN = [
   "REGISTRATIE",
   "AFKEURING_AANGEVRAAGD",
@@ -173,6 +180,41 @@ export const logregels = sqliteTable(
   (t) => [index("log_materiaal").on(t.materiaalDbId), index("log_tijdstip").on(t.tijdstip)]
 );
 
+/**
+ * Gemeld onderhoud: een instructeur ziet dat er iets moet gebeuren, de
+ * werkplaats voert het uit. Bewust geen logregel — pas de registratie van het
+ * uitgevoerde onderhoud komt in het log en telt mee in de cijfers.
+ */
+export const onderhoudsverzoeken = sqliteTable(
+  "onderhoudsverzoeken",
+  {
+    id: text("id").primaryKey(),
+    materiaalDbId: text("materiaal_db_id")
+      .notNull()
+      .references(() => materiaal.id, { onDelete: "cascade" }),
+    /** Tekstkopie, blijft staan als de actie later wordt gearchiveerd. */
+    actieNaam: text("actie_naam").notNull(),
+    actieId: text("actie_id"),
+    opmerking: text("opmerking").notNull().default(""),
+    status: text("status", { enum: VERZOEKSTATUSSEN }).notNull().default("OPEN"),
+    gemeldDoorId: text("gemeld_door_id")
+      .notNull()
+      .references(() => medewerkers.id),
+    gemeldDoorNaam: text("gemeld_door_naam").notNull(),
+    gemeldOp: integer("gemeld_op", { mode: "timestamp_ms" }).notNull(),
+    afgehandeldDoorNaam: text("afgehandeld_door_naam"),
+    afgehandeldOp: integer("afgehandeld_op", { mode: "timestamp_ms" }),
+    /** De registratie waarmee dit verzoek is afgerond; leeg bij vervallen. */
+    logregelId: text("logregel_id"),
+    /** Idempotentie, net als bij logregels. */
+    clientId: text("client_id").notNull().unique(),
+  },
+  (t) => [
+    index("verzoek_materiaal").on(t.materiaalDbId),
+    index("verzoek_status").on(t.status),
+  ]
+);
+
 /** Auditspoor van beheerwijzigingen: acties, velden, medewerkers, imports. */
 export const beheerlog = sqliteTable(
   "beheerlog",
@@ -190,6 +232,7 @@ export const beheerlog = sqliteTable(
 );
 
 export type Onderdeel = typeof onderdelen.$inferSelect;
+export type Onderhoudsverzoek = typeof onderhoudsverzoeken.$inferSelect;
 export type Categorie = typeof categorieen.$inferSelect;
 export type OnderhoudsActie = typeof onderhoudsacties.$inferSelect;
 export type VeldDefinitie = typeof velddefinities.$inferSelect;

@@ -29,9 +29,11 @@ function href(extra: LijstFilters) {
   const q = extra.q ?? filters.q;
   const categorie = "categorie" in extra ? extra.categorie : filters.categorie;
   const aandacht = "aandacht" in extra ? extra.aandacht : filters.aandacht;
+  const gemeld = "gemeld" in extra ? extra.gemeld : filters.gemeld;
   if (q) p.set("q", q);
   if (categorie) p.set("categorie", categorie);
   if (aandacht) p.set("aandacht", "1");
+  if (gemeld) p.set("gemeld", "1");
   const qs = p.toString();
   return qs ? `${basis}?${qs}` : basis;
 }
@@ -43,6 +45,7 @@ const query = new URLSearchParams();
 if (filters.q) query.set("q", filters.q);
 if (filters.categorie) query.set("categorie", filters.categorie);
 if (filters.aandacht) query.set("aandacht", "1");
+if (filters.gemeld) query.set("gemeld", "1");
 const queryString = query.toString();
 ---
 
@@ -73,8 +76,11 @@ const queryString = query.toString();
     )
   }
 
-  {/* Los van de categorieën: combineert ermee in plaats van ze te vervangen. */}
-  <div class="mt-2 flex items-center gap-2">
+  {/* Los van de categorieën: combineren ermee in plaats van ze te vervangen. */}
+  <div class="mt-2 flex flex-wrap items-center gap-2">
+    <Pill href={href({ gemeld: !filters.gemeld })} actief={Boolean(filters.gemeld)}>
+      Onderhoud gemeld
+    </Pill>
     <Pill href={href({ aandacht: !filters.aandacht })} actief={Boolean(filters.aandacht)}>
       Aandacht nodig
     </Pill>
@@ -83,7 +89,9 @@ const queryString = query.toString();
   <p class="mt-2.5 text-[12px] text-text-muted">
     {materiaal.length} van {totaal} stuks{
       actieveCategorie ? ` · ${actieveCategorie.naam}` : " · alle categorieën"
-    }{filters.aandacht ? ` · langer dan ${AANDACHT_NODIG_MAANDEN} maanden geen onderhoud` : ""}
+    }{filters.gemeld ? " · met een openstaande melding" : ""}{
+      filters.aandacht ? ` · langer dan ${AANDACHT_NODIG_MAANDEN} maanden geen onderhoud` : ""
+    }
   </p>
 
   {
@@ -93,7 +101,11 @@ const queryString = query.toString();
           icoon={<Search size={26} strokeWidth={2} />}
           kop="Geen materiaal gevonden"
           uitleg={
-            filters.aandacht
+            filters.gemeld
+              ? `Er staat geen onderhoud open in ${onderdeelNaam}${
+                  actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
+                }.`
+              : filters.aandacht
               ? `Al het materiaal in ${onderdeelNaam}${
                   actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
                 } is binnen ${AANDACHT_NODIG_MAANDEN} maanden onderhouden.`
@@ -107,7 +119,7 @@ const queryString = query.toString();
           }
           acties={
             <>
-              {(filters.q || filters.categorie || filters.aandacht) && (
+              {(filters.q || filters.categorie || filters.aandacht || filters.gemeld) && (
                 <OutlineKnop href={basis}>Filter wissen</OutlineKnop>
               )}
               <a
@@ -148,6 +160,11 @@ const queryString = query.toString();
                       {m.materiaalId}
                     </span>
                     <CategorieBadge naam={m.categorieNaam} />
+                    {m.meldingen > 0 && (
+                      <span class="shrink-0 whitespace-nowrap rounded-full bg-amber-text px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.06em] text-creme">
+                        {m.meldingen > 1 ? `${m.meldingen} gemeld` : "Gemeld"}
+                      </span>
+                    )}
                     {aandacht && (
                       <span class="shrink-0 whitespace-nowrap rounded-full bg-amber-tint px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.06em] text-amber-text">
                         Aandacht

@@ -30,6 +30,14 @@ function kopkaart(page, materiaalId) {
   return page.locator("main div.rounded-card").filter({ hasText: materiaalId }).first();
 }
 
+/** Het aantal onderhoudsbeurten uit de specificatietabel van het kaartje. */
+async function aantalBeurten(page, materiaalId) {
+  await ga(page, `/ski-snowboard/materiaal/${materiaalId}`);
+  const tekst = await page.locator("main").innerText();
+  const match = tekst.match(/Onderhoudsbeurten\s*\n?\s*(\d+)/i);
+  return match ? Number(match[1]) : -1;
+}
+
 /** Astro haalt het ssr-attribuut van een island weg zodra het gehydrateerd is. */
 async function gehydrateerd(page) {
   await page.waitForFunction(() => !document.querySelector("astro-island[ssr]"), null, {
@@ -216,6 +224,56 @@ async function inloggen(page, gebruikersnaam) {
     beweer(!/Ter goedkeuring/i.test(kop), "status stond nog op Ter goedkeuring");
     const tekst = await page.locator("main").innerText();
     beweer(/Afkeuring afgewezen/i.test(tekst), "geen logregel voor de afwijzing");
+  });
+
+  console.log("\nOnderhoud melden");
+
+  await test("melding maakt geen registratie aan", async () => {
+    // Eerst tellen: aantalBeurten navigeert zelf naar het kaartje.
+    const beurtenVoor = await aantalBeurten(page, nieuwId);
+    const kaart = page.locator("div.rounded-card").filter({ hasText: "Onderhoud nodig" }).first();
+    await kaart.locator('button:has-text("Waxen")').first().click();
+    await kaart.locator("#melding-opmerking").fill("Melding via e2e.");
+    await Promise.all([
+      page.waitForLoadState("load"),
+      kaart.locator('button:has-text("Onderhoud nodig melden")').click(),
+    ]);
+    await page.waitForTimeout(500);
+    const tekst = await page.locator("main").innerText();
+    beweer(/Melding via e2e/.test(tekst), "melding niet zichtbaar");
+    beweer(
+      (await aantalBeurten(page, nieuwId)) === beurtenVoor,
+      "melding telde mee als onderhoudsbeurt"
+    );
+  });
+
+  await test("gemeld materiaal staat in de lijst en op het overzicht", async () => {
+    await ga(page, "/ski-snowboard/materiaal?gemeld=1");
+    const lijst = await page.locator("main").innerText();
+    beweer(lijst.includes(nieuwId), "gemeld materiaal ontbreekt in het filter");
+    await ga(page, "/ski-snowboard/overzicht");
+    const overzicht = await page.locator("main").innerText();
+    beweer(/onderhoud gemeld/i.test(overzicht), "kaart Onderhoud gemeld ontbreekt");
+    beweer(overzicht.includes(nieuwId), "gemeld materiaal ontbreekt op het overzicht");
+  });
+
+  await test("registreren rondt de melding af", async () => {
+    await ga(page, `/ski-snowboard/materiaal/${nieuwId}`);
+    const formulier = page
+      .locator("div.rounded-card")
+      .filter({ hasText: "Onderhoud registreren" })
+      .first();
+    await formulier.locator('button:has-text("Waxen")').first().click();
+    await page.waitForTimeout(300);
+    const vinkje = formulier.locator("input[name=verzoekIds]").first();
+    beweer(await vinkje.isChecked(), "de melding stond niet automatisch aangevinkt");
+    await Promise.all([
+      page.waitForLoadState("load"),
+      formulier.locator('button:has-text("Onderhoud opslaan")').click(),
+    ]);
+    await page.waitForTimeout(500);
+    const kaart = page.locator("div.rounded-card").filter({ hasText: "Onderhoud nodig" }).first();
+    beweer(/Niets gemeld/i.test(await kaart.innerText()), "melding stond nog open");
   });
 
   console.log("\nLog en overzicht");

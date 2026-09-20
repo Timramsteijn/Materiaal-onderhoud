@@ -3,8 +3,15 @@ import { and, asc, count, eq, like, or, sql } from "drizzle-orm";
 import { db } from "./context";
 import { categorieen, materiaal } from "../db/schema";
 import { heeftAandachtNodig } from "./domein";
+import { telOpenVerzoeken } from "./verzoeken";
 
-export type LijstFilters = { q?: string; categorie?: string; aandacht?: boolean };
+export type LijstFilters = {
+  q?: string;
+  categorie?: string;
+  aandacht?: boolean;
+  /** Alleen materiaal waarvoor onderhoud is gemeld. */
+  gemeld?: boolean;
+};
 
 /** Materiaal van één onderdeel, gefilterd op zoekterm en categorie. */
 export async function haalMateriaal(onderdeelId: string, filters: LijstFilters) {
@@ -26,7 +33,7 @@ export async function haalMateriaal(onderdeelId: string, filters: LijstFilters) 
       : []),
   ];
 
-  const [totaal, rijen] = await Promise.all([
+  const [totaal, rijen, openMeldingen] = await Promise.all([
     db().select({ aantal: count() }).from(materiaal).where(eq(materiaal.onderdeelId, onderdeelId)),
     db()
       .select({
@@ -43,13 +50,16 @@ export async function haalMateriaal(onderdeelId: string, filters: LijstFilters) 
       .innerJoin(categorieen, eq(categorieen.id, materiaal.categorieId))
       .where(and(...voorwaarden))
       .orderBy(asc(materiaal.materiaalId)),
+    telOpenVerzoeken(onderdeelId),
   ]);
+
+  const metMeldingen = rijen.map((r) => ({ ...r, meldingen: openMeldingen.get(r.id) ?? 0 }));
 
   // Het aandacht-filter draait bewust in JavaScript: zo beslist overal exact
   // dezelfde functie wie aandacht nodig heeft — overzicht, badge en lijst.
-  const gefilterd = filters.aandacht
-    ? rijen.filter((r) => heeftAandachtNodig(r.laatsteOnderhoud, r.inGebruikSinds))
-    : rijen;
+  const gefilterd = metMeldingen
+    .filter((r) => !filters.aandacht || heeftAandachtNodig(r.laatsteOnderhoud, r.inGebruikSinds))
+    .filter((r) => !filters.gemeld || r.meldingen > 0);
 
   return { totaal: totaal[0]?.aantal ?? 0, materiaal: gefilterd };
 }

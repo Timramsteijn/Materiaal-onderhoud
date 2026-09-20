@@ -16,6 +16,8 @@ const filters = {
   categorie: Astro.url.searchParams.get("categorie") ?? undefined,
   // Vanaf het overzicht: alleen materiaal dat te lang niet onderhouden is.
   aandacht: Astro.url.searchParams.get("aandacht") === "1",
+  // Of juist alleen materiaal waarvoor iemand onderhoud heeft gemeld.
+  gemeld: Astro.url.searchParams.get("gemeld") === "1",
 };
 const basis = `/${slug}/materiaal`;
 ---

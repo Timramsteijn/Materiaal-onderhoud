@@ -1,10 +1,17 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro/zod";
-import { and, eq, isNull, sql } from "drizzle-orm";
+import { and, eq, inArray, isNull, sql } from "drizzle-orm";
 
 import { db } from "@/lib/context";
 import { vereisBeheerder, vereisMedewerker } from "@/lib/guard";
-import { beheerlog, logregels, materiaal, onderhoudsacties, type Status } from "@/db/schema";
+import {
+  beheerlog,
+  logregels,
+  materiaal,
+  onderhoudsacties,
+  onderhoudsverzoeken,
+  type Status,
+} from "@/db/schema";
 import { nieuwId } from "@/lib/id";
 
 /**
@@ -19,6 +26,8 @@ export const registreerOnderhoud = defineAction({
     actieId: z.string().min(1),
     opmerking: z.string().trim().max(2000).optional(),
     nieuweStatus: z.enum(["IN_GEBRUIK", "IN_REPARATIE", "BUITEN_GEBRUIK"]).optional(),
+    /** Meldingen die met deze registratie zijn afgehandeld. */
+    verzoekIds: z.array(z.string()).optional(),
     /** Idempotentiesleutel; laat de offline wachtrij veilig opnieuw versturen. */
     clientId: z.string().min(1).max(100),
   }),
@@ -58,6 +67,22 @@ export const registreerOnderhoud = defineAction({
 
     const nu = new Date();
     const isAfkeuring = actie.isAfkeuren;
+    const logId = nieuwId("log");
+
+    // Alleen open meldingen van dit materiaal; een id uit een ander formulier
+    // sluiten we hier stil buiten in plaats van de registratie te weigeren.
+    const afTeRonden = invoer.verzoekIds?.length
+      ? await db()
+          .select({ id: onderhoudsverzoeken.id })
+          .from(onderhoudsverzoeken)
+          .where(
+            and(
+              eq(onderhoudsverzoeken.materiaalDbId, stuk.id),
+              eq(onderhoudsverzoeken.status, "OPEN"),
+              inArray(onderhoudsverzoeken.id, invoer.verzoekIds)
+            )
+          )
+      : [];
 
     // Bij een afkeuraanvraag bepaalt de flow de status, niet de keuze in het formulier.
     const nieuweStatus: Status | null = isAfkeuring
@@ -66,7 +91,7 @@ export const registreerOnderhoud = defineAction({
 
     await db().batch([
       db().insert(logregels).values({
-        id: nieuwId("log"),
+        id: logId,
         materiaalDbId: stuk.id,
         actieNaam: actie.naam,
         actieId: actie.id,
@@ -95,9 +120,31 @@ export const registreerOnderhoud = defineAction({
               : {}),
         })
         .where(eq(materiaal.id, stuk.id)),
+      ...(afTeRonden.length
+        ? [
+            db()
+              .update(onderhoudsverzoeken)
+              .set({
+                status: "AFGEROND" as const,
+                afgehandeldDoorNaam: medewerker.naam,
+                afgehandeldOp: nu,
+                logregelId: logId,
+              })
+              .where(
+                inArray(
+                  onderhoudsverzoeken.id,
+                  afTeRonden.map((v) => v.id)
+                )
+              ),
+          ]
+        : []),
     ]);
 
-    return { opgeslagen: true, afkeuringAangevraagd: isAfkeuring };
+    return {
+      opgeslagen: true,
+      afkeuringAangevraagd: isAfkeuring,
+      afgerondeMeldingen: afTeRonden.length,
+    };
   },
 });
 

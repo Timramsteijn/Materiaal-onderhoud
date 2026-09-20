@@ -251,6 +251,28 @@ for (const [onderdeelSlug, stukken] of Object.entries(MATERIAAL)) {
       aangemaakt: NU,
     });
 
+    // Openstaande meldingen: "dit moet nog gebeuren", geen logregel.
+    for (const [i, m] of (s.meldingen ?? []).entries()) {
+      const melder = medewerkerOpNaam.get(m.door);
+      if (!melder) continue;
+      const actie = categorie.acties.get(m.actie);
+      invoegen("onderhoudsverzoeken", {
+        id: tekst(`vzk_${onderdeelSlug}_${slug(s.materiaalId)}_${i}`),
+        materiaal_db_id: tekst(materiaalDbId),
+        actie_naam: tekst(m.actie),
+        actie_id: nullbaar(actie?.id),
+        opmerking: tekst(m.opmerking ?? ""),
+        status: tekst("OPEN"),
+        gemeld_door_id: tekst(melder.id),
+        gemeld_door_naam: tekst(melder.naam),
+        gemeld_op: dagen(m.dagen, m.uur ?? 9, m.minuut ?? 0),
+        afgehandeld_door_naam: "NULL",
+        afgehandeld_op: "NULL",
+        logregel_id: "NULL",
+        client_id: tekst(`seed:melding:${s.materiaalId}:${m.actie}:${m.dagen}`),
+      });
+    }
+
     for (const [i, l] of logs.entries()) {
       const medewerker = medewerkerOpNaam.get(l.door);
       if (!medewerker) continue;
