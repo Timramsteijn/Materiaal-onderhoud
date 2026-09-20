@@ -54,6 +54,12 @@ npm run seed
 npm run dev
 ```
 
+Sneller op Windows: dubbelklik `start-website.bat` in de hoofdmap van het
+project. Dat bestand haalt de laatste versie op, installeert wat ontbreekt,
+werkt de database bij, vult bij een eerste keer de voorbeeldgegevens (het
+vraagt dan om een wachtwoord) en start de server. Een snelkoppeling ernaartoe
+op het bureaublad werkt ook.
+
 `npm run dev` blijft draaien zolang het venster openstaat; stoppen doe je met
 Ctrl+C. Wil je met schone gegevens opnieuw beginnen, verwijder dan de map
 `.wrangler` en draai `db:migrate` en `seed` nog eens.

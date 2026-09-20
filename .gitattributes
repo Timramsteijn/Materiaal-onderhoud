@@ -1,0 +1,2 @@
+# Batch-bestanden hebben Windows-regeleindes nodig.
+*.bat text eol=crlf
