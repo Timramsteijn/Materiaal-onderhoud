@@ -1,4 +1,5 @@
 import { UitlogKnop } from "@/components/uitlog-knop";
+import { Logo } from "@/components/logo";
 
 /** Mobiele chrome: navy header met het actieve onderdeel in de accentkleur. */
 export function AppHeader({
@@ -31,7 +32,18 @@ export function AppHeader({
           <p className="mt-0.5 text-[12px] text-text-on-dark">Ingelogd als {medewerkerNaam}</p>
         ) : null}
       </div>
-      <UitlogKnop variant="donker" />
+      <div className="flex shrink-0 items-center gap-0.5">
+        {/* Verstopt extraatje, zie top-bar.tsx voor de uitleg. */}
+        <button
+          type="button"
+          data-ov-logo-trigger
+          aria-label="Outdoor Valley"
+          className="motion flex h-9 w-9 items-center justify-center rounded-full text-creme hover:bg-navy-light"
+        >
+          <Logo variant="merkteken" size={16} className="text-accent" />
+        </button>
+        <UitlogKnop variant="donker" />
+      </div>
     </header>
   );
 }

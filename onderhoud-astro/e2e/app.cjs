@@ -346,6 +346,37 @@ async function inloggen(page, gebruikersnaam) {
     beweer(cellen === 12, `verwacht 12 cellen, kreeg ${cellen}`);
   });
 
+  console.log("\nVerstopt extraatje");
+
+  await test("vijf klikken op het logo opent het spel, minder niet", async () => {
+    await ga(page, "/ski-snowboard/overzicht");
+    const trigger = page.locator("[data-ov-logo-trigger]:visible").first();
+    for (let i = 0; i < 4; i++) await trigger.click();
+    beweer(!(await page.locator("#ov-spel-overlay").isVisible()), "opende te vroeg");
+    await trigger.click();
+    beweer(await page.locator("#ov-spel-overlay").isVisible(), "opende niet na de vijfde klik");
+  });
+
+  await test("spelen levert score op en Escape sluit weer", async () => {
+    await page.locator("#ov-spel-start").click();
+    await page.waitForTimeout(700);
+    let geklikt = false;
+    for (let i = 0; i < 10 && !geklikt; i++) {
+      const item = page.locator('.ov-slot[data-status="nodig"]').first();
+      if (await item.count()) {
+        await item.click();
+        geklikt = true;
+      } else {
+        await page.waitForTimeout(300);
+      }
+    }
+    beweer(geklikt, "geen enkel item om op te klikken verschenen");
+    beweer((await page.locator("#ov-spel-score").textContent()) === "10", "score klopt niet");
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(150);
+    beweer(!(await page.locator("#ov-spel-overlay").isVisible()), "Escape sloot het spel niet");
+  });
+
   console.log("\nRollen");
 
   await test("medewerker ziet geen Beheer in de navigatie", async () => {

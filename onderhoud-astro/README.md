@@ -240,6 +240,17 @@ de gewone telefooncamera ook buiten de app uitkomt op de juiste plek. Codes
 worden als SVG gegenereerd (`src/lib/qr.ts`) — geen Node-afhankelijkheden, dus
 ze werken gewoon op Workers.
 
+### Verstopt extraatje
+
+Vijf keer snel op het OV-merkteken klikken (rechtsboven, naast de naam op
+desktop, naast uitloggen op mobiel) opent **Werkplaats Rush**: tik het
+materiaal weg dat onderhoud nodig heeft, laat staan wat al in orde is.
+Puur cosmetisch en bewust géén React-eiland — een klikteller en een overlay
+hebben geen framework nodig. Zie `src/components/EasterEggSpel.astro`; de
+knop zelf staat in `top-bar.tsx`, `app-header.tsx` en `onderdeel.astro`
+(`data-ov-logo-trigger`), en het scriptje luistert daar met event delegation
+naar, zodat het overal werkt zonder dat elke pagina zelf iets hoeft te doen.
+
 ---
 
 ## Excel

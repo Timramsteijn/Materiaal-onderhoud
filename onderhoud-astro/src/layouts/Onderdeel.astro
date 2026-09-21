@@ -3,6 +3,7 @@ import Basis from "./Basis.astro";
 import { SideNav } from "@/components/side-nav";
 import { BottomNav } from "@/components/bottom-nav";
 import { AppHeader } from "@/components/app-header";
+import EasterEggSpel from "@/components/EasterEggSpel.astro";
 import { accentCss } from "@/lib/accent";
 import { isBeheerder } from "@/lib/permissies";
 import type { Onderdeel } from "@/db/schema";
@@ -42,4 +43,9 @@ const pad = Astro.url.pathname;
       </div>
     </div>
   </div>
+
+  {/* Verstopt extraatje: reageert op klikken van het OV-merkteken hierboven,
+      in de AppHeader (mobiel) én in de TopBar die elke pagina zelf rendert
+      (desktop). Eén overlay per pagina, ongeacht hoeveel logo's zichtbaar zijn. */}
+  <EasterEggSpel />
 </Basis>

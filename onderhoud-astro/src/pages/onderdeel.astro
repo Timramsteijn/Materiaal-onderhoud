@@ -5,6 +5,7 @@ import Basis from "@/layouts/Basis.astro";
 import { AppHeader } from "@/components/app-header";
 import { UitlogKnop } from "@/components/uitlog-knop";
 import { Logo } from "@/components/logo";
+import EasterEggSpel from "@/components/EasterEggSpel.astro";
 import { onderdeelIcoon, ArrowRight, ChevronRight } from "@/components/icons";
 import { accentCss } from "@/lib/accent";
 import { formatAantal } from "@/lib/domein";
@@ -39,14 +40,24 @@ const kaarten = rijen.map((o) => ({
           Materiaal<br />Onderhoud
         </span>
       </div>
-      <div class="flex items-center gap-3">
-        <div class="text-right">
+      <div class="flex items-center gap-1">
+        <button
+          type="button"
+          data-ov-logo-trigger
+          aria-label="Outdoor Valley"
+          class="motion flex h-9 w-9 items-center justify-center rounded-full text-creme hover:bg-navy-light"
+        >
+          <Logo variant="merkteken" size={16} className="text-accent" />
+        </button>
+        <div class="ml-2 text-right">
           <p class="text-[13px] font-semibold text-creme">{medewerker.naam}</p>
           <p class="text-[11px] text-text-on-dark">{medewerker.functie}</p>
         </div>
         <UitlogKnop variant="donker" />
       </div>
     </div>
+
+    <EasterEggSpel />
 
     <main class="flex-1 px-[18px] py-6 desktop:px-12 desktop:py-10">
       <h1 class="display text-[24px] text-ink desktop:text-[30px]">Kies een onderdeel</h1>
