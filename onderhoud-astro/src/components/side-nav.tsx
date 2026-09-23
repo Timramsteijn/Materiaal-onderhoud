@@ -16,7 +16,17 @@ export function SideNav({
   const items = buildNavItems({ slug, isBeheerder });
 
   return (
-    <aside className="no-print hidden w-[232px] shrink-0 flex-col bg-navy py-5 desktop:flex">
+    <aside
+      className={
+        // Zonder desktop:h-dvh rekt de aside mee met de langste kolom ernaast
+        // (flex-stretch): bij een lange materiaallijst zakt "wissel van
+        // onderdeel" dan mee weg tot onderaan die lijst. sticky top-0 houdt
+        // 'm daarna in beeld, overflow-y-auto is de vangnet-scroll voor het
+        // zeldzame geval dat de eigen inhoud toch niet past.
+        "no-print hidden w-[232px] shrink-0 flex-col overflow-y-auto bg-navy py-5 " +
+        "desktop:sticky desktop:top-0 desktop:flex desktop:h-dvh"
+      }
+    >
       <a
         href={`/${slug}/scannen`}
         className="mb-4 flex items-center gap-2.5 border-b border-border-dark px-5 pb-5 text-creme"
