@@ -251,6 +251,56 @@ knop zelf staat in `top-bar.tsx`, `app-header.tsx` en `onderdeel.astro`
 (`data-ov-logo-trigger`), en het scriptje luistert daar met event delegation
 naar, zodat het overal werkt zonder dat elke pagina zelf iets hoeft te doen.
 
+### Baan & Installaties, en de Baanschets
+
+Naast de verhuuronderdelen hierboven is er een onderdeel **Baan &
+Installaties** voor wat niet wordt uitgeleend maar wel onderhoud nodig heeft:
+de liften (touwlift, twee sleepliften, lopende bandlift), acht lantaarnpalen
+en drie tubingbanen. Dat paste zonder schema-wijziging in het bestaande
+materiaal-/categoriemodel — alleen nieuwe seed-data (`scripts/seed-data.mjs`).
+
+De **Baanschets** (mattenbeheer van de skibaan zelf) is een eigen, klein
+domein ernaast, bereikbaar als extra navigatie-item op dat ene onderdeel
+(`onderdelen.heeftBaanschets`):
+
+- **Datamodel** (`src/db/schema.ts`, tabellen `baanschets_*`): instellingen
+  (matafmeting, basisleeftijd, roostergrootte), secties met elk een of meer
+  rechthoekige celbereiken, één rij per mat (een lege plek krijgt bewust géén
+  rij — de baan is geen rechthoek), en twee logs (rotatiegeschiedenis,
+  nieuwe-matten-opname). Celwijzigingen worden gelogd in het bestaande
+  `beheerlog`, niet in een aparte auditlog-tabel.
+- **Legenda is vaste code, geen database-rij** (`BAANSCHETS_LEGENDA` in
+  `src/lib/domein.ts`): dezelfde zes categorieën als het oude Excel-bestand,
+  net zoals `STATUS_LABELS` ook gewoon code is. Een beheerder kan via de UI
+  geen zevende matcategorie verzinnen.
+- **Het rooster is canvas, geen 1125+ losse knoppen** (`baanschets-grid.tsx`):
+  hover-tooltip, een leeftijd-toggle, klik-om-te-bewerken (beheerder) en een
+  secties-tabel die het rooster highlight zitten in één component, omdat
+  "klik op een sectie" en "het rooster" state moeten delen. Zoom is
+  stapsgewijs (knoppen, geen pinch-gebaar) en herberekent de canvasresolutie
+  zelf; pannen is gewoon `overflow: auto`, dus een vinger-sleep op mobiel.
+- **Excel-export** (`GET /api/baanschets-export`) levert dezelfde informatie
+  als het aangeleverde `build_baanschets.py` (legenda, secties, rooster,
+  beide logs) maar als gewone tabellen, niet als gekleurd rooster. De hier
+  geïnstalleerde `xlsx`-package (community-editie) schrijft geen celstijlen —
+  geverifieerd met een testbestand: een achtergrondkleur kwam er na
+  schrijven/lezen zonder kleur weer uit. Omdat de opdracht expliciet "een
+  eenvoudige server-side export" toestond en er geen nieuwe dependency bij
+  mocht zonder noodzaak, is dit een bewuste keuze: één rij per mat met de
+  categorie als tekst, net zo bruikbaar om in te lezen of te filteren.
+
+**Het rooster dat nu gezaaid is, is bewust illustratief, niet de echte baan.**
+De opdracht noemt `categorie_grid.csv` en `leeftijd_overrides.json` als
+brondata, maar alleen de prompt en `build_baanschets.py` zijn aangeleverd —
+die twee bestanden zelf niet. De **rotatiegeschiedenis en nieuwe-matten-opname
+zijn wél woordelijk overgenomen** uit `build_baanschets.py` (`scripts/seed-data.mjs`,
+`BAANSCHETS.rotatiegeschiedenis`/`nieuweMatten`); alleen de 7 secties en de
+~300 cellen eromheen zijn een zelfbedachte, piste-vormige plaatsvervanger
+(`genereerBaanschetsRooster()`), zodat de pagina nu al met échte interactie te
+testen is. Zodra de twee CSV/JSON-bestanden er zijn, vervangt een nieuw
+migratiescript dit rooster door de werkelijke matindeling — de rest (pagina,
+acties, export, audit-log) hoeft daarvoor niet te veranderen.
+
 ---
 
 ## Excel

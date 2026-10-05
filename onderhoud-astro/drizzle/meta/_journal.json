@@ -15,6 +15,13 @@
       "when": 1789901249413,
       "tag": "0001_onderhoudsverzoeken",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791192465185,
+      "tag": "0002_baanschets_en_heeft_baanschets",
+      "breakpoints": true
     }
   ]
 }

@@ -29,6 +29,9 @@ import {
   Mountain,
   Waves,
   Compass,
+  CableCar,
+  Grid3x3,
+  Lamp,
 } from "lucide-react";
 
 export {
@@ -60,6 +63,9 @@ export {
   Mountain,
   Waves,
   Compass,
+  CableCar,
+  Grid3x3,
+  Lamp,
 };
 
 /** Gedeeld type voor plekken die zowel Lucide-iconen als SkiIcon accepteren. */
@@ -101,6 +107,7 @@ export const ONDERDEEL_ICONEN: Record<string, IconComponent> = {
   target: Target,
   mountain: Mountain,
   waves: Waves,
+  "cable-car": CableCar,
 };
 
 export function onderdeelIcoon(sleutel: string): IconComponent {

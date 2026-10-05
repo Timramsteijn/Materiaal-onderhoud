@@ -16,7 +16,13 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { webcrypto as crypto } from "node:crypto";
 
-import { ONDERDELEN, MEDEWERKERS, MATERIAAL } from "./seed-data.mjs";
+import {
+  ONDERDELEN,
+  MEDEWERKERS,
+  MATERIAAL,
+  BAANSCHETS,
+  genereerBaanschetsRooster,
+} from "./seed-data.mjs";
 import { wrangler } from "./wrangler.mjs";
 
 const ITERATIES = 210_000;
@@ -136,6 +142,7 @@ for (const o of ONDERDELEN) {
       uitgelicht: bool(o.uitgelicht),
       sortering: o.sortering ?? 0,
       aantal_indicatie: o.aantalIndicatie ?? 0,
+      heeft_baanschets: bool(o.heeftBaanschets ?? false),
     },
     {
       bijwerken: [
@@ -147,6 +154,7 @@ for (const o of ONDERDELEN) {
         "uitgelicht",
         "sortering",
         "aantal_indicatie",
+        "heeft_baanschets",
       ],
     }
   );
@@ -325,6 +333,104 @@ for (const s of MATERIAAL["ski-snowboard"] ?? []) {
     teller++;
   }
 }
+
+/* ---------- baanschets: instellingen, secties, rooster, logs ---------- */
+
+invoegen(
+  "baanschets_instellingen",
+  {
+    id: tekst("singleton"),
+    breedte_m: BAANSCHETS.instellingen.breedteM,
+    hoogte_m: BAANSCHETS.instellingen.hoogteM,
+    basisleeftijd_seizoenen: BAANSCHETS.instellingen.basisleeftijdSeizoenen,
+    aantal_rijen: BAANSCHETS.aantalRijen,
+    aantal_kolommen: BAANSCHETS.aantalKolommen,
+  },
+  {
+    bijwerken: [
+      "breedte_m",
+      "hoogte_m",
+      "basisleeftijd_seizoenen",
+      "aantal_rijen",
+      "aantal_kolommen",
+    ],
+  }
+);
+
+const sectieIdPerNr = new Map();
+for (const sectie of BAANSCHETS.secties) {
+  const sectieId = `bs_sct_${sectie.nr}`;
+  sectieIdPerNr.set(sectie.nr, sectieId);
+  invoegen(
+    "baanschets_secties",
+    {
+      id: tekst(sectieId),
+      nr: sectie.nr,
+      omschrijving: tekst(sectie.omschrijving),
+      sortering: sectie.nr,
+    },
+    { bijwerken: ["omschrijving", "sortering"] }
+  );
+  sectie.bereiken.forEach(([rijVan, rijTot, kolomVan, kolomTot], i) => {
+    invoegen(
+      "baanschets_sectie_bereiken",
+      {
+        id: tekst(`bs_bereik_${sectie.nr}_${i}`),
+        sectie_id: tekst(sectieId),
+        rij_van: rijVan,
+        rij_tot: rijTot,
+        kolom_van: kolomVan,
+        kolom_tot: kolomTot,
+      },
+      { bijwerken: ["rij_van", "rij_tot", "kolom_van", "kolom_tot"] }
+    );
+  });
+}
+
+// Het rooster zelf is echte, bewerkbare data (zoals materiaal): alleen
+// aanmaken, nooit overschrijven — een beheerder kan 'm na de eerste seed
+// gewoon via de pagina aanpassen zonder dat een her-seed dat terugdraait.
+const rooster = genereerBaanschetsRooster();
+for (const [sleutel, cel] of rooster) {
+  const [rij, kolom] = sleutel.split("_").map(Number);
+  invoegen("baanschets_cellen", {
+    id: tekst(`bs_cel_${rij}_${kolom}`),
+    rij,
+    kolom,
+    categorie: tekst(cel.categorie),
+    leeftijd: cel.leeftijd === undefined ? "NULL" : cel.leeftijd,
+    opmerking: tekst(cel.opmerking ?? ""),
+    gemarkeerd: bool(cel.gemarkeerd ?? false),
+  });
+}
+
+BAANSCHETS.rotatiegeschiedenis.forEach((r, i) => {
+  invoegen("baanschets_rotaties", {
+    id: tekst(`bs_rot_${i}`),
+    seizoen: tekst(r.seizoen),
+    van: tekst(r.van),
+    naar: tekst(r.naar),
+    toelichting: tekst(r.toelichting),
+    medewerker_id: "NULL",
+    medewerker_naam: tekst(""),
+    // Oplopend, zodat de nieuwste rij ook echt bovenaan het logboek staat.
+    tijdstip: maanden(BAANSCHETS.rotatiegeschiedenis.length - i),
+  });
+});
+
+BAANSCHETS.nieuweMatten.forEach((n, i) => {
+  invoegen("baanschets_nieuwe_matten", {
+    id: tekst(`bs_nm_${i}`),
+    seizoen: tekst(n.seizoen),
+    aantal: n.aantal,
+    leeftijd_bij_opname: n.leeftijd,
+    vanuit: tekst(n.vanuit ?? ""),
+    toelichting: tekst(n.toelichting),
+    medewerker_id: "NULL",
+    medewerker_naam: tekst(""),
+    tijdstip: maanden(BAANSCHETS.nieuweMatten.length - i),
+  });
+});
 
 /* ---------- uitvoeren ---------- */
 

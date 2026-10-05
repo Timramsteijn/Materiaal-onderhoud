@@ -33,12 +33,18 @@ const pad = Astro.url.pathname;
           slug={onderdeel.slug}
           onderdeelNaam={onderdeel.naam}
           isBeheerder={beheerder}
+          heeftBaanschets={onderdeel.heeftBaanschets}
           pad={pad}
         />
         <div class="flex min-w-0 flex-1 flex-col">
           <AppHeader onderdeelNaam={onderdeel.naam} />
           <slot />
-          <BottomNav slug={onderdeel.slug} isBeheerder={beheerder} pad={pad} />
+          <BottomNav
+            slug={onderdeel.slug}
+            isBeheerder={beheerder}
+            heeftBaanschets={onderdeel.heeftBaanschets}
+            pad={pad}
+          />
         </div>
       </div>
     </div>

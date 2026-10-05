@@ -1,0 +1,249 @@
+---
+import { actions } from "astro:actions";
+import { desc } from "drizzle-orm";
+
+import Onderdeel from "@/layouts/Onderdeel.astro";
+import { TopBar } from "@/components/top-bar";
+import { Kaart, KaartTitel } from "@/components/ui";
+import { Download } from "@/components/icons";
+import { BaanschetsGrid, type SectieMetPosities } from "@/components/baanschets-grid";
+import { BaanschetsInstellingen } from "@/components/baanschets-instellingen";
+import { BaanschetsRotatieForm, BaanschetsNieuweMattenForm } from "@/components/baanschets-logs";
+import { db } from "@/lib/context";
+import { getOnderdeel } from "@/lib/onderdeel";
+import { isBeheerder } from "@/lib/permissies";
+import { formatDatum, formatAantal } from "@/lib/domein";
+import {
+  BAANSCHETS_LEGENDA,
+  cellenMetAfwijkendeLeeftijd,
+  haalBaanschetsCellen,
+  haalBaanschetsInstellingen,
+  haalBaanschetsSecties,
+  m2PerCategorie,
+  oppervlaktePerMat,
+  sectiePosities,
+  telPerCategorie,
+} from "@/lib/baanschets";
+import { baanschetsNieuweMatten, baanschetsRotaties } from "@/db/schema";
+
+const slug = Astro.params.onderdeel!;
+const onderdeel = await getOnderdeel(slug);
+if (!onderdeel) return Astro.rewrite("/404");
+// Mattenbeheer is één rooster voor de hele skibaan, geen per-onderdeel gegeven
+// — maar de pagina hoort wel thuis in het navigatiepatroon van dit onderdeel.
+if (!onderdeel.heeftBaanschets) return Astro.redirect(`/${slug}/scannen`);
+
+const medewerker = Astro.locals.medewerker!;
+const beheerder = isBeheerder(medewerker.rol);
+const pad = Astro.url.pathname;
+
+const [instellingen, cellen, secties, rotaties, nieuweMatten] = await Promise.all([
+  haalBaanschetsInstellingen(),
+  haalBaanschetsCellen(),
+  haalBaanschetsSecties(),
+  db().select().from(baanschetsRotaties).orderBy(desc(baanschetsRotaties.tijdstip)),
+  db().select().from(baanschetsNieuweMatten).orderBy(desc(baanschetsNieuweMatten.tijdstip)),
+]);
+
+const oppervlaktePerMatM2 = oppervlaktePerMat(instellingen);
+const totalen = telPerCategorie(cellen);
+const m2 = m2PerCategorie(totalen, oppervlaktePerMatM2);
+const afwijkendeLeeftijd = cellenMetAfwijkendeLeeftijd(cellen, instellingen.basisleeftijdSeizoenen);
+const totaalOpVoorraad = nieuweMatten.reduce((som, n) => som + n.aantal, 0);
+
+const sectiesMetTotalen: SectieMetPosities[] = secties.map((s) => {
+  const posities = sectiePosities(s);
+  const sectieTotalen = telPerCategorie(cellen, posities);
+  const sectieM2 = m2PerCategorie(sectieTotalen, oppervlaktePerMatM2);
+  return {
+    id: s.id,
+    nr: s.nr,
+    omschrijving: s.omschrijving,
+    posities: [...posities],
+    bereiken: s.bereiken,
+    totalen: sectieTotalen,
+    totaalAantal: sectieTotalen.totaal,
+    totaalM2: sectieM2.totaal,
+  };
+});
+
+const urls = {
+  bewerkCel: `${pad}${actions.bewerkBaanschetsCel.queryString}`,
+  instellingen: `${pad}${actions.zetBaanschetsInstellingen.queryString}`,
+  sectieToevoegen: `${pad}${actions.voegBaanschetsSectieToe.queryString}`,
+  bereikToevoegen: `${pad}${actions.voegBaanschetsSectieBereikToe.queryString}`,
+  bereikVerwijderen: `${pad}${actions.verwijderBaanschetsSectieBereik.queryString}`,
+  rotatieToevoegen: `${pad}${actions.voegBaanschetsRotatieToe.queryString}`,
+  nieuweMattenToevoegen: `${pad}${actions.voegBaanschetsNieuweMattenToe.queryString}`,
+};
+---
+
+<Onderdeel onderdeel={onderdeel} titel="Baanschets">
+  <TopBar
+    titel="Baanschets"
+    subregel={`Mattenbeheer van de skibaan · ${formatAantal(totalen.totaal)} matten`}
+    medewerkerNaam={medewerker.naam}
+    functie={medewerker.functie}
+  >
+    <a
+      href="/api/baanschets-export"
+      class="motion ml-auto flex h-10 shrink-0 items-center gap-1.5 rounded-full border-[1.5px] border-ink px-4 text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-ink hover:bg-neutral-fill"
+    >
+      <Download size={15} strokeWidth={2} />
+      Exporteren
+    </a>
+  </TopBar>
+
+  <main class="flex-1 px-[18px] pb-24 pt-4 desktop:px-6 desktop:pb-8 desktop:pt-5">
+    <div class="flex items-center justify-between desktop:hidden">
+      <div>
+        <h1 class="display text-[22px] text-ink">Baanschets</h1>
+        <p class="mt-0.5 text-[13px] text-text-muted">
+          Mattenbeheer van de skibaan · {formatAantal(totalen.totaal)} matten
+        </p>
+      </div>
+      <a
+        href="/api/baanschets-export"
+        aria-label="Exporteren naar Excel"
+        class="motion flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink text-ink"
+      >
+        <Download size={16} strokeWidth={2} />
+      </a>
+    </div>
+
+    {/* Legenda + totalen — puur weergave, dus server-rendered zonder eiland. */}
+    <Kaart className="mt-3 desktop:mt-0">
+      <KaartTitel>Legenda</KaartTitel>
+      <div class="mt-2 grid grid-cols-2 gap-x-6 gap-y-2 desktop:grid-cols-3">
+        {
+          Object.entries(BAANSCHETS_LEGENDA).map(([key, { label, kleur }]) => (
+            <div class="flex items-center justify-between gap-2 text-[13px]">
+              <span class="flex min-w-0 items-center gap-2">
+                <span
+                  class="h-4 w-4 shrink-0 rounded-[4px] border border-border-light"
+                  style={`background:${kleur}`}
+                />
+                <span class="truncate text-ink">{label}</span>
+              </span>
+              <span class="shrink-0 text-text-muted">
+                {formatAantal(totalen[key as keyof typeof totalen] as number)} ·{" "}
+                {(m2[key as keyof typeof m2] as number).toFixed(1)} m²
+              </span>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-3 flex items-center justify-between border-t border-zand pt-3 text-[13.5px] font-bold text-ink">
+        <span>Totaal skimatten</span>
+        <span>
+          {formatAantal(totalen.totaalSkimatten)} · {m2.totaalSkimatten.toFixed(1)} m²
+        </span>
+      </div>
+      {
+        afwijkendeLeeftijd.length > 0 && (
+          <p class="mt-3 text-[12px] text-amber-text">
+            {afwijkendeLeeftijd.length} mat(ten) wijken af van de basisleeftijd ({
+              instellingen.basisleeftijdSeizoenen
+            } seizoenen) — zichtbaar op de baan hieronder met "Leeftijden" aan.
+          </p>
+        )
+      }
+    </Kaart>
+
+    {/* De baanschets zelf: canvas-rooster + secties-tabel in één component. */}
+    <div class="mt-3">
+      <BaanschetsGrid
+        client:load
+        aantalRijen={instellingen.aantalRijen}
+        aantalKolommen={instellingen.aantalKolommen}
+        cellen={cellen.map((c) => ({
+          rij: c.rij,
+          kolom: c.kolom,
+          categorie: c.categorie,
+          leeftijd: c.leeftijd,
+          opmerking: c.opmerking,
+          gemarkeerd: c.gemarkeerd,
+        }))}
+        secties={sectiesMetTotalen}
+        basisleeftijdSeizoenen={instellingen.basisleeftijdSeizoenen}
+        magBewerken={beheerder}
+        bewerkUrl={urls.bewerkCel}
+        sectieToevoegenUrl={urls.sectieToevoegen}
+        bereikToevoegenUrl={urls.bereikToevoegen}
+        bereikVerwijderenUrl={urls.bereikVerwijderen}
+      />
+    </div>
+
+    {
+      beheerder && (
+        <div class="mt-3">
+          <BaanschetsInstellingen
+            client:idle
+            breedteM={instellingen.breedteM}
+            hoogteM={instellingen.hoogteM}
+            basisleeftijdSeizoenen={instellingen.basisleeftijdSeizoenen}
+            url={urls.instellingen}
+          />
+        </div>
+      )
+    }
+
+    <Kaart className="mt-3">
+      <KaartTitel>Rotatiegeschiedenis</KaartTitel>
+      {
+        rotaties.length === 0 ? (
+          <p class="mt-2 text-[13px] text-text-muted">Nog geen rotaties vastgelegd.</p>
+        ) : (
+          <ul class="mt-2 divide-y divide-zand">
+            {rotaties.map((r) => (
+              <li class="py-2.5">
+                <div class="flex items-baseline justify-between gap-2">
+                  <p class="text-[13.5px] font-bold text-ink">
+                    {r.seizoen} · sectie {r.van} → {r.naar}
+                  </p>
+                  <p class="shrink-0 text-[11.5px] text-text-muted">{formatDatum(r.tijdstip)}</p>
+                </div>
+                {r.toelichting && (
+                  <p class="mt-0.5 text-[13px] text-text-medium">{r.toelichting}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {beheerder && <BaanschetsRotatieForm client:idle url={urls.rotatieToevoegen} />}
+    </Kaart>
+
+    <Kaart className="mt-3">
+      <div class="flex items-center justify-between gap-2">
+        <KaartTitel>Nieuwe matten opname</KaartTitel>
+        <p class="text-[12.5px] text-text-muted">
+          Op voorraad: <strong class="text-ink">{formatAantal(totaalOpVoorraad)}</strong>
+        </p>
+      </div>
+      {
+        nieuweMatten.length === 0 ? (
+          <p class="mt-2 text-[13px] text-text-muted">Nog geen opnames vastgelegd.</p>
+        ) : (
+          <ul class="mt-2 divide-y divide-zand">
+            {nieuweMatten.map((n) => (
+              <li class="py-2.5">
+                <div class="flex items-baseline justify-between gap-2">
+                  <p class="text-[13.5px] font-bold text-ink">
+                    {n.seizoen} · {n.aantal} matten (leeftijd {n.leeftijdBijOpname})
+                    {n.vanuit && <span class="font-normal text-text-muted"> · vanuit {n.vanuit}</span>}
+                  </p>
+                  <p class="shrink-0 text-[11.5px] text-text-muted">{formatDatum(n.tijdstip)}</p>
+                </div>
+                {n.toelichting && (
+                  <p class="mt-0.5 text-[13px] text-text-medium">{n.toelichting}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {beheerder && <BaanschetsNieuweMattenForm client:idle url={urls.nieuweMattenToevoegen} />}
+    </Kaart>
+  </main>
+</Onderdeel>

@@ -332,6 +332,49 @@ async function inloggen(page, gebruikersnaam) {
     beweer(/Inactief/i.test(tekst), "inactieve medewerker ontbreekt");
   });
 
+  console.log("\nBaanschets");
+
+  await test("legenda, rooster en secties tonen echte totalen", async () => {
+    await ga(page, "/baan-installaties/baanschets");
+    const tekst = await page.locator("main").innerText();
+    beweer(/Totaal skimatten/i.test(tekst), "legenda ontbreekt");
+    beweer(/Bovenbaan noord/.test(tekst), "sectie 1 ontbreekt");
+    beweer((await page.locator("canvas").count()) === 1, "geen rooster-canvas");
+  });
+
+  await test("klikken op een cel opent het bewerkformulier (beheerder)", async () => {
+    const canvas = page.locator("canvas");
+    const box = await canvas.boundingBox();
+    await page.mouse.click(box.x + 1.5 * 26, box.y + 1.5 * 26);
+    const popover = page.locator('[aria-label^="Cel "]');
+    beweer(await popover.isVisible(), "bewerkformulier ging niet open");
+    beweer((await popover.locator("select#cel-categorie").count()) === 1, "geen categorie-veld");
+    await popover.locator('button[aria-label="Sluiten"]').click();
+  });
+
+  await test("een medewerker ziet alleen een leesbare baanschets", async () => {
+    const mw = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const p = await mw.newPage();
+    await p.goto(`${BASIS}/inloggen`, { waitUntil: "domcontentloaded" });
+    await p.locator("#gebruikersnaam-licht").fill("s.degroot");
+    await p.locator("#wachtwoord-licht").fill(WACHTWOORD);
+    await Promise.all([
+      p.waitForURL(/\/onderdeel/),
+      p.locator("form:has(#gebruikersnaam-licht) button[type=submit]").click(),
+    ]);
+    await p.goto(`${BASIS}/baan-installaties/baanschets`, { waitUntil: "networkidle" });
+    beweer(
+      (await p.locator('button:has-text("Sectie toevoegen")').count()) === 0,
+      "medewerker ziet beheerknoppen"
+    );
+    const canvas = p.locator("canvas");
+    const box = await canvas.boundingBox();
+    await p.mouse.click(box.x + 1.5 * 26, box.y + 1.5 * 26);
+    const popover = p.locator('[aria-label^="Cel "]');
+    beweer((await popover.locator("form").count()) === 0, "medewerker kreeg een bewerkformulier");
+    await mw.close();
+  });
+
   console.log("\nPrinten");
 
   await test("los label rendert een QR", async () => {

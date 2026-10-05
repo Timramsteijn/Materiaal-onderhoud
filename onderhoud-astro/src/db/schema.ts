@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer, index, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 /*
  * D1 is SQLite: geen enums en geen json-kolomtype. Enums worden tekstkolommen
@@ -19,6 +19,21 @@ export type Status = (typeof STATUSSEN)[number];
 
 export const VELDTYPES = ["TEKST", "GETAL", "BEREIK", "DATUM", "KEUZE"] as const;
 export type VeldType = (typeof VELDTYPES)[number];
+
+/**
+ * De zes matcategorieën van de baanschets. Vaste lijst (net als STATUSSEN
+ * hierboven) — het label en de kleur per key staan in lib/domein.ts, niet
+ * hier, net zoals STATUS_LABELS/STATUS_STIJL ook niet in dit bestand staan.
+ */
+export const BAANSCHETS_CATEGORIEEN = [
+  "SkiLicht",
+  "SkiMidden",
+  "SkiDonker",
+  "LiftLicht",
+  "LiftDonker",
+  "Rubber",
+] as const;
+export type BaanschetsCategorie = (typeof BAANSCHETS_CATEGORIEEN)[number];
 
 /**
  * Een melding "dit moet gebeuren" leeft los van de registratie "dit is
@@ -65,6 +80,8 @@ export const onderdelen = sqliteTable("onderdelen", {
   sortering: integer("sortering").notNull().default(0),
   /** Toont een aantal op het keuzescherm zolang er nog geen materiaal in staat. */
   aantalIndicatie: integer("aantal_indicatie").notNull().default(0),
+  /** Toont het extra navigatie-item "Baanschets" (zie baanschets*-tabellen). */
+  heeftBaanschets: integer("heeft_baanschets", { mode: "boolean" }).notNull().default(false),
 });
 
 export const categorieen = sqliteTable(
@@ -215,6 +232,101 @@ export const onderhoudsverzoeken = sqliteTable(
   ]
 );
 
+/*
+ * Mattenbeheer van de skibaan ("Baanschets"): een eigen, klein domein naast
+ * materiaal/categorieën hierboven. Een matcel is geen "materiaal" — matten
+ * worden nooit verhuurd of gescand, maar liggen vast in een rooster. Wie de
+ * cel wijzigt wordt vastgelegd in `beheerlog` (hieronder), net als elke
+ * andere beheerwijziging; er komt dus geen aparte auditlog-tabel bij.
+ */
+
+/** Precies één rij; "singleton" is de vaste id. */
+export const baanschetsInstellingen = sqliteTable("baanschets_instellingen", {
+  id: text("id").primaryKey(),
+  breedteM: real("breedte_m").notNull().default(2.17),
+  hoogteM: real("hoogte_m").notNull().default(1.45),
+  basisleeftijdSeizoenen: integer("basisleeftijd_seizoenen").notNull().default(6),
+  /** Vaste canvasgrootte van het rooster — ook lege cellen horen erbinnen. */
+  aantalRijen: integer("aantal_rijen").notNull().default(40),
+  aantalKolommen: integer("aantal_kolommen").notNull().default(40),
+});
+
+export const baanschetsSecties = sqliteTable("baanschets_secties", {
+  id: text("id").primaryKey(),
+  nr: integer("nr").notNull().unique(),
+  omschrijving: text("omschrijving").notNull().default(""),
+  sortering: integer("sortering").notNull().default(0),
+});
+
+/** Eén sectie kan uit meerdere, niet-aaneengesloten rechthoeken bestaan. */
+export const baanschetsSectieBereiken = sqliteTable(
+  "baanschets_sectie_bereiken",
+  {
+    id: text("id").primaryKey(),
+    sectieId: text("sectie_id")
+      .notNull()
+      .references(() => baanschetsSecties.id, { onDelete: "cascade" }),
+    rijVan: integer("rij_van").notNull(),
+    rijTot: integer("rij_tot").notNull(),
+    kolomVan: integer("kolom_van").notNull(),
+    kolomTot: integer("kolom_tot").notNull(),
+  },
+  (t) => [index("sectiebereik_sectie").on(t.sectieId)]
+);
+
+/**
+ * Eén rij per mat. Een lege plek in het rooster (geen mat) krijgt bewust géén
+ * rij — de baan is geen rechthoek, dus "geen rij" betekent hier "leeg".
+ */
+export const baanschetsCellen = sqliteTable(
+  "baanschets_cellen",
+  {
+    id: text("id").primaryKey(),
+    rij: integer("rij").notNull(),
+    kolom: integer("kolom").notNull(),
+    categorie: text("categorie", { enum: BAANSCHETS_CATEGORIEEN }).notNull(),
+    /** NULL = volgt de ingestelde basisleeftijd; een getal overschrijft die. */
+    leeftijd: integer("leeftijd"),
+    opmerking: text("opmerking").notNull().default(""),
+    /** Fysiek tussen secties omgewisseld, dus onregelmatig versleten. */
+    gemarkeerd: integer("gemarkeerd", { mode: "boolean" }).notNull().default(false),
+  },
+  (t) => [uniqueIndex("baanschets_cel_positie").on(t.rij, t.kolom)]
+);
+
+/** Rotatiegeschiedenis: van-sectie/naar-sectie zijn vrije tekst (ook "Reserve"). */
+export const baanschetsRotaties = sqliteTable(
+  "baanschets_rotaties",
+  {
+    id: text("id").primaryKey(),
+    seizoen: text("seizoen").notNull(),
+    van: text("van").notNull(),
+    naar: text("naar").notNull(),
+    toelichting: text("toelichting").notNull().default(""),
+    medewerkerId: text("medewerker_id").references(() => medewerkers.id),
+    medewerkerNaam: text("medewerker_naam").notNull().default(""),
+    tijdstip: integer("tijdstip", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [index("rotatie_tijdstip").on(t.tijdstip)]
+);
+
+/** Nieuwe-matten-opname: "vanuit" is vrije tekst, zelfde reden als hierboven. */
+export const baanschetsNieuweMatten = sqliteTable(
+  "baanschets_nieuwe_matten",
+  {
+    id: text("id").primaryKey(),
+    seizoen: text("seizoen").notNull(),
+    aantal: integer("aantal").notNull(),
+    leeftijdBijOpname: integer("leeftijd_bij_opname").notNull(),
+    vanuit: text("vanuit").notNull().default(""),
+    toelichting: text("toelichting").notNull().default(""),
+    medewerkerId: text("medewerker_id").references(() => medewerkers.id),
+    medewerkerNaam: text("medewerker_naam").notNull().default(""),
+    tijdstip: integer("tijdstip", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [index("nieuwematten_tijdstip").on(t.tijdstip)]
+);
+
 /** Auditspoor van beheerwijzigingen: acties, velden, medewerkers, imports. */
 export const beheerlog = sqliteTable(
   "beheerlog",
@@ -239,3 +351,9 @@ export type VeldDefinitie = typeof velddefinities.$inferSelect;
 export type Materiaal = typeof materiaal.$inferSelect;
 export type LogRegel = typeof logregels.$inferSelect;
 export type Medewerker = typeof medewerkers.$inferSelect;
+export type BaanschetsInstellingen = typeof baanschetsInstellingen.$inferSelect;
+export type BaanschetsSectie = typeof baanschetsSecties.$inferSelect;
+export type BaanschetsSectieBereik = typeof baanschetsSectieBereiken.$inferSelect;
+export type BaanschetsCel = typeof baanschetsCellen.$inferSelect;
+export type BaanschetsRotatie = typeof baanschetsRotaties.$inferSelect;
+export type BaanschetsNieuweMatten = typeof baanschetsNieuweMatten.$inferSelect;

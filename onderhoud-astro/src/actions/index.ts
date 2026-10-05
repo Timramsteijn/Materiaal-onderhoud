@@ -18,6 +18,15 @@ import {
   voegVeldToe,
   zetMedewerkerActief,
 } from "./beheer";
+import {
+  bewerkBaanschetsCel,
+  verwijderBaanschetsSectieBereik,
+  voegBaanschetsNieuweMattenToe,
+  voegBaanschetsRotatieToe,
+  voegBaanschetsSectieBereikToe,
+  voegBaanschetsSectieToe,
+  zetBaanschetsInstellingen,
+} from "./baanschets";
 
 /**
  * Alle mutaties lopen via Astro Actions: één plek waar invoer wordt gevalideerd
@@ -46,4 +55,11 @@ export const server = {
   voegMedewerkerToe,
   zetMedewerkerActief,
   verwijderMedewerker,
+  bewerkBaanschetsCel,
+  zetBaanschetsInstellingen,
+  voegBaanschetsSectieToe,
+  voegBaanschetsSectieBereikToe,
+  verwijderBaanschetsSectieBereik,
+  voegBaanschetsRotatieToe,
+  voegBaanschetsNieuweMattenToe,
 };

@@ -1,4 +1,4 @@
-import type { Rol, Status, VeldType } from "../db/schema";
+import type { BaanschetsCategorie, Rol, Status, VeldType } from "../db/schema";
 
 export const STATUS_LABELS: Record<Status, string> = {
   IN_GEBRUIK: "In gebruik",
@@ -38,6 +38,24 @@ export const VELDTYPE_LABELS: Record<VeldType, string> = {
   DATUM: "Datum",
   KEUZE: "Keuze",
 };
+
+/**
+ * De zes matcategorieën van de baanschets: vaste lijst, overgenomen uit het
+ * oude Excel-bestand (zelfde sleutels, labels en kleuren). Net als
+ * STATUS_LABELS hierboven hoort dit bij de code, niet bij de database — een
+ * beheerder kan via de UI geen zevende categorie verzinnen.
+ */
+export const BAANSCHETS_LEGENDA: Record<BaanschetsCategorie, { label: string; kleur: string }> = {
+  SkiLicht: { label: "Ski licht", kleur: "#92D050" },
+  SkiMidden: { label: "Ski midden", kleur: "#00B050" },
+  SkiDonker: { label: "Ski donker", kleur: "#375623" },
+  LiftLicht: { label: "Lift/loop licht", kleur: "#D9D9D9" },
+  LiftDonker: { label: "Lift/loop donker", kleur: "#7F7F7F" },
+  Rubber: { label: "Rubber", kleur: "#000000" },
+};
+
+/** Telt mee in "Totaal skimatten"; Lift- en Rubber-categorieën niet. */
+export const BAANSCHETS_SKI_KEYS: BaanschetsCategorie[] = ["SkiLicht", "SkiMidden", "SkiDonker"];
 
 /**
  * Aantal maanden zonder énige onderhoudsregistratie waarna materiaal in de
