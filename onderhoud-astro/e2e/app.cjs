@@ -338,7 +338,8 @@ async function inloggen(page, gebruikersnaam) {
     await ga(page, "/baan-installaties/baanschets");
     const tekst = await page.locator("main").innerText();
     beweer(/Totaal skimatten/i.test(tekst), "legenda ontbreekt");
-    beweer(/Bovenbaan noord/.test(tekst), "sectie 1 ontbreekt");
+    beweer(/Sectie 1/.test(tekst), "sectie 1 ontbreekt");
+    beweer(/838 · 2636\.8 m²/.test(tekst), "totaal aantal skimatten klopt niet");
     beweer((await page.locator("canvas").count()) === 1, "geen rooster-canvas");
   });
 

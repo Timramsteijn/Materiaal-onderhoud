@@ -4,6 +4,8 @@
  * dus alleen data — geen code.
  */
 
+import { readFileSync } from "node:fs";
+
 const AFKEUREN = { naam: "Afkeuren", isAfkeuren: true };
 
 export const ONDERDELEN = [
@@ -581,55 +583,49 @@ export const MATERIAAL = {
 };
 
 /**
- * Baanschets: mattenbeheer van de skibaan. Het rooster hieronder is een
- * ILLUSTRATIEF, zelfbedacht voorbeeld — géén kopie van de echte baan. De
- * echte matindeling staat in categorie_grid.csv/leeftijd_overrides.json, die
- * (nog) niet zijn aangeleverd; zodra die er zijn vervangt een los migratie-
- * script dit rooster door de werkelijke ~1125 matten over 7 secties.
+ * Baanschets: mattenbeheer van de skibaan. Het rooster komt uit
+ * `baanschets-grid-data.json` — geëxporteerd uit de echte baanschets.xlsx
+ * (CSV-export van Tim), geparsed volgens precies de twee-rastersstructuur die
+ * build_baanschets.py beschrijft: het leeftijdraster (kolom D t/m AG, met de
+ * lege kolom P) en het verborgen hulpraster ernaast (+32 kolommen, dus AJ
+ * t/m BM) met de categorie als platte tekst. Een lege combinatie (geen
+ * herkende categorie in het hulpraster) betekent geen mat op die plek.
  *
- * Rotatiegeschiedenis en nieuwe-matten-opname hieronder zijn wél de echte
- * teksten uit build_baanschets.py, woordelijk overgenomen.
+ * Geverifieerd tegen de sectietotalen die al in de sheet stonden: 1125 matten
+ * in totaal, 838 skimatten (286 licht + 277 midden + 275 donker), en de
+ * secties 1 t/m 5 en 7 kloppen exact. Sectie 6 ("8 deelgebieden") komt uit
+ * de echte celdata op 151 matten i.p.v. de 161 die de oude Excel-formule zelf
+ * liet zien — alle 838 skimatten zitten zonder gaten of overlap verdeeld over
+ * precies deze 7 secties, dus dat is een latente inconsistentie in de oude
+ * (handmatig samengestelde) COUNTIF-bereiken van sectie 6, niet een fout in
+ * deze parsing. Omdat hier alles live wordt geteld in plaats van in een los
+ * Excel-vakje bijgehouden, kan dat soort verschil hierna niet meer ontstaan.
+ *
+ * "Gemarkeerd" (fysiek geroteerd) en de celopmerkingen komen niet uit de CSV
+ * — een CSV-export bevat geen Excel-opmerkingen of lettertypekleur — maar uit
+ * dezelfde ROTATION_HIGHLIGHTS/EXTRA_COMMENTS die in build_baanschets.py
+ * stonden, omgerekend naar dit roosters eigen rij/kolom-coördinaten.
  */
+const BAANSCHETS_GRID = JSON.parse(
+  readFileSync(new URL("./baanschets-grid-data.json", import.meta.url), "utf-8")
+);
+
 export const BAANSCHETS = {
-  instellingen: { breedteM: 2.17, hoogteM: 1.45, basisleeftijdSeizoenen: 6 },
-  aantalRijen: 20,
-  aantalKolommen: 16,
-  // [nr, omschrijving, [[rijVan, rijTot, kolomVan, kolomTot], ...]]
-  secties: [
-    { nr: 1, omschrijving: "Bovenbaan noord", bereiken: [[1, 6, 1, 8]] },
-    { nr: 2, omschrijving: "Middenbaan noord", bereiken: [[7, 12, 1, 8]] },
-    { nr: 3, omschrijving: "Onderbaan noord", bereiken: [[13, 16, 1, 8]] },
-    { nr: 4, omschrijving: "Onderbaan breed", bereiken: [[17, 20, 1, 16]] },
-    { nr: 5, omschrijving: "Onderbaan zuid", bereiken: [[13, 16, 9, 12]] },
-    { nr: 6, omschrijving: "Middenbaan zuid", bereiken: [[7, 12, 9, 16]] },
-    { nr: 7, omschrijving: "Bovenbaan zuid", bereiken: [[1, 6, 9, 16]] },
-  ],
-  // Losse overrides op het gegenereerde rooster: leeftijd/opmerking/gemarkeerd.
-  overrides: {
-    "3_3": { leeftijd: 1, opmerking: "Nieuwe mat (zie Nieuwe matten opname 2026/27)." },
-    "3_4": { leeftijd: 1, opmerking: "Nieuwe mat (zie Nieuwe matten opname 2026/27)." },
-    "1_2": {
-      gemarkeerd: true,
-      opmerking:
-        "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7. Zie rotatiegeschiedenis.",
-    },
-    "1_10": {
-      gemarkeerd: true,
-      opmerking:
-        "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7. Zie rotatiegeschiedenis.",
-    },
-    "9_2": {
-      gemarkeerd: true,
-      opmerking:
-        "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6. Zie rotatiegeschiedenis.",
-    },
-    "9_12": {
-      gemarkeerd: true,
-      opmerking:
-        "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6. Zie rotatiegeschiedenis.",
-      categorie: "SkiLicht",
-    },
+  instellingen: {
+    breedteM: BAANSCHETS_GRID.breedteM,
+    hoogteM: BAANSCHETS_GRID.hoogteM,
+    basisleeftijdSeizoenen: BAANSCHETS_GRID.basisleeftijdSeizoenen,
   },
+  aantalRijen: BAANSCHETS_GRID.aantalRijen,
+  aantalKolommen: BAANSCHETS_GRID.aantalKolommen,
+  // [nr, omschrijving, [[rijVan, rijTot, kolomVan, kolomTot], ...]]
+  secties: BAANSCHETS_GRID.secties.map((s) => ({
+    nr: s.nr,
+    omschrijving: `Sectie ${s.nr}`,
+    bereiken: s.bereiken,
+  })),
+  // Eén rij per echte mat (rij, kolom, categorie, leeftijd, gemarkeerd, opmerking).
+  cellen: BAANSCHETS_GRID.cellen,
   rotatiegeschiedenis: [
     {
       seizoen: "2025/26",
@@ -700,35 +696,3 @@ export const BAANSCHETS = {
     },
   ],
 };
-
-/**
- * Genereert het illustratieve rooster: per sectie overwegend Ski-matten, met
- * een rand van Lift-/Rubbermatten (net als bij een echte piste, waar de
- * randen van liften en opstapplekken een andere mat hebben dan de pistevloer
- * zelf). Determinstisch — geen willekeur, zodat een her-seed identiek is.
- */
-export function genereerBaanschetsRooster() {
-  const cellen = new Map(); // "rij_kolom" -> { categorie }
-  for (const sectie of BAANSCHETS.secties) {
-    for (const [rijVan, rijTot, kolomVan, kolomTot] of sectie.bereiken) {
-      for (let rij = rijVan; rij <= rijTot; rij++) {
-        for (let kolom = kolomVan; kolom <= kolomTot; kolom++) {
-          const opRand =
-            rij === rijVan || rij === rijTot || kolom === kolomVan || kolom === kolomTot;
-          let categorie;
-          if (opRand && (rij + kolom) % 5 === 0) categorie = "Rubber";
-          else if (opRand) categorie = kolom % 2 === 0 ? "LiftLicht" : "LiftDonker";
-          else if ((rij + kolom) % 7 === 0) categorie = "SkiDonker";
-          else if ((rij + kolom) % 3 === 0) categorie = "SkiLicht";
-          else categorie = "SkiMidden";
-          cellen.set(`${rij}_${kolom}`, { categorie });
-        }
-      }
-    }
-  }
-  for (const [sleutel, override] of Object.entries(BAANSCHETS.overrides)) {
-    const bestaand = cellen.get(sleutel) ?? {};
-    cellen.set(sleutel, { ...bestaand, ...override });
-  }
-  return cellen;
-}

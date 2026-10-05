@@ -289,17 +289,36 @@ domein ernaast, bereikbaar als extra navigatie-item op dat ene onderdeel
   mocht zonder noodzaak, is dit een bewuste keuze: één rij per mat met de
   categorie als tekst, net zo bruikbaar om in te lezen of te filteren.
 
-**Het rooster dat nu gezaaid is, is bewust illustratief, niet de echte baan.**
-De opdracht noemt `categorie_grid.csv` en `leeftijd_overrides.json` als
-brondata, maar alleen de prompt en `build_baanschets.py` zijn aangeleverd —
-die twee bestanden zelf niet. De **rotatiegeschiedenis en nieuwe-matten-opname
-zijn wél woordelijk overgenomen** uit `build_baanschets.py` (`scripts/seed-data.mjs`,
-`BAANSCHETS.rotatiegeschiedenis`/`nieuweMatten`); alleen de 7 secties en de
-~300 cellen eromheen zijn een zelfbedachte, piste-vormige plaatsvervanger
-(`genereerBaanschetsRooster()`), zodat de pagina nu al met échte interactie te
-testen is. Zodra de twee CSV/JSON-bestanden er zijn, vervangt een nieuw
-migratiescript dit rooster door de werkelijke matindeling — de rest (pagina,
-acties, export, audit-log) hoeft daarvoor niet te veranderen.
+**Het gezaaide rooster is de echte baan.** Aangeleverd is een csv-export van
+het bestaande Excel-werkblad (`baanschets_1Blad1.csv`) — niet de in de
+opdracht genoemde `categorie_grid.csv`/`leeftijd_overrides.json`, maar een
+ruwe dump van het hele werkblad (beide rasters, legenda, secties- en
+historietabellen door elkaar). Daaruit is de echte matindeling teruggerekend:
+
+- De csv bleek twee rasters naast elkaar te bevatten — een zichtbaar
+  "leeftijdraster" (kolommen D:AG, gekleurd per categorie) en een verborgen
+  "hulpraster" 32 kolommen verderop (AJ:BM, platte categorietekst) dat in het
+  origineel alleen als COUNTIF-brondata diende. De kolomoffset tussen
+  csv-veldindex en Excel-kolomnummer is geverifieerd met bekende ankerwaarden
+  (`csv_kolom = excel_kolom − 4`) voordat er iets werd overgenomen.
+  `scripts/baanschets-grid-data.json` is het resultaat: 1.125 matten over een
+  rooster van 95 × 30, in 7 secties met elk hun eigen celbereik(en).
+- De splitsing is **838 skimatten** (286 licht, 277 midden, 275 donker),
+  186 lift/loop-donker, 51 lift/loop-licht en 50 rubbermatten — en 279 matten
+  die wijken van de basisleeftijd, geverifieerd 1-op-1 tegen de brontabellen
+  in de csv (per-sectie totalen, legenda-aantallen).
+- **Rotatiegeschiedenis en nieuwe-matten-opname** komen woordelijk uit
+  `build_baanschets.py` (`BAANSCHETS.rotatiegeschiedenis`/`nieuweMatten` in
+  `scripts/seed-data.mjs`) — net als de "fysiek gedraaid"-markering van
+  cellen en de bijbehorende opmerkingen, want een csv-export kan geen
+  Excel-celopmerkingen of -opmaak meenemen; alleen platte celwaarden.
+- Eén sectie ("8 deelgebieden", nr. 6) telt in de app **151** matten waar het
+  oude werkblad zelf **161** liet zien. Dat is nagerekend: alle 838 skimatten
+  zijn, zonder gaten of overlap, aan precies één van de 7 secties toe te
+  wijzen — het verschil zit in de COUNTIF-formule van het origineel, die voor
+  dit ene complexe celbereik een te ruim bereik had. De app rekent live vanuit
+  de 1.125 cellen zelf, dus toont het kloppende (lagere) aantal in plaats van
+  het verouderde, zelf-opgetelde cijfer uit het oude bestand.
 
 ---
 

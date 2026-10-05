@@ -16,13 +16,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { webcrypto as crypto } from "node:crypto";
 
-import {
-  ONDERDELEN,
-  MEDEWERKERS,
-  MATERIAAL,
-  BAANSCHETS,
-  genereerBaanschetsRooster,
-} from "./seed-data.mjs";
+import { ONDERDELEN, MEDEWERKERS, MATERIAAL, BAANSCHETS } from "./seed-data.mjs";
 import { wrangler } from "./wrangler.mjs";
 
 const ITERATIES = 210_000;
@@ -390,15 +384,13 @@ for (const sectie of BAANSCHETS.secties) {
 // Het rooster zelf is echte, bewerkbare data (zoals materiaal): alleen
 // aanmaken, nooit overschrijven — een beheerder kan 'm na de eerste seed
 // gewoon via de pagina aanpassen zonder dat een her-seed dat terugdraait.
-const rooster = genereerBaanschetsRooster();
-for (const [sleutel, cel] of rooster) {
-  const [rij, kolom] = sleutel.split("_").map(Number);
+for (const cel of BAANSCHETS.cellen) {
   invoegen("baanschets_cellen", {
-    id: tekst(`bs_cel_${rij}_${kolom}`),
-    rij,
-    kolom,
+    id: tekst(`bs_cel_${cel.rij}_${cel.kolom}`),
+    rij: cel.rij,
+    kolom: cel.kolom,
     categorie: tekst(cel.categorie),
-    leeftijd: cel.leeftijd === undefined ? "NULL" : cel.leeftijd,
+    leeftijd: cel.leeftijd === null || cel.leeftijd === undefined ? "NULL" : cel.leeftijd,
     opmerking: tekst(cel.opmerking ?? ""),
     gemarkeerd: bool(cel.gemarkeerd ?? false),
   });

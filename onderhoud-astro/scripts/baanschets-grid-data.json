@@ -1,0 +1,9202 @@
+{
+"breedteM": 2.17,
+"hoogteM": 1.45,
+"basisleeftijdSeizoenen": 6,
+"aantalRijen": 95,
+"aantalKolommen": 30,
+"secties": [
+{
+"nr": 1,
+"bereiken": [
+[
+5,
+22,
+24,
+28
+]
+]
+},
+{
+"nr": 2,
+"bereiken": [
+[
+23,
+42,
+24,
+28
+]
+]
+},
+{
+"nr": 3,
+"bereiken": [
+[
+43,
+54,
+23,
+28
+],
+[
+55,
+62,
+22,
+28
+]
+]
+},
+{
+"nr": 4,
+"bereiken": [
+[
+63,
+82,
+22,
+28
+]
+]
+},
+{
+"nr": 5,
+"bereiken": [
+[
+63,
+82,
+14,
+19
+]
+]
+},
+{
+"nr": 6,
+"bereiken": [
+[
+57,
+82,
+20,
+21
+],
+[
+56,
+56,
+21,
+21
+],
+[
+61,
+62,
+14,
+19
+],
+[
+60,
+60,
+15,
+19
+],
+[
+59,
+59,
+16,
+19
+],
+[
+58,
+58,
+18,
+19
+],
+[
+83,
+87,
+20,
+21
+],
+[
+83,
+87,
+14,
+28
+]
+]
+},
+{
+"nr": 7,
+"bereiken": [
+[
+80,
+91,
+2,
+5
+],
+[
+80,
+91,
+8,
+12
+],
+[
+79,
+79,
+12,
+12
+]
+]
+}
+],
+"cellen": [
+{
+"rij": 1,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 1,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 1,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 1,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 1,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 1,
+"kolom": 29,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 1,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 29,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 2,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 29,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 3,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 4,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 5,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 5,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 5,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 5,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 5,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 5,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 6,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 6,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 6,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 6,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 6,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 6,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 7,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 7,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 7,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 7,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 7,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 7,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 8,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 8,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 8,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 8,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 8,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 8,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 9,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 9,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 9,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 9,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 9,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 9,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 10,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 10,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 10,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 10,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 10,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 10,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 11,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 11,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 11,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 11,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 11,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 11,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 12,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 12,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 12,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 12,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 12,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 12,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 13,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 13,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 13,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 13,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 13,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 13,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 14,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 14,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 14,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 14,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 14,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 14,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 15,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 15,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 15,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 15,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 15,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 15,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 16,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 16,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 16,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 16,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 16,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 16,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 17,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 17,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 17,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 17,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 17,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 17,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 18,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 18,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 18,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 18,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 18,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 18,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 19,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 19,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 19,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 19,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 19,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 19,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 20,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 20,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 20,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 20,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 20,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 20,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 21,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 21,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 21,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 21,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 21,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 21,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 22,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 22,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 22,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 22,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 2,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 22,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 22,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 23,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 23,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 23,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 23,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 23,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 23,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 24,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 24,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 24,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 24,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 24,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 24,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 25,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 25,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 25,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 25,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 25,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 25,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 26,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 26,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 26,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 26,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 26,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 26,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 27,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 27,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 27,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 27,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 27,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 27,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 28,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 28,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 28,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 28,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 28,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 28,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 29,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 29,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 29,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 29,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 29,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 29,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 30,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 30,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 30,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 30,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 30,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 30,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 31,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 31,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 31,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 31,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 31,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 31,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 32,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 32,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 32,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 32,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 32,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 32,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 33,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 33,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 33,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 33,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 33,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 33,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 34,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 34,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 34,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 34,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 34,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 34,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 35,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 35,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 35,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 35,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 35,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 1,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 35,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 36,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 36,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 36,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 36,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 36,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 36,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 37,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 37,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 37,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 37,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 37,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 37,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 38,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 38,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 38,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 38,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 38,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 38,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 39,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 39,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 39,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 39,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 39,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 39,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 40,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 40,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 40,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 40,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 40,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 40,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 41,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 41,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 41,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 41,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 41,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 41,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 42,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 42,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 42,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 42,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 42,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 42,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 43,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 44,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 45,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 46,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 47,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 48,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 49,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 50,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 51,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 52,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 53,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 54,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 55,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 56,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 57,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 58,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 59,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 60,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 61,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 62,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 63,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 63,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 63,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 64,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 64,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 64,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 65,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 65,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 65,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 66,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 66,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 66,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 67,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 67,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 67,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 68,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 68,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 68,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 69,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 69,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 69,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 20,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 70,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 70,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 70,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 71,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"opmerking": "SkiLicht mat (leeftijd 6) vervangen door SkiMidden mat, seizoen 2026/27. Oude mat toegevoegd aan reservevoorraad (zie Nieuwe matten opname).",
+"gemarkeerd": false
+},
+{
+"rij": 71,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 71,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 72,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 72,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 72,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 19,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 73,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 73,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 73,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 74,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 74,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 74,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 16,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 75,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 75,
+"kolom": 22,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 75,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 16,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 76,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 76,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 76,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 14,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 16,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 18,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 20,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 77,
+"kolom": 21,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 77,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 27,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 77,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 15,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 16,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 17,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 19,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 78,
+"kolom": 21,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6. Aanvulling: SkiMidden mat (leeftijd 6) vervangen door SkiLicht mat, seizoen 2026/27. Oude mat toegevoegd aan reservevoorraad (zie Nieuwe matten opname)."
+},
+{
+"rij": 78,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 23,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 78,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 2,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 3,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 4,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 5,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 8,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 9,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 10,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 11,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 12,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 79,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 15,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 16,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 18,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 79,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 79,
+"kolom": 22,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 28,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 79,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 3,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 4,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 5,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 8,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 9,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 10,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 11,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 12,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 80,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 15,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 80,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 80,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 24,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 80,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 3,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 5,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 8,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 9,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 10,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 11,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 12,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 81,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 15,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 17,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 81,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 81,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 23,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 81,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 5,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 8,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 9,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 10,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 11,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 12,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 82,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 15,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 82,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 82,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 82,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 5,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 8,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 9,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 10,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 11,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 12,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 83,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 15,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 83,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 83,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 83,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 5,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 8,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 9,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 10,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 11,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 12,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 84,
+"kolom": 14,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 16,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 84,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 84,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 25,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 84,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 4,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 5,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 8,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 9,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 10,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 11,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 12,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 85,
+"kolom": 14,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 15,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 85,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 85,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 24,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 26,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 27,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 85,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 2,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 4,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 5,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 8,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 9,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 10,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 11,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 12,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 86,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 86,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 86,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 25,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 26,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 28,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 86,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 2,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 4,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 5,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 8,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 9,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 10,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 11,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 12,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 87,
+"kolom": 14,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 15,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 16,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 17,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 18,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 19,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 20,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 87,
+"kolom": 21,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2026/27: fysiek gewisseld tussen sectie 2 en sectie 6."
+},
+{
+"rij": 87,
+"kolom": 22,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 23,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 24,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 25,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 26,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 27,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 28,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 87,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 2,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 3,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 4,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 5,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 8,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 9,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 10,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 11,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 12,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 88,
+"kolom": 14,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 15,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 16,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 17,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 18,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 19,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 20,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 21,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 22,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 23,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 24,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 25,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 26,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 27,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 28,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 88,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 2,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 3,
+"categorie": "SkiLicht",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 5,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 8,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 9,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 10,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 11,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 12,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 89,
+"kolom": 14,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 15,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 16,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 17,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 18,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 19,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 20,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 21,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 22,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 23,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 24,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 25,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 26,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 27,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 28,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 89,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 2,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 5,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 8,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 9,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 10,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 11,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 12,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 90,
+"kolom": 14,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 15,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 16,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 17,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 18,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 19,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 20,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 21,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 22,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 23,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 90,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 2,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 3,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 4,
+"categorie": "SkiMidden",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 5,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 8,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 9,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 10,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 11,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 12,
+"categorie": "SkiDonker",
+"leeftijd": 6,
+"gemarkeerd": true,
+"opmerking": "Geroteerd seizoen 2025/26: fysiek gewisseld tussen sectie 1 en sectie 7."
+},
+{
+"rij": 91,
+"kolom": 14,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 15,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 16,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 17,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 18,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 19,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 20,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 21,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 22,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 23,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 91,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 1,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 2,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 3,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 4,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 5,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 6,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 7,
+"categorie": "Rubber",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 8,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 9,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 10,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 11,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 12,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 14,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 15,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 16,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 17,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 92,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 1,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 2,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 3,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 4,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 5,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 6,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 7,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 8,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 9,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 10,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 11,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 12,
+"categorie": "LiftLicht",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 14,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 15,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 16,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 17,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 93,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 1,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 2,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 3,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 4,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 5,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 6,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 7,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 8,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 9,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 10,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 11,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 24,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 25,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 26,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 27,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 28,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 29,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 94,
+"kolom": 30,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 1,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 2,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 3,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 4,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 5,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 6,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 7,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 8,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+},
+{
+"rij": 95,
+"kolom": 9,
+"categorie": "LiftDonker",
+"leeftijd": 6,
+"gemarkeerd": false,
+"opmerking": ""
+}
+],
+"rotatiegeschiedenis": [
+{
+"seizoen": "2025/26",
+"van": "1",
+"naar": "7",
+"toelichting": "Rest sectie 1 geruild met sectie 7"
+},
+{
+"seizoen": "2026/27",
+"van": "2",
+"naar": "Reserve",
+"toelichting": "50 matten in sectie 2 (AB23:AE34, AB35, AE35) vervangen door nieuwe matten (leeftijd 1). De weggehaalde matten (leeftijd 6) zijn toegevoegd aan de reservevoorraad."
+},
+{
+"seizoen": "2026/27",
+"van": "2",
+"naar": "6",
+"toelichting": "Deel van sectie 2 (AA24:AA42) fysiek omgewisseld met deel van sectie 6/8 deelgebieden (W78:W87, X79:X87). Beide gebieden stonden op basisleeftijd (6 seizoenen), dus geen aanpassing nodig in het leeftijdraster."
+},
+{
+"seizoen": "2026/27",
+"van": "2",
+"naar": "6",
+"toelichting": "Deel van sectie 2 (AB36:AB42, AE36:AE42) fysiek omgewisseld met deel van sectie 6/8 deelgebieden (W71:W77, X72:X78). Beide gebieden stonden op basisleeftijd (6 seizoenen), dus geen aanpassing nodig in het leeftijdraster."
+},
+{
+"seizoen": "2026/27",
+"van": "2",
+"naar": "6",
+"toelichting": "Deel van sectie 2 (AC35:AD42) fysiek omgewisseld met deel van sectie 6/8 deelgebieden (W63:X70). Beide gebieden stonden op basisleeftijd (6 seizoenen), dus geen aanpassing nodig in het leeftijdraster."
+},
+{
+"seizoen": "Seizoen",
+"van": "Aantal",
+"naar": "Leeftijd bij opname",
+"toelichting": "Vanuit sectie"
+}
+],
+"nieuweMatten": [
+{
+"seizoen": "2026/27",
+"aantal": 1,
+"leeftijd": 6,
+"vanuit": "6",
+"toelichting": "SkiLicht mat op X71 vervangen door SkiMidden mat (categorie gewijzigd, leeftijd ongewijzigd)."
+},
+{
+"seizoen": "2026/27",
+"aantal": 1,
+"leeftijd": 6,
+"vanuit": "6",
+"toelichting": "SkiMidden mat op X78 vervangen door SkiLicht mat (categorie gewijzigd, leeftijd ongewijzigd)."
+}
+]
+}
