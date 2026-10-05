@@ -1,8 +1,9 @@
 /**
  * Genereert een idempotent SQL-bestand voor D1 en voert het uit met wrangler.
  *
- *   SEED_ADMIN_WACHTWOORD=... node scripts/seed.mjs            (lokale D1)
- *   SEED_ADMIN_WACHTWOORD=... node scripts/seed.mjs --remote   (D1 in Cloudflare)
+ *   node scripts/seed.mjs                                       (lokale D1, wachtwoord "devwachtwoord")
+ *   SEED_ADMIN_WACHTWOORD=... node scripts/seed.mjs             (lokale D1, eigen wachtwoord)
+ *   SEED_ADMIN_WACHTWOORD=... node scripts/seed.mjs --remote    (D1 in Cloudflare — zet hier altijd een eigen wachtwoord)
  *   SEED_ADMIN_WACHTWOORD=... node scripts/seed.mjs --alleen-sql > seed.sql
  *
  * Alle id's zijn afgeleid van de data zelf, zodat opnieuw draaien niets
@@ -88,11 +89,14 @@ function invoegen(tabel, rij, { bijwerken = [] } = {}) {
 
 /* ---------- medewerkers ---------- */
 
-const wachtwoord = process.env.SEED_ADMIN_WACHTWOORD;
-if (!wachtwoord) {
-  console.error("SEED_ADMIN_WACHTWOORD is niet ingesteld — nodig voor de eerste accounts.");
+if (process.argv.includes("--remote") && !process.env.SEED_ADMIN_WACHTWOORD) {
+  console.error(
+    "SEED_ADMIN_WACHTWOORD is niet ingesteld — verplicht bij --remote, " +
+      "zodat de productiedatabase nooit per ongeluk met het standaardwachtwoord wordt gevuld."
+  );
   process.exit(1);
 }
+const wachtwoord = process.env.SEED_ADMIN_WACHTWOORD || "devwachtwoord";
 const hash = await hashWachtwoord(wachtwoord);
 
 const medewerkerOpNaam = new Map();

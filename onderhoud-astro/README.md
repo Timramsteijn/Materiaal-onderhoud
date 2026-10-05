@@ -38,26 +38,23 @@ npm install
 
 # Database aanmaken en vullen (lokale D1 in .wrangler/state)
 npm run db:migrate
-SEED_ADMIN_WACHTWOORD='kies-een-wachtwoord' npm run seed
+npm run seed
 
 npm run dev          # http://localhost:4321
 ```
 
-Op Windows (CMD) zet je die variabele apart, want de regel hierboven is
-bash-syntax:
-
-```
-npm install
-npm run db:migrate
-set SEED_ADMIN_WACHTWOORD=kies-een-wachtwoord
-npm run seed
-npm run dev
-```
+Zonder verdere instellingen krijgen de eerste accounts het wachtwoord
+"devwachtwoord". Wil je lokaal een ander wachtwoord, zet dan vooraf
+`SEED_ADMIN_WACHTWOORD` (bash: `SEED_ADMIN_WACHTWOORD='...' npm run seed`;
+Windows CMD: `set SEED_ADMIN_WACHTWOORD=...` op een eigen regel vóór
+`npm run seed`). Bij het zaaien van een **remote** D1-database
+(`npm run seed:remote`) zet je altijd zelf een wachtwoord — daar is geen
+standaard voor.
 
 Sneller op Windows: dubbelklik `start-website.bat` in de hoofdmap van het
 project. Dat bestand haalt de laatste versie op, installeert wat ontbreekt,
-werkt de database bij, vult bij een eerste keer de voorbeeldgegevens (het
-vraagt dan om een wachtwoord) en start de server. Een snelkoppeling ernaartoe
+werkt de database bij en vult bij een eerste keer de voorbeeldgegevens
+(wachtwoord "devwachtwoord") en start de server. Een snelkoppeling ernaartoe
 op het bureaublad werkt ook.
 
 `npm run dev` blijft draaien zolang het venster openstaat; stoppen doe je met

@@ -67,11 +67,8 @@ if errorlevel 1 goto :fout
 if "%EERSTEKEER%"=="1" (
   echo.
   echo       Eerste keer op deze computer: de database wordt gevuld met de
-  echo       voorbeeldgegevens. Kies een wachtwoord voor de accounts die
-  echo       daarbij worden aangemaakt.
+  echo       voorbeeldgegevens.
   echo.
-  set /p WACHTWOORD=      Wachtwoord ^(minimaal 8 tekens^): 
-  set "SEED_ADMIN_WACHTWOORD=!WACHTWOORD!"
   call npm run seed
   if errorlevel 1 goto :fout
 )
