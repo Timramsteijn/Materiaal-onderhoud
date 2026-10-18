@@ -198,6 +198,33 @@ export const ONDERDELEN = [
         acties: ["Mat controleren", "Rubber vervangen", "Reiniging", "Reparatie", AFKEUREN],
         velden: [{ naam: "Lengte", type: "GETAL", eenheid: "m" }],
       },
+      {
+        naam: "Hindernissen",
+        acties: [
+          "Constructie controleren",
+          "Bevestigingen controleren",
+          "Touwwerk/net controleren",
+          "Scherpe randen controleren",
+          "Reinigen",
+          "Reparatie",
+          AFKEUREN,
+        ],
+        velden: [
+          {
+            naam: "Type",
+            type: "KEUZE",
+            opties: [
+              "Klimobstakel",
+              "Balanceeronderdeel",
+              "Net/touwwerk",
+              "Springobstakel",
+              "Kruipobstakel",
+              "Overig",
+            ],
+          },
+          { naam: "Materiaal", type: "TEKST" },
+        ],
+      },
     ],
   },
 ];
