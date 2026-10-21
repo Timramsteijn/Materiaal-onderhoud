@@ -26,11 +26,20 @@ where git >nul 2>nul
 if errorlevel 1 (
   echo       Git is niet gevonden - deze stap wordt overgeslagen.
 ) else (
-  git pull --ff-only
+  for /f "delims=" %%b in ('git rev-parse --abbrev-ref HEAD') do set HUIDIGE_BRANCH=%%b
+  git fetch --quiet origin
   if errorlevel 1 (
     echo.
-    echo       Ophalen is niet gelukt. Er staan mogelijk eigen wijzigingen
-    echo       open. De app start met de versie die nu op deze computer staat.
+    echo       Ophalen is niet gelukt - geen internetverbinding? De app start
+    echo       met de versie die nu op deze computer staat.
+  ) else (
+    rem npm install kan hier zelf bestanden lichtjes aanpassen (bv.
+    rem package-lock.json, door een andere npm-versie). Zo'n eigen wijziging
+    rem blokkeert een gewone git pull stilletjes, waarna je op een oude versie
+    rem blijft hangen zonder foutmelding. Deze map is geen plek om zelf in te
+    rem bewerken - je eigen gegevens staan in de database, niet in deze
+    rem bestanden - dus het is veilig om altijd gelijk te zetten met GitHub.
+    git reset --hard --quiet origin/!HUIDIGE_BRANCH!
   )
 )
 
