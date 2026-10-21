@@ -22,6 +22,13 @@
       "when": 1791192465185,
       "tag": "0002_baanschets_en_heeft_baanschets",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1792565025515,
+      "tag": "0003_opstakelparcours_verplaatsen",
+      "breakpoints": true
     }
   ]
 }

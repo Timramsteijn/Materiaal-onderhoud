@@ -198,6 +198,18 @@ export const ONDERDELEN = [
         acties: ["Mat controleren", "Rubber vervangen", "Reiniging", "Reparatie", AFKEUREN],
         velden: [{ naam: "Lengte", type: "GETAL", eenheid: "m" }],
       },
+    ],
+  },
+  {
+    naam: "Opstakelparcours",
+    slug: "opstakelparcours",
+    accent: "#b8790a",
+    accentPressed: "#8f5e07",
+    accentTint: "#f6e8d0",
+    icoon: "fence",
+    sortering: 7,
+    aantalIndicatie: 0,
+    categorieen: [
       {
         naam: "Hindernissen",
         acties: [

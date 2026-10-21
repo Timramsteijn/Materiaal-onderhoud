@@ -32,6 +32,7 @@ import {
   CableCar,
   Grid3x3,
   Lamp,
+  Fence,
 } from "lucide-react";
 
 export {
@@ -66,6 +67,7 @@ export {
   CableCar,
   Grid3x3,
   Lamp,
+  Fence,
 };
 
 /** Gedeeld type voor plekken die zowel Lucide-iconen als SkiIcon accepteren. */
@@ -108,6 +110,7 @@ export const ONDERDEEL_ICONEN: Record<string, IconComponent> = {
   mountain: Mountain,
   waves: Waves,
   "cable-car": CableCar,
+  fence: Fence,
 };
 
 export function onderdeelIcoon(sleutel: string): IconComponent {
