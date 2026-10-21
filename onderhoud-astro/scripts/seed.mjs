@@ -141,6 +141,10 @@ for (const o of ONDERDELEN) {
       sortering: o.sortering ?? 0,
       aantal_indicatie: o.aantalIndicatie ?? 0,
       heeft_baanschets: bool(o.heeftBaanschets ?? false),
+      materiaal_meervoud: nullbaar(o.materiaalMeervoud),
+      materiaal_nieuw_kop: nullbaar(o.materiaalNieuwKop),
+      materiaal_id_label: nullbaar(o.materiaalIdLabel),
+      verberg_merk_model: bool(o.verbergMerkModel ?? false),
     },
     {
       bijwerken: [
@@ -153,6 +157,10 @@ for (const o of ONDERDELEN) {
         "sortering",
         "aantal_indicatie",
         "heeft_baanschets",
+        "materiaal_meervoud",
+        "materiaal_nieuw_kop",
+        "materiaal_id_label",
+        "verberg_merk_model",
       ],
     }
   );

@@ -90,7 +90,8 @@ const nuLabel = `${formatDatum(nu)} om ${formatTijd(nu)}`;
 
 const specs = [
   { label: "Categorie", waarde: categorie?.naam ?? "—" },
-  { label: "Merk / model", waarde: stuk.merkModel },
+  // Slaat nergens op voor dit onderdeel (bv. een hindernis heeft geen merk/model).
+  ...(onderdeel.verbergMerkModel ? [] : [{ label: "Merk / model", waarde: stuk.merkModel }]),
   { label: "Locatie", waarde: stuk.locatie || "—" },
   { label: "In gebruik sinds", waarde: formatDatum(stuk.inGebruikSinds) },
   {
@@ -135,6 +136,7 @@ const specs = [
         onderdeelNaam={onderdeel.naam}
         filters={filters}
         actiefId={stuk.materiaalId}
+        materiaalNieuwKop={onderdeel.materiaalNieuwKop}
       />
     </div>
 
@@ -144,7 +146,7 @@ const specs = [
         class="motion mb-3 flex items-center gap-1 text-[13px] font-semibold text-link hover:underline desktop:hidden"
       >
         <ChevronLeft size={16} strokeWidth={2} />
-        Terug naar materiaal
+        Terug naar {(onderdeel.materiaalMeervoud ?? "materiaal").toLowerCase()}
       </a>
 
       <OfflineMelding client:idle />
@@ -155,7 +157,9 @@ const specs = [
           <p class="text-[26px] font-extrabold leading-tight tracking-[0.02em] text-ink desktop:text-[32px]">
             {stuk.materiaalId}
           </p>
-          <p class="mt-0.5 text-[14px] text-text-medium">{stuk.merkModel}</p>
+          {!onderdeel.verbergMerkModel && (
+            <p class="mt-0.5 text-[14px] text-text-medium">{stuk.merkModel}</p>
+          )}
           <div class="mt-2 flex flex-wrap items-center gap-1.5">
             {categorie && <CategorieBadge naam={categorie.naam} />}
             <StatusBadge status={stuk.status} />
@@ -299,6 +303,7 @@ const specs = [
             locatie: stuk.locatie,
             inGebruikSinds: stuk.inGebruikSinds.toISOString().slice(0, 10),
           }}
+          verbergMerkModel={onderdeel.verbergMerkModel}
           velden={velden.map((v) => ({
             id: v.id,
             naam: v.naam,

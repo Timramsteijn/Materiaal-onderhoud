@@ -5,8 +5,9 @@ import Onderdeel from "@/layouts/Onderdeel.astro";
 import { TopBar } from "@/components/top-bar";
 import { Zoekveld } from "@/components/zoekveld";
 import { LogFilters } from "@/components/log-filters";
-import { StatusBadge, CategorieBadge, LegeToestand, OutlineKnop } from "@/components/ui";
-import { ClipboardList, Download } from "@/components/icons";
+import { StatusBadge, CategorieBadge } from "@/components/ui";
+import { Download } from "@/components/icons";
+import { LogLegeToestand } from "@/components/log-lege-toestand";
 import { db } from "@/lib/context";
 import { getOnderdeel, getCategorieen } from "@/lib/onderdeel";
 import { dagKop, formatTijd } from "@/lib/domein";
@@ -158,12 +159,7 @@ const thClass = "px-4 py-2.5 text-[10.5px] font-extrabold uppercase tracking-[0.
     {
       regels.length === 0 ? (
         <div class="mt-4">
-          <LegeToestand
-            icoon={<ClipboardList size={26} strokeWidth={2} />}
-            kop="Geen registraties gevonden"
-            uitleg={`Er zijn geen registraties in ${onderdeel.naam} die aan deze filters voldoen.`}
-            acties={heeftFilter ? <OutlineKnop href={basis}>Filter wissen</OutlineKnop> : undefined}
-          />
+          <LogLegeToestand onderdeelNaam={onderdeel.naam} heeftFilter={heeftFilter} basis={basis} />
         </div>
       ) : (
         <>

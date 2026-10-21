@@ -1,7 +1,8 @@
 ---
 import { Zoekveld } from "@/components/zoekveld";
-import { StatusBadge, CategorieBadge, Pill, LegeToestand, OutlineKnop } from "@/components/ui";
-import { Search, Plus } from "@/components/icons";
+import { StatusBadge, CategorieBadge, Pill } from "@/components/ui";
+import { Plus } from "@/components/icons";
+import { MateriaalLegeToestand } from "@/components/materiaal-lege-toestand";
 import { AANDACHT_NODIG_MAANDEN, formatDatum, heeftAandachtNodig } from "@/lib/domein";
 import { getCategorieen } from "@/lib/onderdeel";
 import { haalMateriaal, type LijstFilters } from "@/lib/materiaal-lijst";
@@ -13,9 +14,12 @@ interface Props {
   filters: LijstFilters;
   /** Markeert het geopende materiaal in de master/detail op desktop. */
   actiefId?: string;
+  /** Overschrijft "Nieuw materiaal" als toegankelijkheidslabel, bv. "Nieuwe hindernis". */
+  materiaalNieuwKop?: string | null;
 }
 
-const { slug, onderdeelId, onderdeelNaam, filters, actiefId } = Astro.props;
+const { slug, onderdeelId, onderdeelNaam, filters, actiefId, materiaalNieuwKop } = Astro.props;
+const nieuwKop = materiaalNieuwKop ?? "Nieuw materiaal";
 
 const [{ totaal, materiaal }, categorieen] = await Promise.all([
   haalMateriaal(onderdeelId, filters),
@@ -54,7 +58,7 @@ const queryString = query.toString();
     <Zoekveld client:idle pad={basis} query={queryString} />
     <a
       href={`${basis}/nieuw`}
-      aria-label="Nieuw materiaal"
+      aria-label={nieuwKop}
       class="motion flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-accent-on hover:bg-accent-pressed"
     >
       <Plus size={20} strokeWidth={2} />
@@ -97,40 +101,12 @@ const queryString = query.toString();
   {
     materiaal.length === 0 ? (
       <div class="mt-3">
-        <LegeToestand
-          icoon={<Search size={26} strokeWidth={2} />}
-          kop="Geen materiaal gevonden"
-          uitleg={
-            filters.gemeld
-              ? `Er staat geen onderhoud open in ${onderdeelNaam}${
-                  actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
-                }.`
-              : filters.aandacht
-              ? `Al het materiaal in ${onderdeelNaam}${
-                  actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
-                } is binnen ${AANDACHT_NODIG_MAANDEN} maanden onderhouden.`
-              : filters.q
-                ? `Geen materiaal in ${onderdeelNaam} dat overeenkomt met "${filters.q}"${
-                    actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
-                  }.`
-                : `Er staat nog geen materiaal in ${onderdeelNaam}${
-                    actieveCategorie ? ` binnen ${actieveCategorie.naam}` : ""
-                  }.`
-          }
-          acties={
-            <>
-              {(filters.q || filters.categorie || filters.aandacht || filters.gemeld) && (
-                <OutlineKnop href={basis}>Filter wissen</OutlineKnop>
-              )}
-              <a
-                href={`${basis}/nieuw`}
-                class="motion lift flex min-h-[44px] items-center gap-2 rounded-full bg-accent px-5 text-[13px] font-extrabold uppercase tracking-[0.08em] text-accent-on hover:bg-accent-pressed"
-              >
-                <Plus size={16} strokeWidth={2} />
-                Nieuw
-              </a>
-            </>
-          }
+        <MateriaalLegeToestand
+          onderdeelNaam={onderdeelNaam}
+          categorieNaam={actieveCategorie?.naam}
+          filters={filters}
+          basis={basis}
+          nieuwKop={nieuwKop}
         />
       </div>
     ) : (

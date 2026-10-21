@@ -12,11 +12,15 @@ export function ScanView({
   slug,
   onderdeelId,
   onderdeelNaam,
+  materiaalNieuwKop,
 }: {
   slug: string;
   onderdeelId: string;
   onderdeelNaam: string;
+  /** Overschrijft "Nieuw materiaal" als knoptekst, bv. "Nieuwe hindernis". */
+  materiaalNieuwKop?: string | null;
 }) {
+  const nieuwKop = materiaalNieuwKop ?? "Nieuw materiaal";
   const [handmatigId, setHandmatigId] = useState("");
   const [bezig, setBezig] = useState(false);
   const [onbekendId, setOnbekendId] = useState<string | null>(null);
@@ -166,7 +170,7 @@ export function ScanView({
           <div className="mt-2.5">
             <OutlineKnop href={`/${slug}/materiaal/nieuw?id=${encodeURIComponent(onbekendId)}`}>
               <Plus size={15} strokeWidth={2} />
-              Nieuw materiaal
+              {nieuwKop}
             </OutlineKnop>
           </div>
         </>
@@ -249,7 +253,7 @@ export function ScanView({
           </p>
           <OutlineKnop href={`/${slug}/materiaal/nieuw`}>
             <Plus size={15} strokeWidth={2} />
-            Nieuw materiaal
+            {nieuwKop}
           </OutlineKnop>
         </Kaart>
 

@@ -29,6 +29,13 @@
       "when": 1792565025515,
       "tag": "0003_opstakelparcours_verplaatsen",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792583950396,
+      "tag": "0004_materiaal_labels_en_verberg_merk_model",
+      "breakpoints": true
     }
   ]
 }

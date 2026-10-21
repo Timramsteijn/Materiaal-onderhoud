@@ -16,16 +16,19 @@ export function buildNavItems({
   slug,
   isBeheerder,
   heeftBaanschets = false,
+  materiaalMeervoud,
 }: {
   slug: string;
   isBeheerder: boolean;
   /** Alleen het onderdeel met de skibaan-matten heeft deze extra pagina. */
   heeftBaanschets?: boolean;
+  /** Overschrijft het label "Materiaal", bv. "Hindernissen". */
+  materiaalMeervoud?: string | null;
 }): NavItem[] {
   const basis = `/${slug}`;
   return [
     { href: `${basis}/scannen`, label: "Scannen", Icon: ScanLine },
-    { href: `${basis}/materiaal`, label: "Materiaal", Icon: Package },
+    { href: `${basis}/materiaal`, label: materiaalMeervoud ?? "Materiaal", Icon: Package },
     { href: `${basis}/log`, label: "Log", Icon: ClipboardList },
     { href: `${basis}/overzicht`, label: "Overzicht", Icon: BarChart3 },
     ...(heeftBaanschets

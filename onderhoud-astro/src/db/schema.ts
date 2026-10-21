@@ -82,6 +82,14 @@ export const onderdelen = sqliteTable("onderdelen", {
   aantalIndicatie: integer("aantal_indicatie").notNull().default(0),
   /** Toont het extra navigatie-item "Baanschets" (zie baanschets*-tabellen). */
   heeftBaanschets: integer("heeft_baanschets", { mode: "boolean" }).notNull().default(false),
+  /** Overschrijft het label "Materiaal" (navigatie, "terug naar …") als dat beter past, bv. "Hindernissen". */
+  materiaalMeervoud: text("materiaal_meervoud"),
+  /** Overschrijft "Nieuw materiaal" als titel/knoptekst, bv. "Nieuwe hindernis". */
+  materiaalNieuwKop: text("materiaal_nieuw_kop"),
+  /** Overschrijft het label "Materiaal-ID", bv. "Hindernis-ID". */
+  materiaalIdLabel: text("materiaal_id_label"),
+  /** Verbergt het veld Merk/model in het materiaalformulier en vult "N.v.t." in. */
+  verbergMerkModel: integer("verberg_merk_model", { mode: "boolean" }).notNull().default(false),
 });
 
 export const categorieen = sqliteTable(

@@ -6,16 +6,18 @@ export function SideNav({
   onderdeelNaam,
   isBeheerder,
   heeftBaanschets,
+  materiaalMeervoud,
   pad,
 }: {
   slug: string;
   onderdeelNaam: string;
   isBeheerder: boolean;
   heeftBaanschets?: boolean;
+  materiaalMeervoud?: string | null;
   /** Huidig pad; bepaalt welk item actief is (in Astro geen usePathname). */
   pad: string;
 }) {
-  const items = buildNavItems({ slug, isBeheerder, heeftBaanschets });
+  const items = buildNavItems({ slug, isBeheerder, heeftBaanschets, materiaalMeervoud });
 
   return (
     <aside

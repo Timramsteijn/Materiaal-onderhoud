@@ -4,14 +4,16 @@ export function BottomNav({
   slug,
   isBeheerder,
   heeftBaanschets,
+  materiaalMeervoud,
   pad,
 }: {
   slug: string;
   isBeheerder: boolean;
   heeftBaanschets?: boolean;
+  materiaalMeervoud?: string | null;
   pad: string;
 }) {
-  const tabs = buildNavItems({ slug, isBeheerder, heeftBaanschets });
+  const tabs = buildNavItems({ slug, isBeheerder, heeftBaanschets, materiaalMeervoud });
 
   return (
     <nav className="no-print fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[560px] border-t border-border-dark bg-navy pb-2 desktop:hidden">

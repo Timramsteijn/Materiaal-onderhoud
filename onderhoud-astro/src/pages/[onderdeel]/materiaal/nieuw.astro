@@ -27,11 +27,13 @@ const categorieen = await Promise.all(
 );
 const beginId = Astro.url.searchParams.get("id") ?? "";
 const vandaag = new Date().toISOString().slice(0, 10);
+const kop = onderdeel.materiaalNieuwKop ?? "Nieuw materiaal";
+const materiaalMeervoud = onderdeel.materiaalMeervoud ?? "materiaal";
 ---
 
-<Onderdeel onderdeel={onderdeel} titel="Nieuw materiaal">
+<Onderdeel onderdeel={onderdeel} titel={kop}>
   <TopBar
-    titel="Nieuw materiaal"
+    titel={kop}
     subregel={`Wordt toegevoegd aan ${onderdeel.naam}`}
     medewerkerNaam={medewerker.naam}
     functie={medewerker.functie}
@@ -43,11 +45,11 @@ const vandaag = new Date().toISOString().slice(0, 10);
       class="motion mb-3 flex items-center gap-1 text-[13px] font-semibold text-link hover:underline"
     >
       <ChevronLeft size={16} strokeWidth={2} />
-      Terug naar materiaal
+      Terug naar {materiaalMeervoud.toLowerCase()}
     </a>
 
     <div class="desktop:hidden">
-      <h1 class="display text-[22px] text-ink">Nieuw materiaal</h1>
+      <h1 class="display text-[22px] text-ink">{kop}</h1>
       <p class="mb-4 mt-1 text-[13px] text-text-muted">
         Wordt toegevoegd aan {onderdeel.naam}.
       </p>
@@ -68,6 +70,8 @@ const vandaag = new Date().toISOString().slice(0, 10);
           beginId={beginId}
           vandaag={vandaag}
           actieUrl={`${Astro.url.pathname}${actions.maakMateriaal.queryString}`}
+          materiaalIdLabel={onderdeel.materiaalIdLabel}
+          verbergMerkModel={onderdeel.verbergMerkModel}
         />
       )
     }

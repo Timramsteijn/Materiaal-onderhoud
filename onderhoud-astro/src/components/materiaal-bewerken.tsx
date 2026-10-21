@@ -14,6 +14,7 @@ export function MateriaalBewerken({
   magVerwijderen,
   bewerkUrl,
   verwijderUrl,
+  verbergMerkModel = false,
 }: {
   materiaal: { id: string; merkModel: string; locatie: string; inGebruikSinds: string };
   velden: Veld[];
@@ -21,6 +22,8 @@ export function MateriaalBewerken({
   /** URL's van de Astro Actions; ook het doel als JavaScript uitstaat. */
   bewerkUrl: string;
   verwijderUrl: string;
+  /** Slaat nergens op voor dit onderdeel (bv. een hindernis heeft geen merk/model). */
+  verbergMerkModel?: boolean;
 }) {
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
@@ -65,16 +68,20 @@ export function MateriaalBewerken({
           <input type="hidden" name="materiaalDbId" value={materiaal.id} />
 
           <div className="grid gap-3 desktop:grid-cols-2">
-            <div>
-              <Label htmlFor="merkModel">Merk / model</Label>
-              <input
-                id="merkModel"
-                name="merkModel"
-                defaultValue={materiaal.merkModel}
-                required
-                className={inputClass}
-              />
-            </div>
+            {verbergMerkModel ? (
+              <input type="hidden" name="merkModel" value={materiaal.merkModel} />
+            ) : (
+              <div>
+                <Label htmlFor="merkModel">Merk / model</Label>
+                <input
+                  id="merkModel"
+                  name="merkModel"
+                  defaultValue={materiaal.merkModel}
+                  required
+                  className={inputClass}
+                />
+              </div>
+            )}
             <div>
               <Label htmlFor="locatie">Locatie</Label>
               <input

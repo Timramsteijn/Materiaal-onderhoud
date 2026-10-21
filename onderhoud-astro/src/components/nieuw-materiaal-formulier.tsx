@@ -18,6 +18,8 @@ export function NieuwMateriaalFormulier({
   beginId,
   vandaag,
   actieUrl,
+  materiaalIdLabel,
+  verbergMerkModel = false,
 }: {
   slug: string;
   onderdeelId: string;
@@ -26,6 +28,10 @@ export function NieuwMateriaalFormulier({
   /** Server-side opgemaakt, zodat server- en clientrender identiek blijven. */
   vandaag: string;
   actieUrl: string;
+  /** Overschrijft het label "Materiaal-ID", bv. "Hindernis-ID". */
+  materiaalIdLabel?: string | null;
+  /** Verbergt Merk/model en vult "N.v.t." in — slaat nergens op voor dit onderdeel. */
+  verbergMerkModel?: boolean;
 }) {
   const [categorieId, setCategorieId] = useState(categorieen[0]?.id ?? "");
   const [bezig, setBezig] = useState(false);
@@ -54,7 +60,7 @@ export function NieuwMateriaalFormulier({
 
         <div className="grid gap-4 desktop:grid-cols-2">
           <div>
-            <Label htmlFor="materiaalId">Materiaal-ID</Label>
+            <Label htmlFor="materiaalId">{materiaalIdLabel ?? "Materiaal-ID"}</Label>
             <input
               id="materiaalId"
               name="materiaalId"
@@ -80,16 +86,20 @@ export function NieuwMateriaalFormulier({
             />
           </div>
 
-          <div>
-            <Label htmlFor="merkModel">Merk / model</Label>
-            <input
-              id="merkModel"
-              name="merkModel"
-              placeholder="bv. Rossignol Experience 78"
-              required
-              className={inputClass}
-            />
-          </div>
+          {verbergMerkModel ? (
+            <input type="hidden" name="merkModel" value="N.v.t." />
+          ) : (
+            <div>
+              <Label htmlFor="merkModel">Merk / model</Label>
+              <input
+                id="merkModel"
+                name="merkModel"
+                placeholder="bv. Rossignol Experience 78"
+                required
+                className={inputClass}
+              />
+            </div>
+          )}
 
           <div>
             <Label htmlFor="locatie">Locatie</Label>

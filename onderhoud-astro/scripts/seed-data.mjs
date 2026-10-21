@@ -201,14 +201,21 @@ export const ONDERDELEN = [
     ],
   },
   {
-    naam: "Opstakelparcours",
-    slug: "opstakelparcours",
+    naam: "Survivalbos",
+    slug: "survivalbos",
     accent: "#b8790a",
     accentPressed: "#8f5e07",
     accentTint: "#f6e8d0",
-    icoon: "fence",
+    icoon: "pine",
     sortering: 7,
     aantalIndicatie: 0,
+    // Vervangt "Materiaal"/"Nieuw materiaal"/"Materiaal-ID" in de navigatie en
+    // formulieren van dit onderdeel. Merk/model slaat nergens op bij een
+    // hindernis, dus dat veld blijft verborgen en krijgt altijd "N.v.t.".
+    materiaalMeervoud: "Hindernissen",
+    materiaalNieuwKop: "Nieuwe hindernis",
+    materiaalIdLabel: "Hindernis-ID",
+    verbergMerkModel: true,
     categorieen: [
       {
         naam: "Hindernissen",
