@@ -392,16 +392,25 @@ async function inloggen(page, gebruikersnaam) {
 
   console.log("\nVerstopt extraatje");
 
-  await test("vijf klikken op het logo opent het spel, minder niet", async () => {
+  await test("dubbelklikken op het logo opent de spelkiezer, één klik niet", async () => {
     await ga(page, "/ski-snowboard/overzicht");
     const trigger = page.locator("[data-ov-logo-trigger]:visible").first();
-    for (let i = 0; i < 4; i++) await trigger.click();
-    beweer(!(await page.locator("#ov-spel-overlay").isVisible()), "opende te vroeg");
     await trigger.click();
-    beweer(await page.locator("#ov-spel-overlay").isVisible(), "opende niet na de vijfde klik");
+    beweer(!(await page.locator("#ov-spel-overlay").isVisible()), "opende al bij één klik");
+    await trigger.dblclick();
+    beweer(await page.locator("#ov-spel-overlay").isVisible(), "opende niet na dubbelklikken");
+    beweer(
+      (await page.locator('.ov-spel-keuze[data-spel="werkplaatsRush"]').count()) === 1,
+      "Werkplaats Rush ontbreekt in de kiezer"
+    );
+    beweer(
+      (await page.locator('.ov-spel-keuze[data-spel="onderhoudMemory"]').count()) === 1,
+      "Onderhoud Memory ontbreekt in de kiezer"
+    );
   });
 
-  await test("spelen levert score op en Escape sluit weer", async () => {
+  await test("Werkplaats Rush spelen levert score op en Escape sluit weer", async () => {
+    await page.locator('.ov-spel-keuze[data-spel="werkplaatsRush"]').click();
     await page.locator("#ov-spel-start").click();
     await page.waitForTimeout(700);
     let geklikt = false;
@@ -416,6 +425,23 @@ async function inloggen(page, gebruikersnaam) {
     }
     beweer(geklikt, "geen enkel item om op te klikken verschenen");
     beweer((await page.locator("#ov-spel-score").textContent()) === "10", "score klopt niet");
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(150);
+    beweer(!(await page.locator("#ov-spel-overlay").isVisible()), "Escape sloot het spel niet");
+  });
+
+  await test("Onderhoud Memory toont een kaartenbord en draait een kaart om", async () => {
+    await page.locator("[data-ov-logo-trigger]:visible").first().dblclick();
+    await page.locator('.ov-spel-keuze[data-spel="onderhoudMemory"]').click();
+    beweer((await page.locator("#ov-spel-titel").textContent()) === "Onderhoud Memory", "titel klopt niet");
+    await page.locator("#ov-spel-start").click();
+    beweer((await page.locator(".ov-kaart").count()) === 12, "geen 12 kaarten");
+    const eersteKaart = page.locator(".ov-kaart").first();
+    await eersteKaart.click();
+    beweer(
+      await eersteKaart.evaluate((el) => el.classList.contains("ov-kaart-open")),
+      "kaart draaide niet om"
+    );
     await page.keyboard.press("Escape");
     await page.waitForTimeout(150);
     beweer(!(await page.locator("#ov-spel-overlay").isVisible()), "Escape sloot het spel niet");
