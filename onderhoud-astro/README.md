@@ -52,10 +52,13 @@ Windows CMD: `set SEED_ADMIN_WACHTWOORD=...` op een eigen regel vóór
 standaard voor.
 
 Sneller op Windows: dubbelklik `start-website.bat` in de hoofdmap van het
-project. Dat bestand haalt de laatste versie op, installeert wat ontbreekt,
-werkt de database bij en vult bij een eerste keer de voorbeeldgegevens
-(wachtwoord "devwachtwoord") en start de server. Een snelkoppeling ernaartoe
-op het bureaublad werkt ook.
+project. Dat bestand haalt de laatste versie op en roept daarna
+`onderhoud-astro/draai-lokaal.bat` aan, dat de pakketten/database bijwerkt
+(inclusief nieuwe onderdelen/categorieën — elke keer opnieuw, niet alleen de
+allereerste keer, want zaaien is idempotent) en de server start. Een
+snelkoppeling naar `start-website.bat` op het bureaublad werkt ook; het pad
+daarin hoeft nooit te veranderen, ook niet als `draai-lokaal.bat` zelf
+meeverandert.
 
 `npm run dev` blijft draaien zolang het venster openstaat; stoppen doe je met
 Ctrl+C. Wil je met schone gegevens opnieuw beginnen, verwijder dan de map

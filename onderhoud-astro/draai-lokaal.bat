@@ -13,38 +13,32 @@ if errorlevel 1 (
   goto :einde
 )
 
-rem Geen .wrangler-map betekent: nog nooit een database op deze computer.
-set EERSTEKEER=0
-if not exist ".wrangler" set EERSTEKEER=1
-
-echo [1/3] Pakketten controleren...
-if exist "node_modules" (
-  echo       Al aanwezig.
-) else (
-  call npm install
-  if errorlevel 1 goto :fout
-  rem npm 11 houdt installatiescripts tegen tot ze zijn goedgekeurd; zonder
-  rem die goedkeuring ontbreken esbuild en workerd. Oudere npm kent deze
-  rem opdracht niet - de melding daarover mag je negeren.
-  call npm approve-scripts --all
-)
+echo [1/4] Pakketten controleren...
+call npm install
+if errorlevel 1 goto :fout
+rem npm 11 houdt installatiescripts tegen tot ze zijn goedgekeurd; zonder die
+rem goedkeuring ontbreken esbuild en workerd. Oudere npm kent deze opdracht
+rem niet - de melding daarover mag je negeren. npm install zelf doet niets
+rem (en kost dus bijna geen tijd) als er toch niets gewijzigd is.
+call npm approve-scripts --all
 
 echo.
-echo [2/3] Database bijwerken...
+echo [2/4] Database bijwerken...
 call npm run db:migrate
 if errorlevel 1 goto :fout
 
-if "%EERSTEKEER%"=="1" (
-  echo.
-  echo       Eerste keer op deze computer: de database wordt gevuld met de
-  echo       voorbeeldgegevens.
-  echo.
-  call npm run seed
-  if errorlevel 1 goto :fout
-)
+rem Config (onderdelen, categorieën, acties, velden) wordt bijgewerkt;
+rem materiaal en logregels worden alleen aangemaakt, nooit overschreven -
+rem dit opnieuw draaien is dus altijd veilig, ook op een computer die de
+rem database allang had. Zo komt een nieuw onderdeel dat erbij komt (zoals
+rem Opstakelparcours) ook aan op een computer die al eerder is gestart.
+echo.
+echo [3/4] Voorbeeldgegevens en nieuwe onderdelen bijwerken...
+call npm run seed
+if errorlevel 1 goto :fout
 
 echo.
-echo [3/3] De app draait zo op http://localhost:4321
+echo [4/4] De app draait zo op http://localhost:4321
 echo       Laat dit venster openstaan. Stoppen: Ctrl+C en daarna J.
 echo.
 
