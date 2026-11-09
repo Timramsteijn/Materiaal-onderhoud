@@ -7,7 +7,7 @@ import { FietsHotspotBeheer } from "@/components/fiets-hotspot-beheer";
 
 type Actie = { id: string; naam: string; isAfkeuren: boolean };
 type Veld = { id: string; naam: string; eenheid: string | null };
-type Hotspot = { id: string; actieId: string; label: string; xPct: number; yPct: number };
+type Hotspot = { id: string; actieId: string; xPct: number; yPct: number; rPct: number };
 type Categorie = {
   id: string;
   naam: string;

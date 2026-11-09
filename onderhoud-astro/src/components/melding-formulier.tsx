@@ -160,6 +160,7 @@ export function MeldingFormulier({
               <FietsHotspotMelder
                 fotoUrl={fotoUrl}
                 hotspots={hotspots}
+                acties={acties}
                 geselecteerdActieId={actieId}
                 onKies={(id) => {
                   setActieId(id);

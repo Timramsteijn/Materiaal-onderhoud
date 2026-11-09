@@ -96,11 +96,11 @@ export const ONDERDELEN = [
         // onderdeel uit te snijden en de pixelpositie af te lezen.
         fietsfotoUrl: "/mountainbike-onderdelen.webp",
         hotspots: [
-          { actieNaam: "Remmen controleren", label: "Rem", xPct: 80, yPct: 62.4 },
-          { actieNaam: "Derailleur stellen", label: "Versnelling", xPct: 21, yPct: 65 },
-          { actieNaam: "Ketting reinigen", label: "Ketting", xPct: 35, yPct: 72.8 },
-          { actieNaam: "Wielen centreren", label: "Wiel", xPct: 86, yPct: 43.3 },
-          { actieNaam: "Bandenspanning", label: "Band", xPct: 14, yPct: 89.3 },
+          { actieNaam: "Remmen controleren", xPct: 80, yPct: 62.4, rPct: 7 },
+          { actieNaam: "Derailleur stellen", xPct: 21, yPct: 65, rPct: 8 },
+          { actieNaam: "Ketting reinigen", xPct: 35, yPct: 72.8, rPct: 6 },
+          { actieNaam: "Wielen centreren", xPct: 86, yPct: 43.3, rPct: 11 },
+          { actieNaam: "Bandenspanning", xPct: 14, yPct: 89.3, rPct: 9 },
         ],
       },
       {
@@ -117,8 +117,8 @@ export const ONDERDELEN = [
         // krijgen een stip (geen Wiel/Band, want die acties heeft E-MTB niet).
         fietsfotoUrl: "/mountainbike-onderdelen.webp",
         hotspots: [
-          { actieNaam: "Remmen controleren", label: "Rem", xPct: 80, yPct: 62.4 },
-          { actieNaam: "Derailleur stellen", label: "Versnelling", xPct: 21, yPct: 65 },
+          { actieNaam: "Remmen controleren", xPct: 80, yPct: 62.4, rPct: 7 },
+          { actieNaam: "Derailleur stellen", xPct: 21, yPct: 65, rPct: 8 },
         ],
         velden: [
           { naam: "Framemaat", type: "TEKST" },

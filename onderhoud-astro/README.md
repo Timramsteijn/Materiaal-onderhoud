@@ -205,15 +205,21 @@ verdwijnt dus niet uit de historie. Afkeuren blijft buiten de meldingen: dat
 loopt via registreren mét goedkeuring.
 
 Bij categorie **MTB**/**E-MTB** staat er boven de actielijst ook een foto van
-de mountainbike met aanklikbare onderdelen (`fiets-hotspot-melder.tsx`) — voor
+de mountainbike met aanklikbare gebieden (`fiets-hotspot-melder.tsx`) — voor
 wie niet precies weet hoe een derailleur heet, maar wel ziet welk stuk stuk
-is. De foto zelf (`categorieen.fietsfotoUrl`) en de stippen (tabel
-`fiets_hotspots`: percentage-coördinaten + een actie-id) zijn gewone
-configuratie, net als acties en velden. Een beheerder zet zelf nieuwe stippen
-neer bij Beheer (`fiets-hotspot-beheer.tsx`): actie kiezen, op de foto klikken,
-label kiezen, opslaan — geen code nodig als er een nieuwe onderhoudsactie
-bijkomt die ook op de foto moet kunnen. Verwijderen van de actie of categorie
-ruimt de stip vanzelf op (`ON DELETE CASCADE`). De volledige actielijst
+is. Elk gebied is een cirkel (middelpunt + straal, beide als percentage van
+de foto), geen stip met tekst: de naam van de gekoppelde actie is het
+toegankelijkheidslabel, niet iets dat zichtbaar op de foto staat. De foto zelf
+(`categorieen.fietsfotoUrl`) en de cirkels (tabel `fiets_hotspots`:
+middelpunt + straal + een actie-id) zijn gewone configuratie, net als acties
+en velden. Een beheerder zet zelf nieuwe cirkels neer bij Beheer
+(`fiets-hotspot-beheer.tsx`): actie kiezen, op de foto klikken, met de
+schuifregelaar de straal over het hele onderdeel laten vallen, opslaan — geen
+code nodig als er een nieuwe onderhoudsactie bijkomt die ook op de foto moet
+kunnen. Een bestaande cirkel aanklikken laadt 'm in hetzelfde
+bewerkformulier (verplaatsen door elders te klikken, van grootte veranderen
+met de schuifregelaar, of verwijderen). Verwijderen van de actie of categorie
+ruimt de cirkel vanzelf op (`ON DELETE CASCADE`). De volledige actielijst
 eronder blijft gewoon staan — de foto is een extra, visuele ingang, geen
 vervanging.
 

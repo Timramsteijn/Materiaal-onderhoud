@@ -18,6 +18,7 @@ import {
   verwijderFietsHotspot,
   verwijderMedewerker,
   voegVeldToe,
+  werkFietsHotspotBij,
   zetMedewerkerActief,
 } from "./beheer";
 import {
@@ -58,6 +59,7 @@ export const server = {
   zetMedewerkerActief,
   verwijderMedewerker,
   voegFietsHotspotToe,
+  werkFietsHotspotBij,
   verwijderFietsHotspot,
   bewerkBaanschetsCel,
   zetBaanschetsInstellingen,

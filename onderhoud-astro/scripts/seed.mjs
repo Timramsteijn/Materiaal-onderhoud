@@ -232,11 +232,11 @@ for (const o of ONDERDELEN) {
           id: tekst(hotspotId),
           categorie_id: tekst(categorieId),
           actie_id: tekst(actie.id),
-          label: tekst(h.label),
           x_pct: h.xPct,
           y_pct: h.yPct,
+          r_pct: h.rPct ?? 6,
         },
-        { bijwerken: ["actie_id", "label", "x_pct", "y_pct"] }
+        { bijwerken: ["actie_id", "x_pct", "y_pct", "r_pct"] }
       );
     }
 

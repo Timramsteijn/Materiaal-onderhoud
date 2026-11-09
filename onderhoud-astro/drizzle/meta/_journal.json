@@ -43,6 +43,13 @@
       "when": 1794226105146,
       "tag": "0005_fiets_hotspots",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1794226990278,
+      "tag": "0006_fiets_hotspots_straal",
+      "breakpoints": true
     }
   ]
 }

@@ -356,15 +356,16 @@ export const verwijderMedewerker = defineAction({
 
 /* ---------- fiets-hotspots (aanklikbare foto bij melden) ---------- */
 
+const hotspotPositie = {
+  xPct: z.coerce.number().min(0).max(100),
+  yPct: z.coerce.number().min(0).max(100),
+  rPct: z.coerce.number().min(1).max(40),
+};
+
 export const voegFietsHotspotToe = defineAction({
   accept: "form",
-  input: z.object({
-    actieId: z.string().min(1),
-    label: z.string().trim().min(1).max(24),
-    xPct: z.coerce.number().min(0).max(100),
-    yPct: z.coerce.number().min(0).max(100),
-  }),
-  handler: async ({ actieId, label, xPct, yPct }, context) => {
+  input: z.object({ actieId: z.string().min(1), ...hotspotPositie }),
+  handler: async ({ actieId, xPct, yPct, rPct }, context) => {
     const beheerder = await vereisBeheerder(context);
 
     const actie = await db().query.onderhoudsacties.findFirst({
@@ -386,16 +387,36 @@ export const voegFietsHotspotToe = defineAction({
       id: nieuwId("hotspot"),
       categorieId: categorie.id,
       actieId: actie.id,
-      label,
       xPct,
       yPct,
+      rPct,
     });
 
     await logBeheer(beheerder.id, "Stip op fietsfoto toegevoegd", {
       categorie: categorie.naam,
       actie: actie.naam,
-      label,
     });
+    return { ok: true as const };
+  },
+});
+
+export const werkFietsHotspotBij = defineAction({
+  accept: "form",
+  input: z.object({ hotspotId: z.string().min(1), ...hotspotPositie }),
+  handler: async ({ hotspotId, xPct, yPct, rPct }, context) => {
+    const beheerder = await vereisBeheerder(context);
+
+    const hotspot = await db().query.fietsHotspots.findFirst({
+      where: eq(fietsHotspots.id, hotspotId),
+    });
+    if (!hotspot) throw new ActionError({ code: "NOT_FOUND", message: "Stip niet gevonden." });
+
+    await db()
+      .update(fietsHotspots)
+      .set({ xPct, yPct, rPct })
+      .where(eq(fietsHotspots.id, hotspotId));
+
+    await logBeheer(beheerder.id, "Stip op fietsfoto aangepast", { hotspotId });
     return { ok: true as const };
   },
 });
@@ -412,7 +433,7 @@ export const verwijderFietsHotspot = defineAction({
     if (!hotspot) return { ok: true as const };
 
     await db().delete(fietsHotspots).where(eq(fietsHotspots.id, hotspotId));
-    await logBeheer(beheerder.id, "Stip op fietsfoto verwijderd", { label: hotspot.label });
+    await logBeheer(beheerder.id, "Stip op fietsfoto verwijderd", { hotspotId });
     return { ok: true as const };
   },
 });

@@ -152,10 +152,14 @@ export const velddefinities = sqliteTable(
 );
 
 /**
- * Een aanklikbaar punt op `categorieen.fietsfotoUrl`, gekoppeld aan een
- * bestaande actie. Een actie kan meerdere stippen hebben (bv. voor- en
- * achterrem apart); verwijderen van de actie of categorie ruimt de stip vanzelf
- * op via ON DELETE CASCADE.
+ * Een aanklikbaar gebied op `categorieen.fietsfotoUrl`, gekoppeld aan een
+ * bestaande actie. Getekend als cirkel: middelpunt (xPct, yPct) en straal
+ * (rPct), alle drie als percentage van de natuurlijke breedte van de foto —
+ * de hoogte wordt in de UI met de beeldverhouding herrekend, zodat het altijd
+ * een cirkel blijft, ongeacht de weergavebreedte. Geen eigen tekst: de naam
+ * van de gekoppelde actie is de toegankelijkheidslabel. Een actie kan
+ * meerdere stippen hebben (bv. voor- en achterrem apart); verwijderen van de
+ * actie of categorie ruimt de stip vanzelf op via ON DELETE CASCADE.
  */
 export const fietsHotspots = sqliteTable(
   "fiets_hotspots",
@@ -167,11 +171,9 @@ export const fietsHotspots = sqliteTable(
     actieId: text("actie_id")
       .notNull()
       .references(() => onderhoudsacties.id, { onDelete: "cascade" }),
-    /** Korte tekst op de stip zelf, bv. "Rem" i.p.v. de volledige actienaam. */
-    label: text("label").notNull(),
-    /** Percentage t.o.v. de natuurlijke breedte/hoogte van de foto. */
     xPct: real("x_pct").notNull(),
     yPct: real("y_pct").notNull(),
+    rPct: real("r_pct").notNull().default(6),
   },
   (t) => [index("hotspot_categorie").on(t.categorieId)]
 );

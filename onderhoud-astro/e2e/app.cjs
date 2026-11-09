@@ -285,7 +285,9 @@ async function inloggen(page, gebruikersnaam) {
     const foto = meldFormulier.locator('img[src*="mountainbike-onderdelen"]');
     beweer(await foto.isVisible(), "fietsfoto ontbreekt bij een MTB");
 
-    const ketting = meldFormulier.getByRole("button", { name: "Ketting", exact: true });
+    // aria-label (niet getByRole): de Pill "Ketting reinigen" eronder heeft dezelfde
+    // accessible name via z'n tekst, dus alleen het attribuut onderscheidt de hotspot.
+    const ketting = meldFormulier.locator('button[aria-label="Ketting reinigen"]');
     await ketting.click();
     beweer(
       (await ketting.getAttribute("aria-pressed")) === "true",
@@ -310,11 +312,11 @@ async function inloggen(page, gebruikersnaam) {
 
     const meldFormulier = page.locator('form:has(input[name="clientId"][value^="melding:"])');
     beweer(
-      (await meldFormulier.getByRole("button", { name: "Rem", exact: true }).count()) === 1,
+      (await meldFormulier.locator('button[aria-label="Remmen controleren"]').count()) === 1,
       "Rem-hotspot ontbreekt bij E-MTB"
     );
     beweer(
-      (await meldFormulier.getByRole("button", { name: "Band", exact: true }).count()) === 0,
+      (await meldFormulier.locator('button[aria-label="Bandenspanning"]').count()) === 0,
       "Band-hotspot verschijnt bij E-MTB, maar Bandenspanning bestaat daar niet als actie"
     );
   });
