@@ -16,6 +16,7 @@ import { formatDatum, formatTijd } from "@/lib/domein";
 import {
   beheerlog,
   categorieen,
+  fietsHotspots,
   logregels,
   materiaal,
   medewerkers,
@@ -76,7 +77,7 @@ for (const rij of [...registratiesPerMedewerker, ...wijzigingenPerMedewerker]) {
 // Per categorie de acties, velden en het aantal stuks materiaal.
 const categorieKaarten = await Promise.all(
   rijen.map(async (c) => {
-    const [acties, velden, aantalRij] = await Promise.all([
+    const [acties, velden, hotspots, aantalRij] = await Promise.all([
       db()
         .select()
         .from(onderhoudsacties)
@@ -87,6 +88,9 @@ const categorieKaarten = await Promise.all(
         .from(velddefinities)
         .where(and(eq(velddefinities.categorieId, c.id), isNull(velddefinities.archivedAt)))
         .orderBy(asc(velddefinities.sortering)),
+      c.fietsfotoUrl
+        ? db().select().from(fietsHotspots).where(eq(fietsHotspots.categorieId, c.id))
+        : Promise.resolve([]),
       db().select({ aantal: count() }).from(materiaal).where(eq(materiaal.categorieId, c.id)),
     ]);
     return {
@@ -95,6 +99,14 @@ const categorieKaarten = await Promise.all(
       aantal: aantalRij[0]?.aantal ?? 0,
       acties: acties.map((a) => ({ id: a.id, naam: a.naam, isAfkeuren: a.isAfkeuren })),
       velden: velden.map((v) => ({ id: v.id, naam: v.naam, eenheid: v.eenheid })),
+      fietsfotoUrl: c.fietsfotoUrl,
+      hotspots: hotspots.map((h) => ({
+        id: h.id,
+        actieId: h.actieId,
+        label: h.label,
+        xPct: h.xPct,
+        yPct: h.yPct,
+      })),
     };
   })
 );

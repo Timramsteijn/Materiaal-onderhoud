@@ -3,10 +3,20 @@ import { actions } from "astro:actions";
 
 import { BevestigModal } from "@/components/bevestig-modal";
 import { ChevronDown, Plus, X } from "@/components/icons";
+import { FietsHotspotBeheer } from "@/components/fiets-hotspot-beheer";
 
 type Actie = { id: string; naam: string; isAfkeuren: boolean };
 type Veld = { id: string; naam: string; eenheid: string | null };
-type Categorie = { id: string; naam: string; aantal: number; acties: Actie[]; velden: Veld[] };
+type Hotspot = { id: string; actieId: string; label: string; xPct: number; yPct: number };
+type Categorie = {
+  id: string;
+  naam: string;
+  aantal: number;
+  acties: Actie[];
+  velden: Veld[];
+  fietsfotoUrl: string | null;
+  hotspots: Hotspot[];
+};
 
 type TeArchiveren =
   | { soort: "actie"; id: string; naam: string; categorie: string }
@@ -110,6 +120,14 @@ export function CategorieBeheer({
                       />
                     }
                   />
+
+                  {c.fietsfotoUrl && (
+                    <FietsHotspotBeheer
+                      fotoUrl={c.fietsfotoUrl}
+                      acties={c.acties.filter((a) => !a.isAfkeuren)}
+                      hotspots={c.hotspots}
+                    />
+                  )}
 
                   <ChipBlok
                     titel="Eigen velden"

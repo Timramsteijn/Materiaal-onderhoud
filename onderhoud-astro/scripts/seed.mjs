@@ -178,8 +178,9 @@ for (const o of ONDERDELEN) {
         naam: tekst(c.naam),
         sortering: i,
         archived_at: "NULL",
+        fietsfoto_url: nullbaar(c.fietsfotoUrl),
       },
-      { bijwerken: ["naam", "sortering", "archived_at"] }
+      { bijwerken: ["naam", "sortering", "archived_at", "fietsfoto_url"] }
     );
 
     const acties = new Map();
@@ -218,6 +219,24 @@ for (const o of ONDERDELEN) {
           archived_at: "NULL",
         },
         { bijwerken: ["naam", "type", "eenheid", "opties", "sortering", "archived_at"] }
+      );
+    }
+
+    for (const h of c.hotspots ?? []) {
+      const actie = acties.get(h.actieNaam);
+      if (!actie) continue; // actienaam bestaat niet (meer) in deze categorie
+      const hotspotId = `hotspot_${o.slug}_${slug(c.naam)}_${slug(h.actieNaam)}`;
+      invoegen(
+        "fiets_hotspots",
+        {
+          id: tekst(hotspotId),
+          categorie_id: tekst(categorieId),
+          actie_id: tekst(actie.id),
+          label: tekst(h.label),
+          x_pct: h.xPct,
+          y_pct: h.yPct,
+        },
+        { bijwerken: ["actie_id", "label", "x_pct", "y_pct"] }
       );
     }
 

@@ -14,7 +14,14 @@ import { StatusBadge, CategorieBadge, Kaart, KaartTitel } from "@/components/ui"
 import { ChevronLeft, Printer, ScanLine, Plus } from "@/components/icons";
 import { db } from "@/lib/context";
 import { getOnderdeel } from "@/lib/onderdeel";
-import { categorieen, logregels, materiaal, onderhoudsacties, velddefinities } from "@/db/schema";
+import {
+  categorieen,
+  fietsHotspots,
+  logregels,
+  materiaal,
+  onderhoudsacties,
+  velddefinities,
+} from "@/db/schema";
 import { formatDatum, formatTijd } from "@/lib/domein";
 import { haalOpenVerzoeken } from "@/lib/verzoeken";
 import { isBeheerder } from "@/lib/permissies";
@@ -33,7 +40,7 @@ const stuk = await db().query.materiaal.findFirst({
 // Een materiaal-URL uit een ander onderdeel geeft 404 — geen stille wissel.
 if (!stuk) return Astro.rewrite("/404");
 
-const [categorie, acties, velden, historie, totaalLog, openVerzoeken] = await Promise.all([
+const [categorie, acties, velden, hotspots, historie, totaalLog, openVerzoeken] = await Promise.all([
   db().query.categorieen.findFirst({ where: eq(categorieen.id, stuk.categorieId) }),
   db()
     .select()
@@ -49,6 +56,7 @@ const [categorie, acties, velden, historie, totaalLog, openVerzoeken] = await Pr
       and(eq(velddefinities.categorieId, stuk.categorieId), isNull(velddefinities.archivedAt))
     )
     .orderBy(asc(velddefinities.sortering)),
+  db().select().from(fietsHotspots).where(eq(fietsHotspots.categorieId, stuk.categorieId)),
   db()
     .select()
     .from(logregels)
@@ -235,7 +243,14 @@ const specs = [
           nuLabel={nuLabel}
           meldUrl={`${Astro.url.pathname}${actions.meldOnderhoudNodig.queryString}`}
           vervalUrl={`${Astro.url.pathname}${actions.laatVerzoekVervallen.queryString}`}
-          categorieNaam={categorie?.naam}
+          fotoUrl={categorie?.fietsfotoUrl}
+          hotspots={hotspots.map((h) => ({
+            id: h.id,
+            actieId: h.actieId,
+            label: h.label,
+            xPct: h.xPct,
+            yPct: h.yPct,
+          }))}
         />
       </div>
 

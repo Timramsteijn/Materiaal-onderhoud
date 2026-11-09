@@ -9,6 +9,7 @@ import { nieuwId } from "@/lib/id";
 import {
   beheerlog,
   categorieen,
+  fietsHotspots,
   logregels,
   medewerkers,
   onderdelen,
@@ -349,6 +350,69 @@ export const verwijderMedewerker = defineAction({
       naam: medewerker.naam,
       gebruikersnaam: medewerker.gebruikersnaam,
     });
+    return { ok: true as const };
+  },
+});
+
+/* ---------- fiets-hotspots (aanklikbare foto bij melden) ---------- */
+
+export const voegFietsHotspotToe = defineAction({
+  accept: "form",
+  input: z.object({
+    actieId: z.string().min(1),
+    label: z.string().trim().min(1).max(24),
+    xPct: z.coerce.number().min(0).max(100),
+    yPct: z.coerce.number().min(0).max(100),
+  }),
+  handler: async ({ actieId, label, xPct, yPct }, context) => {
+    const beheerder = await vereisBeheerder(context);
+
+    const actie = await db().query.onderhoudsacties.findFirst({
+      where: eq(onderhoudsacties.id, actieId),
+    });
+    if (!actie) throw new ActionError({ code: "NOT_FOUND", message: "Actie niet gevonden." });
+
+    const categorie = await db().query.categorieen.findFirst({
+      where: eq(categorieen.id, actie.categorieId),
+    });
+    if (!categorie?.fietsfotoUrl) {
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message: "Deze categorie heeft geen foto om een stip op te zetten.",
+      });
+    }
+
+    await db().insert(fietsHotspots).values({
+      id: nieuwId("hotspot"),
+      categorieId: categorie.id,
+      actieId: actie.id,
+      label,
+      xPct,
+      yPct,
+    });
+
+    await logBeheer(beheerder.id, "Stip op fietsfoto toegevoegd", {
+      categorie: categorie.naam,
+      actie: actie.naam,
+      label,
+    });
+    return { ok: true as const };
+  },
+});
+
+export const verwijderFietsHotspot = defineAction({
+  accept: "form",
+  input: z.object({ hotspotId: z.string().min(1) }),
+  handler: async ({ hotspotId }, context) => {
+    const beheerder = await vereisBeheerder(context);
+
+    const hotspot = await db().query.fietsHotspots.findFirst({
+      where: eq(fietsHotspots.id, hotspotId),
+    });
+    if (!hotspot) return { ok: true as const };
+
+    await db().delete(fietsHotspots).where(eq(fietsHotspots.id, hotspotId));
+    await logBeheer(beheerder.id, "Stip op fietsfoto verwijderd", { label: hotspot.label });
     return { ok: true as const };
   },
 });

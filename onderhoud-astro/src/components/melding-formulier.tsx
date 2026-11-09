@@ -3,10 +3,7 @@ import { actions } from "astro:actions";
 
 import { Kaart, KaartTitel, Label, Pill, PrimaireKnop } from "@/components/ui";
 import { Check, CircleAlert } from "@/components/icons";
-import { FietsHotspotMelder } from "@/components/fiets-hotspot-melder";
-
-/** Categorieën met een fietsfoto om op te klikken i.p.v. de actielijst te lezen. */
-const CATEGORIEEN_MET_FIETSFOTO = new Set(["MTB", "E-MTB"]);
+import { FietsHotspotMelder, type Hotspot } from "@/components/fiets-hotspot-melder";
 
 type Actie = { id: string; naam: string };
 
@@ -32,7 +29,8 @@ export function MeldingFormulier({
   nuLabel,
   meldUrl,
   vervalUrl,
-  categorieNaam,
+  fotoUrl,
+  hotspots,
 }: {
   materiaalDbId: string;
   /** Alleen gewone acties; afkeuren loopt via registreren met goedkeuring. */
@@ -43,8 +41,9 @@ export function MeldingFormulier({
   /** URL's van de Astro Actions; ook het doel als JavaScript uitstaat. */
   meldUrl: string;
   vervalUrl: string;
-  /** Bepaalt of de aanklikbare fietsfoto verschijnt (zie CATEGORIEEN_MET_FIETSFOTO). */
-  categorieNaam?: string;
+  /** Aanwezig zodra de categorie een fietsfoto heeft (zie categorieen.fietsfotoUrl). */
+  fotoUrl?: string | null;
+  hotspots?: Hotspot[];
 }) {
   const [open, setOpen] = useState(meldingen.length === 0);
   const [actieId, setActieId] = useState("");
@@ -155,11 +154,12 @@ export function MeldingFormulier({
           {/* Zonder JavaScript vult de server zelf geen clientId in. */}
           <input type="hidden" name="clientId" value={`melding:${materiaalDbId}:${nuLabel}`} />
 
-          {categorieNaam && CATEGORIEEN_MET_FIETSFOTO.has(categorieNaam) && (
+          {fotoUrl && hotspots && hotspots.length > 0 && (
             <div className="mb-3">
               <Label>Klik op de foto op wat kapot is</Label>
               <FietsHotspotMelder
-                acties={acties}
+                fotoUrl={fotoUrl}
+                hotspots={hotspots}
                 geselecteerdActieId={actieId}
                 onKies={(id) => {
                   setActieId(id);
@@ -170,9 +170,7 @@ export function MeldingFormulier({
           )}
 
           <Label>
-            {categorieNaam && CATEGORIEEN_MET_FIETSFOTO.has(categorieNaam)
-              ? "Of kies uit de lijst"
-              : "Wat moet er gebeuren?"}
+            {fotoUrl && hotspots && hotspots.length > 0 ? "Of kies uit de lijst" : "Wat moet er gebeuren?"}
           </Label>
           <div className="flex flex-wrap gap-2">
             {acties.map((a) => (

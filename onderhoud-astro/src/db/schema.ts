@@ -102,6 +102,8 @@ export const categorieen = sqliteTable(
     naam: text("naam").notNull(),
     sortering: integer("sortering").notNull().default(0),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
+    /** Pad naar een foto met aanklikbare onderdelen bij het melden (zie fiets_hotspots). */
+    fietsfotoUrl: text("fietsfoto_url"),
   },
   (t) => [
     uniqueIndex("categorie_onderdeel_naam").on(t.onderdeelId, t.naam),
@@ -147,6 +149,31 @@ export const velddefinities = sqliteTable(
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
   },
   (t) => [index("veld_categorie").on(t.categorieId)]
+);
+
+/**
+ * Een aanklikbaar punt op `categorieen.fietsfotoUrl`, gekoppeld aan een
+ * bestaande actie. Een actie kan meerdere stippen hebben (bv. voor- en
+ * achterrem apart); verwijderen van de actie of categorie ruimt de stip vanzelf
+ * op via ON DELETE CASCADE.
+ */
+export const fietsHotspots = sqliteTable(
+  "fiets_hotspots",
+  {
+    id: text("id").primaryKey(),
+    categorieId: text("categorie_id")
+      .notNull()
+      .references(() => categorieen.id, { onDelete: "cascade" }),
+    actieId: text("actie_id")
+      .notNull()
+      .references(() => onderhoudsacties.id, { onDelete: "cascade" }),
+    /** Korte tekst op de stip zelf, bv. "Rem" i.p.v. de volledige actienaam. */
+    label: text("label").notNull(),
+    /** Percentage t.o.v. de natuurlijke breedte/hoogte van de foto. */
+    xPct: real("x_pct").notNull(),
+    yPct: real("y_pct").notNull(),
+  },
+  (t) => [index("hotspot_categorie").on(t.categorieId)]
 );
 
 export const materiaal = sqliteTable(
@@ -356,6 +383,7 @@ export type Onderhoudsverzoek = typeof onderhoudsverzoeken.$inferSelect;
 export type Categorie = typeof categorieen.$inferSelect;
 export type OnderhoudsActie = typeof onderhoudsacties.$inferSelect;
 export type VeldDefinitie = typeof velddefinities.$inferSelect;
+export type FietsHotspot = typeof fietsHotspots.$inferSelect;
 export type Materiaal = typeof materiaal.$inferSelect;
 export type LogRegel = typeof logregels.$inferSelect;
 export type Medewerker = typeof medewerkers.$inferSelect;

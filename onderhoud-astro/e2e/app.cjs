@@ -282,7 +282,7 @@ async function inloggen(page, gebruikersnaam) {
     if (await nogIetsMelden.count()) await nogIetsMelden.click();
 
     const meldFormulier = page.locator('form:has(input[name="clientId"][value^="melding:"])');
-    const foto = meldFormulier.locator('img[alt*="mountainbike"]');
+    const foto = meldFormulier.locator('img[src*="mountainbike-onderdelen"]');
     beweer(await foto.isVisible(), "fietsfoto ontbreekt bij een MTB");
 
     const ketting = meldFormulier.getByRole("button", { name: "Ketting", exact: true });

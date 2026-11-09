@@ -207,10 +207,13 @@ loopt via registreren mét goedkeuring.
 Bij categorie **MTB**/**E-MTB** staat er boven de actielijst ook een foto van
 de mountainbike met aanklikbare onderdelen (`fiets-hotspot-melder.tsx`) — voor
 wie niet precies weet hoe een derailleur heet, maar wel ziet welk stuk stuk
-is. De stippen zijn vaste coördinaten (percentages) op
-`public/mountainbike-onderdelen.webp`, gekoppeld aan bestaande actienamen uit
-die categorie; een stip verschijnt alleen als die actie ook echt bestaat, dus
-dit breekt niet als de actielijst ooit wijzigt. De volledige actielijst
+is. De foto zelf (`categorieen.fietsfotoUrl`) en de stippen (tabel
+`fiets_hotspots`: percentage-coördinaten + een actie-id) zijn gewone
+configuratie, net als acties en velden. Een beheerder zet zelf nieuwe stippen
+neer bij Beheer (`fiets-hotspot-beheer.tsx`): actie kiezen, op de foto klikken,
+label kiezen, opslaan — geen code nodig als er een nieuwe onderhoudsactie
+bijkomt die ook op de foto moet kunnen. Verwijderen van de actie of categorie
+ruimt de stip vanzelf op (`ON DELETE CASCADE`). De volledige actielijst
 eronder blijft gewoon staan — de foto is een extra, visuele ingang, geen
 vervanging.
 

@@ -91,6 +91,17 @@ export const ONDERDELEN = [
           { naam: "Versnellingen", type: "GETAL" },
           { naam: "Veerweg", type: "GETAL", eenheid: "mm" },
         ],
+        // Aanklikbare foto bij "Onderhoud melden" — zie README "Melden en
+        // registreren". Coördinaten in percentages, bepaald door de foto per
+        // onderdeel uit te snijden en de pixelpositie af te lezen.
+        fietsfotoUrl: "/mountainbike-onderdelen.webp",
+        hotspots: [
+          { actieNaam: "Remmen controleren", label: "Rem", xPct: 80, yPct: 62.4 },
+          { actieNaam: "Derailleur stellen", label: "Versnelling", xPct: 21, yPct: 65 },
+          { actieNaam: "Ketting reinigen", label: "Ketting", xPct: 35, yPct: 72.8 },
+          { actieNaam: "Wielen centreren", label: "Wiel", xPct: 86, yPct: 43.3 },
+          { actieNaam: "Bandenspanning", label: "Band", xPct: 14, yPct: 89.3 },
+        ],
       },
       {
         naam: "E-MTB",
@@ -101,6 +112,13 @@ export const ONDERDELEN = [
           "Software bijwerken",
           "Reparatie",
           AFKEUREN,
+        ],
+        // Zelfde foto als MTB; alleen de acties die hier ook echt bestaan
+        // krijgen een stip (geen Wiel/Band, want die acties heeft E-MTB niet).
+        fietsfotoUrl: "/mountainbike-onderdelen.webp",
+        hotspots: [
+          { actieNaam: "Remmen controleren", label: "Rem", xPct: 80, yPct: 62.4 },
+          { actieNaam: "Derailleur stellen", label: "Versnelling", xPct: 21, yPct: 65 },
         ],
         velden: [
           { naam: "Framemaat", type: "TEKST" },
