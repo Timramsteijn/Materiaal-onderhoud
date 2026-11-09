@@ -204,6 +204,16 @@ melding die toch niet nodig blijkt, wordt ingetrokken (`VERVALLEN`) en
 verdwijnt dus niet uit de historie. Afkeuren blijft buiten de meldingen: dat
 loopt via registreren mét goedkeuring.
 
+Bij categorie **MTB**/**E-MTB** staat er boven de actielijst ook een foto van
+de mountainbike met aanklikbare onderdelen (`fiets-hotspot-melder.tsx`) — voor
+wie niet precies weet hoe een derailleur heet, maar wel ziet welk stuk stuk
+is. De stippen zijn vaste coördinaten (percentages) op
+`public/mountainbike-onderdelen.webp`, gekoppeld aan bestaande actienamen uit
+die categorie; een stip verschijnt alleen als die actie ook echt bestaat, dus
+dit breekt niet als de actielijst ooit wijzigt. De volledige actielijst
+eronder blijft gewoon staan — de foto is een extra, visuele ingang, geen
+vervanging.
+
 ### Afkeuren loopt via goedkeuring
 
 Kiest een medewerker een actie die als `isAfkeuren` staat gemarkeerd, dan gaat

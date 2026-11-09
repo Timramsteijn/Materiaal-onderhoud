@@ -276,6 +276,49 @@ async function inloggen(page, gebruikersnaam) {
     beweer(/Niets gemeld/i.test(await kaart.innerText()), "melding stond nog open");
   });
 
+  await test("mountainbike: klikken op de foto kiest de bijbehorende actie", async () => {
+    await ga(page, "/mountainbike/materiaal/MTB-0142");
+    const nogIetsMelden = page.locator('button:has-text("nog iets melden")');
+    if (await nogIetsMelden.count()) await nogIetsMelden.click();
+
+    const meldFormulier = page.locator('form:has(input[name="clientId"][value^="melding:"])');
+    const foto = meldFormulier.locator('img[alt*="mountainbike"]');
+    beweer(await foto.isVisible(), "fietsfoto ontbreekt bij een MTB");
+
+    const ketting = meldFormulier.getByRole("button", { name: "Ketting", exact: true });
+    await ketting.click();
+    beweer(
+      (await ketting.getAttribute("aria-pressed")) === "true",
+      "hotspot werd niet als geselecteerd gemarkeerd"
+    );
+
+    await meldFormulier.locator("#melding-opmerking").fill("Via de foto gemeld (e2e).");
+    await Promise.all([
+      page.waitForLoadState("load"),
+      meldFormulier.locator('button:has-text("Onderhoud nodig melden")').click(),
+    ]);
+    await page.waitForTimeout(400);
+    const tekst = await page.locator("main").innerText();
+    beweer(/Ketting reinigen/.test(tekst), "actie uit de hotspot staat niet in de melding");
+    beweer(/Via de foto gemeld/.test(tekst), "opmerking van de hotspot-melding ontbreekt");
+  });
+
+  await test("e-mtb: foto toont alleen hotspots voor acties die in die categorie bestaan", async () => {
+    await ga(page, "/mountainbike/materiaal/EMTB-0031");
+    const nogIetsMelden = page.locator('button:has-text("nog iets melden")');
+    if (await nogIetsMelden.count()) await nogIetsMelden.click();
+
+    const meldFormulier = page.locator('form:has(input[name="clientId"][value^="melding:"])');
+    beweer(
+      (await meldFormulier.getByRole("button", { name: "Rem", exact: true }).count()) === 1,
+      "Rem-hotspot ontbreekt bij E-MTB"
+    );
+    beweer(
+      (await meldFormulier.getByRole("button", { name: "Band", exact: true }).count()) === 0,
+      "Band-hotspot verschijnt bij E-MTB, maar Bandenspanning bestaat daar niet als actie"
+    );
+  });
+
   console.log("\nLog en overzicht");
 
   await test("log toont registraties per dag", async () => {
